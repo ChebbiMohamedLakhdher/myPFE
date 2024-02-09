@@ -46,7 +46,7 @@ export default function LoginPage() {
     return (
     <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
         
-        <h1 className=" absolute top-20 text-5 xl" >{loading ? "Processing" : "Login"}</h1>
+        <h1 className=" absolute top-20 text-5xl" >{loading ? "Processing" : "Login"}</h1>
         
         
         
