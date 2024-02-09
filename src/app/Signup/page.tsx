@@ -12,7 +12,7 @@ export default function SignupPage() {
     const router = useRouter();
     const [user, setUser] = React.useState({
         email: "",
-        password: "",
+        password: "",           
         username: "",
     })
     const [buttonDisabled, setButtonDisabled] = React.useState(false);
@@ -29,7 +29,7 @@ export default function SignupPage() {
             console.log("Signup failed", error.message);
             
             toast.error(error.message);
-        }finally {
+        }finally {  
             setLoading(false);
         }
     }

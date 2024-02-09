@@ -45,6 +45,10 @@ export default function LoginPage() {
 
     return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        
+        <h1> Welcome Back </h1>
+        <h2>Enter your credentials to login</h2>
+        
         <h1>{loading ? "Processing" : "Login"}</h1>
         <hr />
         
@@ -73,4 +77,4 @@ export default function LoginPage() {
         </div>
     )
 
-}
+}   
