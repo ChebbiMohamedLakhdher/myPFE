@@ -44,13 +44,12 @@ export default function LoginPage() {
     }, [user]);
 
     return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="static flex flex-col items-center justify-center min-h-screen py-2">
         
-        <h1> Welcome Back </h1>
-        <h2>Enter your credentials to login</h2>
+        <h1 className="static top-16  text-6x1"> Enter your credentials to login </h1>
+        <h1 className="static top-20 text-6xl">Welcome Back</h1>
         
-        <h1>{loading ? "Processing" : "Login"}</h1>
-        <hr />
+        
         
         <label htmlFor="email">email</label>
         <input 
