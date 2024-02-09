@@ -44,10 +44,9 @@ export default function LoginPage() {
     }, [user]);
 
     return (
-    <div className="static flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
         
-        <h1 className="static top-16  text-6x1"> Enter your credentials to login </h1>
-        <h1 className="static top-20 text-6xl">Welcome Back</h1>
+        <h1 className=" absolute top-20 text-5 xl" >{loading ? "Processing" : "Login"}</h1>
         
         
         
