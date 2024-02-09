@@ -35,40 +35,6 @@
             }   
         }
 
-<<<<<<< HEAD
-    return (
-    <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
-        
-        <h1 className=" absolute top-20 text-5xl" >Login</h1>
-        
-        
-        
-        <label htmlFor="email">email</label>
-        <input 
-        className="p-2 border  border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-            id="email"
-            type="text"
-            value={user.email}
-            onChange={(e) => setUser({...user, email: e.target.value})}
-            placeholder="email"
-            />
-        <label htmlFor="password">password</label>
-        <input 
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-            id="password"
-            type="password"
-            value={user.password}
-            onChange={(e) => setUser({...user, password: e.target.value})}
-            placeholder="password"
-            />
-            <button
-            onClick={onLogin}
-            className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
-            <Link href="/signup">Visit Signup page</Link>
-        </div>
-        
-   )
-=======
         useEffect(() => {
             if(user.email.length > 0 && user.password.length > 0) {
                 setButtonDisabled(false);
@@ -76,34 +42,33 @@
                 setButtonDisabled(true);
             }
         }, [user]); 
->>>>>>> 2dd0dfa4eb51034288dcbc9c3f734ed3be145987
 
         return (
         <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
             
             <h1 className=" absolute top-20 text-5xl" >Login</h1>
             
+
             
-            
-            <label htmlFor="email">email</label>
+            <label htmlFor="email">Email</label>
             <input 
             className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
                 id="email"
                 type="text"
                 value={user.email}
                 onChange={(e) => setUser({...user, email: e.target.value})}
-                placeholder="email"
+                placeholder="Enter Your Email"
                 />
-            <label htmlFor="password">password</label>
+            <label htmlFor="password">Password</label>
             <input 
             className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
                 id="password"
                 type="password"
                 value={user.password}
                 onChange={(e) => setUser({...user, password: e.target.value})}
-                placeholder="password"
+                placeholder="Password"
                 />
-      <a href="#" className="mx-1 text-sm font-medium text-primary-600 hover:underline dark:text-[#000000]">Forgot password?</a>
+          
                 <button
                 onClick={onLogin}
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>

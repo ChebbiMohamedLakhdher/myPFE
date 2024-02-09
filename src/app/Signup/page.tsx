@@ -43,7 +43,7 @@ export default function SignupPage() {
 
     return (
         <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="absolute top-20 text-3xl">Signup</h1>
+            <h1 className="absolute top-20 text-5xl">Signup</h1>
             <hr />
             <label htmlFor="name">Name</label>
             <input
