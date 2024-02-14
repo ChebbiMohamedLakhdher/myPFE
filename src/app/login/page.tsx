@@ -1,6 +1,6 @@
 "use client";
     import Link from "next/link";
-    import React, {useEffect} from "react";
+    import React, {useEffect, useState} from "react";
     import {useRouter} from "next/navigation";
     import axios from "axios";
     import { toast } from "react-hot-toast";
@@ -11,6 +11,7 @@
 
     export default function LoginPage() {
         const router = useRouter();
+        const [error, setError] = useState('');
         const [user, setUser] = React.useState({
             email: "",
             password: "",
@@ -28,8 +29,9 @@
                 toast.success("Login success");
                 router.push("/profile");
             } catch (error:any) {
-                console.log("Login failed", error.message);
-                toast.error(error.message);
+                console.log("Login failed", error.response.data.error);
+                setError(error.response.data.error);
+                toast.error(error.response.data.error);
             } finally{
             setLoading(false);
             }   
@@ -68,13 +70,13 @@
                 onChange={(e) => setUser({...user, password: e.target.value})}
                 placeholder="Password"
                 />
-          
+               
                 <button
                 onClick={onLogin}
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
                 <h1 >Don't have an account ?</h1>
                 <Link href="/signup">Signup</Link>
-                
+                {error && <p style={{ color: 'red' }}>{error}</p>}
             </div>
             
     )
