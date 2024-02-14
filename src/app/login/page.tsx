@@ -11,7 +11,7 @@
 
     export default function LoginPage() {
         const router = useRouter();
-        const [error, setError] = useState(false);
+        const [error,setError] = useState(false);
         const [errorMessage, setErrorMessage] = useState('');
         const [user, setUser] = React.useState({
             email: "",
@@ -77,13 +77,13 @@
             <label htmlFor="password">Password</label>
             <div>
             <input 
-            className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+            className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error ? 'border-red-700 border-4' : ''}`}
                 id="password"
                 type="password"
                 value={user.password}
                 onChange={(e) => setUser({...user, password: e.target.value})}
                 placeholder="Password"
-                
+                onBlur={() => setError(false)}
                 />
                 {error && (
                     <div className="absolute top-0 bottom-4 right-0 flex items-center pr-3">
