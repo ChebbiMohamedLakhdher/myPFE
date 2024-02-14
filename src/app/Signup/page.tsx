@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // Change from "next/navigation" to "next/router"
+import { useRouter } from "next/navigation"; 
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
 const SignupPage = () => {
     const router = useRouter();
-    const [error, setError] = useState(false); // Changed from string to boolean
+    const [error, setError] = useState(false); 
     const [errorMessage, setErrorMessage] = useState('');
     const [user, setUser] = useState({
         email: "",
@@ -17,7 +17,7 @@ const SignupPage = () => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    // Regular expression for email validation
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const handleSignup = async () => {
@@ -30,14 +30,14 @@ const SignupPage = () => {
             console.log("Signup failed", error.message);
             setError(true);
             setErrorMessage(error.response.data.error);
-            toast.error(error.response.data.error); // Updated to access the error message from response data
+            toast.error(error.response.data.error); 
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        // Check if all fields are filled and email is valid
+        
         if (user.name.length > 0 && user.password.length > 0 && emailRegex.test(user.email)) {
             setButtonDisabled(false);
         } else {
@@ -61,13 +61,13 @@ const SignupPage = () => {
             <label htmlFor="email">Email</label>
             <div className="relative">
                 <input
-                    className={`p-2 border-4 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error ? 'border-red-700' : ''}`}
+                    className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error ? 'border-red-700 border-4' : ''}`}
                     id="email"
                     type="text"
                     value={user.email}
                     onChange={(e) => setUser({ ...user, email: e.target.value })}
                     placeholder="Email"
-                    onBlur={() => setError(false)} // Reset error state when user starts typing in the email field again
+                    onBlur={() => setError(false)} 
                 />
                 {error && (
                     <div className="absolute top-0 bottom-4 right-0 flex items-center pr-3">
