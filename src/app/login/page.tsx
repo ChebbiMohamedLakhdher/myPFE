@@ -16,21 +16,6 @@ export default function LoginPage() {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
 
-<<<<<<< HEAD
-    const onLogin = async () => {
-        try {
-            setLoading(true);
-            const response = await axios.post("/api/users/login", user);
-            console.log("Login success", response.data);
-            toast.success("Login success");
-            router.push("/profile");
-        } catch (error:any) {
-            console.log("Login failed", error.response.data.error);
-            setError(true);
-            setErrorMessage(error.response.data.error);
-            toast.error(error.response.data.error);
-        } finally {
-=======
 
 
 
@@ -60,7 +45,6 @@ export default function LoginPage() {
                 setErrorMessage(error.response.data.error);
                 toast.error(error.response.data.error);
             } finally{
->>>>>>> fd77dc773d1f83e7f61ae1f1e7ed033d99117fb9
             setLoading(false);
         }
     };
@@ -94,15 +78,6 @@ export default function LoginPage() {
             </div>
             <label htmlFor="password">Password</label>
             <div>
-<<<<<<< HEAD
-                <input
-                    className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-                    id="password"
-                    type="password"
-                    value={user.password}
-                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                    placeholder="Password"
-=======
             <input 
             className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error ? 'border-red-700 border-4' : ''}`}
                 id="password"
@@ -111,7 +86,6 @@ export default function LoginPage() {
                 onChange={(e) => setUser({...user, password: e.target.value})}
                 placeholder="Password"
                 onBlur={() => setError(false)}
->>>>>>> fd77dc773d1f83e7f61ae1f1e7ed033d99117fb9
                 />
                 {error && (
                     <div className="absolute top-0 bottom-4 right-0 flex items-center pr-3">
