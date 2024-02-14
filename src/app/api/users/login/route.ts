@@ -6,6 +6,26 @@ import jwt from "jsonwebtoken";
 
 connect()
 
+
+export default function handler(req: { method: string; body: { email: any; password: any; }; }, res: { status: (arg0: number) => { (): any; new(): any; json: { (arg0: { success: boolean; message?: string; }): void; new(): any; }; end: { (): void; new(): any; }; }; }) {
+    if (req.method === 'POST') {
+      const { email, password } = req.body;
+  
+      // Validate username and password here
+      // Example: Check against a database
+      if (validCredentials(email, password)) {
+        // If credentials are valid, return success
+        res.status(200).json({ success: true });
+      } else {
+        // If credentials are invalid, return failure
+        res.status(401).json({ success: false, message: 'Invalid email or password' });
+      }
+    } else {
+      // Return 405 Method Not Allowed if the request method is not POST
+      res.status(405).end();
+    }
+  }
+
 export async function POST(request:NextRequest) {
     try {
         const reqBody = await request.json()
@@ -53,4 +73,8 @@ export async function POST(request:NextRequest) {
 
 
         
+
+function validCredentials(email: any, password: any) {
+    throw new Error("Function not implemented.");
+}
      
