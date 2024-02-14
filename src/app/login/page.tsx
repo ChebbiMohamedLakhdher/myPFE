@@ -76,7 +76,7 @@
                 className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
                 <h1 >Don't have an account ?</h1>
                 <Link href="/signup">Signup</Link>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={{ color: 'black' }}>{error}</p>}
             </div>
             
     )
