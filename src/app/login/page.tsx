@@ -5,19 +5,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 
-export default function LoginPage() {
-    const router = useRouter();
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [user, setUser] = useState({
-        email: "",
-        password: "",
-    });
-    const [buttonDisabled, setButtonDisabled] = useState(true);
-    const [loading, setLoading] = useState(false);
-
-
-
 
     export default function LoginPage() {
         const router = useRouter();
@@ -59,7 +46,7 @@ export default function LoginPage() {
             <label htmlFor="email">Email</label>
             <div className="relative">
                 <input
-                    className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error ? 'border-red-700 border-4' : ''}`}
+                    className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "User does not exist" ? 'border-red-700 border-4' : ''}`}
                     id="email"
                     type="text"
                     value={user.email}
@@ -67,7 +54,7 @@ export default function LoginPage() {
                     placeholder="Enter Your Email"
                     onBlur={() => setError(false)}
                 />
-                {error && (
+                {error && errorMessage == "User does not exist" &&(
                     <div className="absolute top-0 bottom-4 right-0 flex items-center pr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-700 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M11 14a1 1 0 11-2 0 1 1 0 012 0zM10 2a8 8 0 100 16A8 8 0 0010 2zM9 12a1 1 0 112 0v-5a1 1 0 11-2 0v5z" clipRule="evenodd" />
@@ -77,9 +64,9 @@ export default function LoginPage() {
                 )}
             </div>
             <label htmlFor="password">Password</label>
-            <div>
+            <div className="relative">
             <input 
-            className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error ? 'border-red-700 border-4' : ''}`}
+            className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "Invalid Password" ?  'border-red-700 border-4' : ''}`}
                 id="password"
                 type="password"
                 value={user.password}
@@ -87,7 +74,7 @@ export default function LoginPage() {
                 placeholder="Password"
                 onBlur={() => setError(false)}
                 />
-                {error && (
+                {error && errorMessage == "Invalid Password" &&(
                     <div className="absolute top-0 bottom-4 right-0 flex items-center pr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-700 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M11 14a1 1 0 11-2 0 1 1 0 012 0zM10 2a8 8 0 100 16A8 8 0 0010 2zM9 12a1 1 0 112 0v-5a1 1 0 11-2 0v5z" clipRule="evenodd" />
