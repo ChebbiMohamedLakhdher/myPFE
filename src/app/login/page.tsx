@@ -72,7 +72,7 @@ import Link from "next/link";
                 value={user.password}
                 onChange={(e) => setUser({...user, password: e.target.value})}
                 placeholder="Password"
-                onBlur={() => setError(false)}
+                
                 />
                 {error && errorMessage == "Invalid Password" &&(
                     <div className="absolute top-0 bottom-4 right-0 flex items-center pr-3">
