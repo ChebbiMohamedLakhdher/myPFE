@@ -4,7 +4,7 @@ import User from "@/models/userModel";
 
 
 
-connect()
+connect();
 
 
 export async function POST(request: NextRequest){
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest){
         }
         console.log(user);
 
-        user.isVerfied = true;
+        user.isEmployee = true;
         user.verifyToken = undefined;
         user.verifyTokenExpiry = undefined;
         await user.save();
