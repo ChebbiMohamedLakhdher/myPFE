@@ -46,7 +46,7 @@ import Link from "next/link";
             <label htmlFor="email">Email</label>
             <div className="relative">
                 <input
-                    className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "User does not exist" ? 'border-red-700 border-4' : ''}`}
+                    className={`p-2  border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "User does not exist" ? 'border-red-700 border-4' : ''}`}
                     id="email"
                     type="text"
                     value={user.email}
