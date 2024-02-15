@@ -46,7 +46,7 @@ import Link from "next/link";
             <label htmlFor="email">Email</label>
             <div className="relative">
                 <input
-                    className={`p-2  border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "User does not exist" ? 'border-red-700 border-4' : ''}`}
+                    className={`p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "User does not exist" ? 'border-red-700 border-4' : ''}`}
                     id="email"
                     type="text"
                     value={user.email}
@@ -59,14 +59,14 @@ import Link from "next/link";
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-700 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M11 14a1 1 0 11-2 0 1 1 0 012 0zM10 2a8 8 0 100 16A8 8 0 0010 2zM9 12a1 1 0 112 0v-5a1 1 0 11-2 0v5z" clipRule="evenodd" />
                         </svg>
-                        <div className="absolute bg-red-700 text-white rounded-lg p-2 text-sm top-0 left-full ml-2">{errorMessage}</div>
+                        <div className="absolute  bg-red-700 text-white rounded-lg p-2 text-sm top-0 left-full ml-2">{errorMessage}</div>
                     </div>
                 )}
             </div>
             <label htmlFor="password">Password</label>
             <div className="relative">
             <input 
-            className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "Invalid Password" ?  'border-red-700 border-4' : ''}`}
+            className={`p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "Invalid Password" ?  'border-red-700 border-4' : ''}`}
                 id="password"
                 type="password"
                 value={user.password}
