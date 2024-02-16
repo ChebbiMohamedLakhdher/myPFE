@@ -9,7 +9,7 @@ connect()
 export async function POST(request:NextRequest) {
     try {
         const reqBody = await request.json()
-        const {email, password} = reqBody;
+        const {email, password,isEmployee} = reqBody;
         console.log(reqBody);
 
         const user = await User.findOne({email})
@@ -23,6 +23,10 @@ export async function POST(request:NextRequest) {
         if (!validPassword){
             return NextResponse.json({error:"Invalid Password"}, {status:400})
         }
+        if (!isEmployee){
+            return NextResponse.json({error:"verify token!"}, {status:400})
+        }
+        
         
         const tokenData = {
             id: user._id,
