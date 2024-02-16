@@ -93,6 +93,13 @@ import Link from "next/link";
             </button>
             <h1>Don't have an account ?</h1>
             <Link href="/signup">Signup</Link>
+            <div className="relative items-center ">
+            {error && errorMessage == "Invalid Token" &&(
+                    <div className="relative top-8 bottom-4 left-2 items-center pr-3 text-white bg-red-700 pb-3 pt-3 pr-3 pl-3 rounded-lg ">
+                        <h1 className="whitespace-nowrap">Please Check Your Email To Verify Your Account    </h1>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
