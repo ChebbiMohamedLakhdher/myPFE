@@ -9,7 +9,7 @@ connect()
 export async function POST(request:NextRequest) {
     try {
         const reqBody = await request.json()
-        const {email, password,isEmployee} = reqBody;
+        const {email, password} = reqBody;
         console.log(reqBody);
 
         const user = await User.findOne({email})
@@ -23,16 +23,22 @@ export async function POST(request:NextRequest) {
         if (!validPassword){
             return NextResponse.json({error:"Invalid Password"}, {status:400})
         }
+
         
-        if (isEmployee === true){
-            return NextResponse.json({error:"verify token!"}, {status:400})
+        
+        if (user) {
+        const isEmployee = user.isEmployee;
+        console.log("Is Employee:", isEmployee);
+        } else {
+        console.log("Token not found");
         }
-        
+
         
         const tokenData = {
             id: user._id,
             name: user.name,
-            email: user.email
+            email: user.email,
+            isEmployee: user.isEmployee
         }
         
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "1d"})
@@ -63,3 +69,6 @@ function validCredentials(email: any, password: any) {
     throw new Error("Function not implemented.");
 }
      
+
+
+
