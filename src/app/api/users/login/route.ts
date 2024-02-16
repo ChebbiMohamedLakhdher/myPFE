@@ -25,13 +25,11 @@ export async function POST(request:NextRequest) {
         }
 
         
-        
-        if (user) {
         const isEmployee = user.isEmployee;
-        console.log("Is Employee:", isEmployee);
-        } else {
-        console.log("Token not found");
-        }
+        if (!isEmployee) {
+            console.log("Token not found");
+            return NextResponse.json({error:"Invalid Token"}, {status:400});
+        } 
 
         
         const tokenData = {
