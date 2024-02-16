@@ -13,27 +13,28 @@ import Link from "next/link";
         const [user, setUser] = React.useState({
             email: "",
             password: "",
+            isEmployee:"",
         
         })
         const [buttonDisabled, setButtonDisabled] = React.useState(false);
         const [loading, setLoading] = React.useState(false);
 
 
-        const onLogin = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.post("/api/users/login", user);
-                console.log("Login success", response.data);
-                toast.success("Login success");
-                router.push("/profile");
-            } catch (error:any) {
-                console.log("Login failed", error.response.data.error);
-                setError(error.response.data.error);
-                setErrorMessage(error.response.data.error);
-                toast.error(error.response.data.error);
-            } finally{
-            setLoading(false);
-        }
+            const onLogin = async () => {
+                try {
+                    setLoading(true);
+                    const response = await axios.post("/api/users/login", user);
+                    console.log("Login success", response.data);
+                    toast.success("Login success");
+                    router.push("/profile");
+                } catch (error:any) {
+                    console.log("Login failed", error.response.data.error);
+                    setError(error.response.data.error);
+                    setErrorMessage(error.response.data.error);
+                    toast.error(error.response.data.error);
+                } finally{
+                setLoading(false);
+            }
     };
 
     useEffect(() => {
