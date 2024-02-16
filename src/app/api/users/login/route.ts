@@ -23,7 +23,8 @@ export async function POST(request:NextRequest) {
         if (!validPassword){
             return NextResponse.json({error:"Invalid Password"}, {status:400})
         }
-        if (!isEmployee){
+        
+        if (isEmployee === true){
             return NextResponse.json({error:"verify token!"}, {status:400})
         }
         
