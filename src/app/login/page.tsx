@@ -46,7 +46,7 @@ import Link from "next/link";
             <div className="relative text-5xl" style={{ top: '-100px' }}>
             <h1>Login</h1> 
             </div>
-            <label htmlFor="email" >Email</label>
+            <label htmlFor="email" style={{ display: 'inline-block', width: '310px' }} >Email</label>
             <div className="relative">
                 <input
                     className={`p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "User does not exist" ? 'border-red-700 border-4' : ''}`}
@@ -65,7 +65,7 @@ import Link from "next/link";
                 </div><div className="relative bg-red-700 text-white rounded-lg p-2 text-sm bottom-3 left-0 ">{errorMessage}</div></>
             )}
             </div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" style={{ display: 'inline-block', width: '310px' }}>Password</label>
             <div className="relative">
             <input 
             className={`p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error && errorMessage == "Invalid Password" ?  'border-red-700 border-4' : ''}`}
