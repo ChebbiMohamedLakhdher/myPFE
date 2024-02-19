@@ -47,7 +47,9 @@ const SignupPage = () => {
 
     return (
         <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="absolute top-20 text-5xl">Signup</h1>
+            <div className="relative text-5xl" style={{ top: '-100px' }}>
+            <h1>Signup</h1> 
+            </div>
             <hr />
             <label htmlFor="name" style={{ display: 'inline-block', width: '310px' }}>Name</label>
             <input

@@ -43,7 +43,9 @@ import Link from "next/link";
 
     return (
         <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="absolute top-20 text-5xl">Login</h1>
+            <div className="relative text-5xl" style={{ top: '-100px' }}>
+            <h1>Login</h1> 
+            </div>
             <label htmlFor="email" >Email</label>
             <div className="relative">
                 <input
