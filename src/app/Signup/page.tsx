@@ -47,9 +47,11 @@ const SignupPage = () => {
 
     return (
         <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
-            <h1 className="absolute top-20 text-5xl">Signup</h1>
+            <div className="relative bottom-20 text-5xl">
+            <h1>Signup</h1> 
+            </div>
             <hr />
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name" style={{ display: 'inline-block', width: '310px' }}>Name</label>
             <input
                 className="p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
                 id="name"
@@ -58,7 +60,7 @@ const SignupPage = () => {
                 onChange={(e) => setUser({ ...user, name: e.target.value })}
                 placeholder="Name"
             />
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email" style={{ display: 'inline-block', width: '310px' }}>Email</label>
             <div className="relative">
                 <input
                     className={`p-2 border flex-none w-80 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${error ? 'border-red-700 border-4' : ''}`}
@@ -70,15 +72,14 @@ const SignupPage = () => {
                     onBlur={() => setError(false)} 
                 />
                 {error && (
-                    <div className="absolute top-0 bottom-4 right-0 flex items-center pr-3">
+                    <><div className="absolute top-3 right-0 flex items-center pr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-700 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M11 14a1 1 0 11-2 0 1 1 0 012 0zM10 2a8 8 0 100 16A8 8 0 0010 2zM9 12a1 1 0 112 0v-5a1 1 0 11-2 0v5z" clipRule="evenodd" />
                         </svg>
-                        <div className="absolute bg-red-700 text-white rounded-lg p-2 text-sm top-0 left-full ml-2">{errorMessage}</div>
-                    </div>
+                    </div><div className="relative bg-red-700 text-white rounded-lg p-2 text-sm bottom-3 left-0 ">{errorMessage}</div></>
                 )}
             </div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" style={{ display: 'inline-block', width: '310px' }}>Password</label>
             <div>
             <input
                 className="p-2 border flex-none w-80 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
