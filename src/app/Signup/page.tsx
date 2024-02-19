@@ -1,3 +1,4 @@
+
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -17,8 +18,12 @@ const SignupPage = () => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const checkPasswordStrength = (password: string) => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return passwordRegex.test(password);
+    };
 
     const handleSignup = async () => {
         try {
@@ -37,8 +42,8 @@ const SignupPage = () => {
     };
 
     useEffect(() => {
-        
-        if (user.name.length > 0 && user.password.length > 0 && emailRegex.test(user.email)) {
+        const isPasswordStrong = checkPasswordStrength(user.password);
+        if (user.name.length > 0 && isPasswordStrong && emailRegex.test(user.email)) {
             setButtonDisabled(false);
         } else {
             setButtonDisabled(true);
@@ -111,4 +116,3 @@ const SignupPage = () => {
 }
 
 export default SignupPage;
-
