@@ -43,14 +43,34 @@ const SignupPage = () => {
             setLoading(false);
         }
     };
+    const checkPasswordStrength = (password: any) => {
+        const errors = [];
+        if (password.length < 8) {
+            errors.push("Password must be at least 8 characters long.");
+        }
+        if (!/(?=.*[a-z])/.test(password)) {
+            errors.push("Password must contain at least one lowercase letter.");
+        }
+        if (!/(?=.*[A-Z])/.test(password)) {
+            errors.push("Password must contain at least one uppercase letter.");
+        }
+        if (!/(?=.*\d)/.test(password)) {
+            errors.push("Password must contain at least one digit.");
+        }
+        if (!/(?=.*[@$!%*?&])/.test(password)) {
+            errors.push("Password must contain at least one special character.");
+        }
+        return errors;
+    };
 
     useEffect(() => {
-        
-        if (user.name.length > 0 && user.password.length > 0 && emailRegex.test(user.email)) {
+        const passwordErrors = checkPasswordStrength(user.password);
+        if (user.name.length > 0 && emailRegex.test(user.email) && passwordErrors.length === 0) {
             setButtonDisabled(false);
         } else {
             setButtonDisabled(true);
         }
+        setErrorMessage(passwordErrors.join(" "));
     }, [user]);
 
 
@@ -112,13 +132,34 @@ const SignupPage = () => {
                 endContent={
                    <div className="h-full flex justify-center items-center">
                     <button onClick={ () => setPassVisibility((prev) => !prev )}>
-                      
+                      {passVisibility ?
+                        <EyeIcon className="w-4 text-slate-500" />
+                        :
+                        <EyeSlashIcon className="w-4 text-slate-500" />
+                       }
 
                     </button>
                    </div>
 
                 }
             />
+            {
+                inputedPassword ?
+                 <div className="w-[350px]">
+                    <PassStrengthBar strength={strengthBar} />
+                    <p className="text-slate-200 text-xs py-2">
+                        We believe that your password is {passSecurityLevel}
+                    </p>
+                    <p className="text-[.75em] text-slate-500 italic pt-2">
+                        Combine uppercase / lowercase / numbers and special characters
+                        to create a stronger password. The colour bar will let you 
+                        know 
+                        how secure your password is.
+                    </p>
+                    </div>
+                    :
+                    ""
+            }
            
               </div>  
 
