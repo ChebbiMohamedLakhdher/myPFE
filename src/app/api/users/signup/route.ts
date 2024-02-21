@@ -6,7 +6,7 @@ import { sendEmail } from "@/helpers/mailer";
 
 connect();
 
-const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
+
 
 export async function POST(request: NextRequest) {
     try {
@@ -20,9 +20,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: "Email already used" }, { status: 400 });
         }
 
-        if (!passwordRegex.test(password)) {
-            return NextResponse.json({ error: "Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long." }, { status: 400 });
-        }
+       
 
         const salt = await bcryptjs.genSalt(10);
         const hashedPassword = await bcryptjs.hash(password, salt);

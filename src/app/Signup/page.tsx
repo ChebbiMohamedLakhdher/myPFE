@@ -45,8 +45,8 @@ const SignupPage = () => {
     };
     const checkPasswordStrength = (password: any) => {
         const errors = [];
-        if (password.length < 8) {
-            errors.push("Password must be at least 8 characters long.");
+        if (password.length < 10) {
+            errors.push("Password must be a t least 8 characters long.");
         }
         if (!/(?=.*[a-z])/.test(password)) {
             errors.push("Password must contain at least one lowercase letter.");
