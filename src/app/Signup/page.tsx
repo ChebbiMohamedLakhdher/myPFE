@@ -45,20 +45,20 @@ const SignupPage = () => {
     };
     const checkPasswordStrength = (password: any) => {
         const errors = [];
-        if (password.length < 8) {
-            errors.push("Password must be at least 8 characters long.");
+        if (password.length < 10) {
+            errors.push("");
         }
         if (!/(?=.*[a-z])/.test(password)) {
-            errors.push("Password must contain at least one lowercase letter.");
+            errors.push("");
         }
         if (!/(?=.*[A-Z])/.test(password)) {
-            errors.push("Password must contain at least one uppercase letter.");
+            errors.push("");
         }
         if (!/(?=.*\d)/.test(password)) {
-            errors.push("Password must contain at least one digit.");
+            errors.push("");
         }
         if (!/(?=.*[@$!%*?&])/.test(password)) {
-            errors.push("Password must contain at least one special character.");
+            errors.push("");
         }
         return errors;
     };
@@ -111,7 +111,7 @@ const SignupPage = () => {
                     placeholder="Email"
                     onBlur={() => setError(false)} 
                 />
-                {error && (
+                {error && errorMessage=="Email already used" &&(
                     <><div className="absolute top-3 right-0 flex items-center pr-3">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-red-700 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M11 14a1 1 0 11-2 0 1 1 0 012 0zM10 2a8 8 0 100 16A8 8 0 0010 2zM9 12a1 1 0 112 0v-5a1 1 0 11-2 0v5z" clipRule="evenodd" />
