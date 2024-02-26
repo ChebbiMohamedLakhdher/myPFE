@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+
 import { passwordStrength } from "check-password-strength";
 import { Input } from "@nextui-org/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/20/solid";
@@ -122,21 +123,18 @@ const SignupPage = () => {
             <label htmlFor="password" style={{ display: 'inline-block', width: '310px' }}>Password</label>
             <div>
             <Input
-                className="p-2 border flex-none w-80 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-                id="password"
+                className="p-2 border flex-none w-80  border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
                 type={passVisibility ? 'text' : 'password'}
-                value={user.password}
                 onValueChange={(value) => setInputedPassword(value)}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-                placeholder="Password"
                 endContent={
                    <div className="h-full flex justify-center items-center">
                     <button onClick={ () => setPassVisibility((prev) => !prev )}>
-                      {passVisibility ?
+                      {passVisibility ? (
                         <EyeIcon className="w-4 text-slate-500" />
-                        :
+                      ):(
                         <EyeSlashIcon className="w-4 text-slate-500" />
-                       }
+                       )}
 
                     </button>
                    </div>
