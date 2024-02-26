@@ -143,10 +143,13 @@ const SignupPage = () => {
           </>
         )}
       </div>
-      <label  htmlFor="password" style={{ display: "inline-block", width: "310px" }} > Password </label>
+      <div className="relative ">
+      <label  htmlFor="password" style={{ display: "inline-block", width: "310px",}} > Password </label>
+      </div>
       
-      <div className="w-full h-full max-w-[335px] items-center">
-        <div className="relative">
+      
+      <div className="w-full h-full max-w-[335px] items-center ">
+        <div className="relative bottom-2">
           <Input
             className="w-full text-slate-800 px-2"
             id="password"
