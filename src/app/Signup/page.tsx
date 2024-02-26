@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-
 import { passwordStrength } from "check-password-strength";
 import { Input } from "@nextui-org/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/20/solid";
@@ -144,10 +143,15 @@ const SignupPage = () => {
         )}
       </div>
       <div className="relative ">
-      <label  htmlFor="password" style={{ display: "inline-block", width: "310px",}} > Password </label>
+        <label
+          htmlFor="password"
+          style={{ display: "inline-block", width: "310px" }}
+        >
+          {" "}
+          Password{" "}
+        </label>
       </div>
-      
-      
+
       <div className="w-full h-full max-w-[335px] items-center ">
         <div className="relative bottom-2">
           <Input
