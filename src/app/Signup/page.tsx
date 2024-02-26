@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+
 import { passwordStrength } from "check-password-strength";
 import { Input } from "@nextui-org/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/20/solid";
@@ -142,16 +143,13 @@ const SignupPage = () => {
           </>
         )}
       </div>
-      <label
-        htmlFor="password"
-        style={{ display: "inline-block", width: "310px" }}
-      >
-        {" "}
-        Password{" "}
-      </label>
-
-      <div className="w-full h-full max-w-[335px] items-center">
-        <div className="relative">
+      <div className="relative ">
+      <label  htmlFor="password" style={{ display: "inline-block", width: "310px",}} > Password </label>
+      </div>
+      
+      
+      <div className="w-full h-full max-w-[335px] items-center ">
+        <div className="relative bottom-2">
           <Input
             className="w-full text-slate-800 px-2"
             id="password"
@@ -180,18 +178,16 @@ const SignupPage = () => {
                 className="w-full text-slate-800 p-2 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
                 id="password"
                 type={passVisibility ? 'text' : 'password'}
-                value={user.password}
                 onValueChange={(value) => setInputedPassword(value)}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
-                placeholder="Password"
                 endContent={
                    <div className="h-full flex justify-center items-center">
                     <button onClick={ () => setPassVisibility((prev) => !prev )}>
-                      {passVisibility ?
+                      {passVisibility ? (
                         <EyeIcon className="w-4 text-slate-500" />
-                        :
+                      ):(
                         <EyeSlashIcon className="w-4 text-slate-500" />
-                       }
+                       )}
 
                     </button>
                    </div>
