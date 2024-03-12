@@ -87,7 +87,7 @@ const SignupPage = () => {
 
   return (
     <div className="static bg-slate-900  flex flex-col items-center justify-center min-h-screen py-2">
-      <div className="relative text-5xl" style={{ top: "-100px" }}>
+      <div className="relative text-5xl" style={{ top: "-80px" }}>
         <h1>Signup</h1>
       </div>
       <hr />
