@@ -86,7 +86,7 @@ const SignupPage = () => {
   }, [passSecurityLevel, inputedPassword]);
 
   return (
-    <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="static bg-slate-900  flex flex-col items-center justify-center min-h-screen py-2">
       <div className="relative text-5xl" style={{ top: "-100px" }}>
         <h1>Signup</h1>
       </div>
@@ -95,7 +95,7 @@ const SignupPage = () => {
         Name
       </label>
       <input
-        className="p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4= focus:outline-none focus:border-gray-600 text-black"
+        className="p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
         id="name"
         type="text"
         value={user.name}
@@ -108,7 +108,7 @@ const SignupPage = () => {
       >
         Email
       </label>
-      <div className="relative">
+      <div className="relative ">
         <input
           className={`p-2 border flex-none w-80 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${
             error ? "border-red-700 border-4" : ""
@@ -153,7 +153,7 @@ const SignupPage = () => {
       </div>
 
       <div className="w-full h-full max-w-[335px] items-center ">
-        <div className="relative bottom-2">
+        <div className="relative bottom-2 ">
           <Input
             className="w-full text-slate-800 px-2"
             id="password"
