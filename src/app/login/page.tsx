@@ -16,6 +16,9 @@ import Link from "next/link";
             isEmployee:"",
         
         })
+        const[resetPassword, setResetPassword] = useState<boolean>(false)
+
+
         const [buttonDisabled, setButtonDisabled] = React.useState(false);
         const [loading, setLoading] = React.useState(false);
 
@@ -42,8 +45,9 @@ import Link from "next/link";
     }, [user.email, user.password]);
 
     return (
-        <div className="static bg-blue-900 flex flex-col items-center justify-center min-h-screen py-2">
-            <div className="relative text-5xl" style={{ top: '-100px' }}>
+        <div className="static bg-slate-900 flex flex-col items-center justify-center min-h-screen py-2">
+            {!resetPassword && <div>
+                <div className="relative text-5xl" style={{ top: '-100px' }}>
             <h1>Login</h1> 
             </div>
             <label htmlFor="email" style={{ display: 'inline-block', width: '310px' }} >Email</label>
@@ -100,6 +104,8 @@ import Link from "next/link";
                     </div>
                 )}
             </div>
+                </div>}
+            <p className="cursor-pointer hover:underline" onClick={() => setResetPassword(!resetPassword) }>{resetPassword ? 'login' : 'Forgot Password'}</p>   
         </div>
     );
 }
