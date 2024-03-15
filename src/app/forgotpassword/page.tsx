@@ -58,7 +58,7 @@ export default function ForgotPasswordPage() {
           placeholder="Enter Your Email"
           onBlur={() => setError(false)}
         />
-        {error && errorMessage == "Email Doesn't Exist " && (
+        {error && errorMessage == "Email Doesn't Exist" && (
           <>
             <div className="absolute top-3 right-0 flex items-center pr-3">
               <svg

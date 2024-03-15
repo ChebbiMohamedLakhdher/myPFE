@@ -120,7 +120,7 @@ export default function LoginPage() {
                 />
               </svg>
             </div>
-            <div className="relative bg-red-90  0 text-white rounded-lg p-2 text-sm bottom-3 left-0 mb-2 ">
+            <div className="relative bg-red-900 text-white rounded-lg p-2 text-sm bottom-3 left-0 mb-2 ">
               {errorMessage}
             </div>
           </>
@@ -139,15 +139,7 @@ export default function LoginPage() {
       </button>
       <h1>Don't have an account ?</h1>
       <Link href="/signup">Signup</Link>
-      <div className="relative items-center ">
-        {error && errorMessage == "Invalid Token" && (
-          <div className="relative top-8 bottom-4 left-2 items-center pr-3 text-white bg-red-900 pb-3 pt-3  pl-3 rounded-lg ">
-            <h1 className="whitespace-nowrap">
-              Please Check Your Email To Verify Your Account{" "}
-            </h1>
-          </div>
-        )}
-      </div>
+      
     </div>
   );
 }
