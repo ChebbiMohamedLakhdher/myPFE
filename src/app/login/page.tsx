@@ -53,7 +53,7 @@ export default function LoginPage() {
         <input
           className={`p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${
             error && errorMessage == "User does not exist"
-              ? "border-red-700 border-4"
+              ? "border-red-900 border-4"
               : ""
           }`}
           id="email"
@@ -68,7 +68,7 @@ export default function LoginPage() {
             <div className="absolute top-3 right-0 flex items-center pr-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-red-700 cursor-pointer"
+                className="h-6 w-6 text-red-900 cursor-pointer"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -79,7 +79,7 @@ export default function LoginPage() {
                 />
               </svg>
             </div>
-            <div className="relative bg-red-700 text-white rounded-lg p-2 text-sm bottom-3 left-0 ">
+            <div className="relative bg-red-900 text-white rounded-lg p-2 text-sm bottom-3 left-0 ">
               {errorMessage}
             </div>
           </>
@@ -95,7 +95,7 @@ export default function LoginPage() {
         <input
           className={`p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${
             error && errorMessage == "Invalid Password"
-              ? "border-red-700 border-4"
+              ? "border-red-900 border-4"
               : ""
           }`}
           id="password"
@@ -106,10 +106,10 @@ export default function LoginPage() {
         />
         {error && errorMessage == "Invalid Password" && (
           <>
-            <div className="absolute top-3 right-0 flex items-center pr-3">
+            <div className="absolute top-3 right-0 flex items-center pr-3 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-red-700 cursor-pointer"
+                className="h-6 w-6 text-red-900 cursor-pointer"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -120,12 +120,16 @@ export default function LoginPage() {
                 />
               </svg>
             </div>
-            <div className="relative bg-red-700 text-white rounded-lg p-2 text-sm bottom-3 left-0 ">
+            <div className="relative bg-red-90  0 text-white rounded-lg p-2 text-sm bottom-3 left-0 mb-2 ">
               {errorMessage}
             </div>
           </>
         )}
       </div>
+      <div className="relative right-28 bottom-3 text-xs ml-4">
+      <Link className="cursor-pointer hover:underline text-zinc-500 font-bold " href="/forgotpassword">Forgot password?</Link>
+      </div>
+      
       <button
         disabled={buttonDisabled || loading}
         onClick={onLogin}
@@ -137,7 +141,7 @@ export default function LoginPage() {
       <Link href="/signup">Signup</Link>
       <div className="relative items-center ">
         {error && errorMessage == "Invalid Token" && (
-          <div className="relative top-8 bottom-4 left-2 items-center pr-3 text-white bg-red-700 pb-3 pt-3  pl-3 rounded-lg ">
+          <div className="relative top-8 bottom-4 left-2 items-center pr-3 text-white bg-red-900 pb-3 pt-3  pl-3 rounded-lg ">
             <h1 className="whitespace-nowrap">
               Please Check Your Email To Verify Your Account{" "}
             </h1>

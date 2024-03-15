@@ -21,7 +21,7 @@ const SignupPage = () => {
     password: "",
     name: "",
   });
-  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(true); 
   const [loading, setLoading] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -111,7 +111,7 @@ const SignupPage = () => {
       <div className="relative ">
         <input
           className={`p-2 border flex-none w-80 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black ${
-            error ? "border-red-700 border-4" : ""
+            error ? "border-red-900 border-4" : ""
           }`}
           id="email"
           type="text"
@@ -125,7 +125,7 @@ const SignupPage = () => {
             <div className="absolute top-3 right-0 flex items-center pr-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-red-700 cursor-pointer"
+                className="h-6 w-6 text-red-900 cursor-pointer"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -136,7 +136,7 @@ const SignupPage = () => {
                 />
               </svg>
             </div>
-            <div className="relative bg-red-700 text-white rounded-lg p-2 text-sm bottom-3 left-0 ">
+            <div className="relative bg-red-900 text-white rounded-lg p-2 text-sm bottom-3 left-0 ">
               {errorMessage}
             </div>
           </>
@@ -155,7 +155,7 @@ const SignupPage = () => {
       <div className="w-full h-full max-w-[335px] items-center ">
         <div className="relative bottom-2 ">
           <Input
-            className="w-full text-slate-800 px-2"
+            className="w-full text-slate-800 px-2  "
             id="password"
             type={passVisibility ? "text" : "password"}
             value={user.password}
@@ -178,26 +178,7 @@ const SignupPage = () => {
           </button>
         </div>
 
-        {/* <Input
-                className="w-full text-slate-800 p-2 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-                id="password"
-                type={passVisibility ? 'text' : 'password'}
-                onValueChange={(value) => setInputedPassword(value)}
-                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                endContent={
-                   <div className="h-full flex justify-center items-center">
-                    <button onClick={ () => setPassVisibility((prev) => !prev )}>
-                      {passVisibility ? (
-                        <EyeIcon className="w-4 text-slate-500" />
-                      ):(
-                        <EyeSlashIcon className="w-4 text-slate-500" />
-                       )}
-
-                    </button>
-                   </div>
-
-                }
-            /> */}
+        
         {inputedPassword ? (
           <div className="w-[310px] ml-3 mb-3">
             <PassStrengthBar strength={strengthBar} />
