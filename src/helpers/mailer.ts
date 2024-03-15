@@ -13,7 +13,7 @@ export const sendEmail = async({email, emailType, userId}:any) => {
                 {verifyToken: hashedToken, verifyTokenExpiry: Date.now() + 3600000})
         } else if (emailType === "RESET"){
             await User.findByIdAndUpdate(userId, 
-                {forgotPasswordToken: hashedToken, forgotPasswordTokenExpiry: Date.now() + 3600000})
+                {resetToken: hashedToken, resetTokenExpiry: Date.now() + 3600000})
         }
 
         var transport = nodemailer.createTransport({
@@ -25,13 +25,12 @@ export const sendEmail = async({email, emailType, userId}:any) => {
             }
           });
 
-
         const mailOptions = {
             from: 'mahdi@gmail.com',
             to: email,
             subject: emailType === "VERIFY" ? "Verify your email" : "Reset your password",
-            html: `<p>Click <a href="${process.env.DOMAIN}/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
-            or copy and paste the link below in your browser. <br> ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
+            html: `<p>Click <a href="http://localhost:3000/${emailType === "VERIFY" ? "verifyemail" : "reset"}?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
+            or copy and paste the link below in your browser. <br> http://localhost:3000/${emailType === "VERIFY" ? "verifyemail" : "reset"}?token=${hashedToken}
             </p>`
         }
 
