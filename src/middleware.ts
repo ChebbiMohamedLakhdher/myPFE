@@ -6,8 +6,8 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
 
-  const isPublicPath = path === '/login' || path === '/signup' || path === '/verifyemail' ||  path === '/reset' 
-  
+  const isPublicPath = path === '/login' || path === '/signup' || path === '/verifyemail' 
+  const isPrivatePath =   path === '/reset' 
   // Get current URL
   const currentUrl = request.nextUrl.href;
 
@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.nextUrl))
   }
 
-  if (!isPublicPath && !token) {
+  if (!isPublicPath && !isPrivatePath && !token) {
     return NextResponse.redirect(new URL('/login', request.nextUrl))
   }
   if (currentUrl=== 'http://localhost:3000/reset'){
