@@ -8,6 +8,8 @@ import { Input } from "@nextui-org/react";
 import { passwordStrength } from "check-password-strength";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/20/solid";
 import PassStrengthBar from "../PassStrengthBar";
+import Cookies from 'js-cookie';
+
 
 type Strength = 0 | 1 | 2 | 3;
 
@@ -18,36 +20,44 @@ export default function Reset() {
   const [token, setToken] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false); // Changed from React.useState to useState
   const [loading, setLoading] = useState(false); // Changed from React.useState to useState
-
+  const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [buttonPressed, setButtonPressed] = useState(false);
 
   const onReset = async () => {
     try {
+      setButtonPressed(true);
       setLoading(true);
-      const response = await axios.post("/api/users/reset", {token}); // Wrapped token in an object
-      console.log("User Exist", response.data);
-      toast.success("User Exist");
-    } catch (error:any) { // Removed type annotation, it's unnecessary
-      console.log("Email Not Sent", error.response.data.error);
-      setError(true); // Set error to true, as it seems you're just checking if there's an error, not setting the error message
-      setErrorMessage(error.response.data.error);
-      toast.error(error.response.data.error);
+      const response = await axios.post("/api/users/reset", {token, newPass});
+      console.log("Password Reset Successful");
+      toast.success("Password Reset Successful");
+      setSuccessMessage("Password Reset Successful");
+    } catch (error:any) {
+      console.error("Password Reset Failed", error);
+      setError(true);
+      setErrorMessage(error.response?.data?.error || "An error occurred while resetting the password");
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
   };
+  
   
   useEffect(() => {
     const urlToken = new URLSearchParams(window.location.search).get("token"); // Changed from split("=")[1] to get("token")
     setToken(urlToken || "");
   }, []);
   
-  useEffect(() => {
-    if(token.length > 0) {
-      onReset(); // Changed from reset() to onReset()
-    }
-  }, [token]);
+  
+     useEffect(() => {
+      if (token.length > 0) {
+        Cookies.set('token', token, { expires: 1 });
+      }
+    }, [token]);
 
+
+ 
 
 
   const checkPasswordStrength = (password: any) => {
@@ -77,24 +87,24 @@ export default function Reset() {
   const [strengthBar, setStrengthBar] = useState<Strength>(0);
   const [inputedPassword, setInputedPassword] = useState("");
   const passSecurityLevel = passwordStrength(inputedPassword).value;
-  const [user, setUser] = useState({
+  const [newPass, setNewPass] = useState({
     password: "",
     confirmPassword: "",
   });
 
 
   useEffect(() => {
-    const passwordErrors = checkPasswordStrength(user.password);
+    const passwordErrors = checkPasswordStrength(newPass.password);
     if (
       passwordErrors.length === 0 && 
-      user.password === user.confirmPassword
+      newPass.password === newPass.confirmPassword
     ) {
-      setButtonDisabled(false);
+      setButtonDisabled(false); 
     } else {
       setButtonDisabled(true);
     }
     setErrorMessage(passwordErrors.join(" "));
-  }, [user]);
+  }, [newPass]);
 
 
   
@@ -123,18 +133,19 @@ export default function Reset() {
             className="w-full text-slate-800 px-2  "
             id="password"
             type={passVisibility ? "text" : "password"}
-            value={user.password}
+            value={newPass.password}
             // variant="border:ed"
             // radius="md"
             onValueChange={(value) => setInputedPassword(value)}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            onChange={(e) => setNewPass({ ...newPass, password: e.target.value })}
             placeholder="Password"
             style={{ borderRadius: "0.5rem", padding: "0.5rem" }}
+            onFocus={() => setIsPasswordFocused(true)}
             onBlur={() => {
               setIsPasswordFocused(false);
               setError(false);
             }}
-            onFocus={() => setIsPasswordFocused(true)}
+            
           />
           
         </div>
@@ -153,18 +164,18 @@ export default function Reset() {
           className={'p-2 flex-none w-80 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black'}
           id="confirmPassword"
           type="password"
-          value={user.confirmPassword}
+          value={newPass.confirmPassword}
           placeholder="Confirm your Password"
-          onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
-         
+          onChange={(e) => setNewPass({ ...newPass, confirmPassword: e.target.value })}
+          onFocus={() => setIsConfirmPasswordFocused(true)}
           onBlur={() => {
-          
+            setIsConfirmPasswordFocused(false);
             setError(false);
           }}
 
         />
       </div>
-      {isPasswordFocused ? true : (
+      {!isConfirmPasswordFocused && isPasswordFocused &&  (
        <div className="w-full h-full max-w-[335px] items-center ">
        <div className="relative bottom-2 ">
          <button
@@ -196,12 +207,15 @@ export default function Reset() {
        )}
      </div>
       )}
+      {successMessage && (
+      <p className="text-green-500">Password updated Successfully</p>
+    )}
       <button
         disabled={buttonDisabled || loading}
         onClick={onReset}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+        className={`p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 ${buttonPressed ? 'pressed' : ''}`}
       >
-        {loading ? "Sending email..." : "Send Email"}
+        {loading ? "Sending email..." : "Reset"}
       </button>
       <Link href="/login">Go Back To Login</Link> {/* Removed className, as Link doesn't accept it */}
     </div>
