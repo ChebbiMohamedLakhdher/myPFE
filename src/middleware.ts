@@ -39,7 +39,10 @@ export const config = {
     '/login',
     '/signup',
     '/verifyemail',
-    '/reset'
+    '/reset',
+    '/admin',
+    '/employees',
+    '/more',
   ]
 }
 
