@@ -65,8 +65,12 @@ const Sidebar = () => {
             <span> Products </span>
           </li>
           <li>
+          <button>
+          <Link href="/offers">
             <CreditCardIcon className="icon" />
-            <span> Orders </span>
+            <span> Offers </span>
+            </Link >
+            </button>
           </li>
           <p className="title">Useful</p>
           <li>
