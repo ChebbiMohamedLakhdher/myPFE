@@ -10,6 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button"; 
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import Link from "next/link";
 
 const List = () => {
@@ -33,8 +34,9 @@ const List = () => {
     }, []);
 
     const handleViewMore = (userId) => {
-        // Implement your logic for handling the "View More" action, for example, redirecting to a detailed view of the user
+
         console.log("View More clicked for user:", userId);
+        
     };
 
     return (
@@ -59,11 +61,12 @@ const List = () => {
                             <TableCell className="tableCell"></TableCell>
                             <TableCell className="tableCell">
                             
-                            <Link href={`/more`}>
+                            <Link href={`/more?id=${user._id}`}>
                                     
-                                    <Button onClick={() => handleViewMore(user.id)} variant="contained" color="primary">View More</Button>
-                                  
+                                    <Button className="acc" onClick={() => handleViewMore(user.id)} variant="contained" color="primary">View</Button>
+
                                 </Link>
+
                         </TableCell>
                             
 
