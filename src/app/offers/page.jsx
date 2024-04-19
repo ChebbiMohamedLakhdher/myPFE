@@ -23,6 +23,7 @@ const Offers = () => {
           <button className="acc" onClick={handleButtonClick} variant="contained" color="primary">
             Add Offers
           </button>
+          
         </div>
 
       </div>

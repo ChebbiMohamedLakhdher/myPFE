@@ -1,29 +1,21 @@
-.Offers {
+.news {
+  
     display: flex;
     background-color: whitesmoke;
     .adminContainer {
       flex: 6;
-      .sec{
-        background-color: whitesmoke;
-        color: #000;
   
-        .acc{
-          background-color: black;
-          color: white;
-        }
-        .butt{
-          background-color: purple;
-        }
-      }
-      
       .widgets,
       .charts {
         display: flex;
         padding: 20px;
         gap: 20px;
       }
-      
-  
+      .body{
+        .h1{
+            color: black   ;
+        }
+      }
       .charts {
         padding: 5px 20px;
       }
@@ -42,3 +34,23 @@
       }
     }
   }
+  .cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px; /* Adjust the width as needed */
+  }
+  
+  .cardTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  

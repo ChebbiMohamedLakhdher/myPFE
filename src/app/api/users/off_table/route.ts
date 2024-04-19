@@ -1,16 +1,19 @@
 import { connect } from "@/dbConfig/dbConfig";
-import User from "@/models/offerModel";
+import Offer from "@/models/offerModel";
 import { NextRequest, NextResponse } from "next/server";
+import { NextApiRequest, NextApiResponse } from 'next';
+
 
 // Connect to the database
 connect();
 
+// Function to handle fetching all offers
 export async function POST(request: NextRequest) {
     try {
-        // Find all users in the database
-        const offers = await User.find();
+        // Find all offers in the database
+        const offers = await Offer.find();
 
-        // Return all users
+        // Return all offers
         return NextResponse.json(offers); // Use NextResponse to properly format the JSON response
 
     } catch (error: any) {
@@ -18,3 +21,5 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: error.message }, { status: 500 }); // Use NextResponse to properly format the JSON response
     }
 }
+
+

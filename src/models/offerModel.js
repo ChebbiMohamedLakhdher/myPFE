@@ -22,7 +22,7 @@ const offerSchema = new mongoose.Schema({
     },
     posts_number: {
         type: Number,
-        required: [true, "Please provide number of posts"]
+        required: [true, "Please provid e number of posts"]
     },
     description: {
         type: String,
@@ -49,6 +49,3 @@ const offerSchema = new mongoose.Schema({
 const Offer = mongoose.models.Offer || mongoose.model("Offer", offerSchema);
 
 export default Offer;
-
-
-
