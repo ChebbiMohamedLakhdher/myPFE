@@ -1,273 +1,213 @@
-"use client"
+import React, { useState } from "react";
+import axios from "axios";
 import "./Documents.scss";
-import { React, useState } from "react";
 
 function Documents() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [contact, setContact] = useState("");
-    const [gender, setGender] = useState("male");
-    const [subjects, setSubjects] = useState({
-        english: true,
-        maths: false,
-        physics: false,
-    });
     const [resume, setResume] = useState("");
-    const [url, setUrl] = useState();
-    const [selectedOption, setSelectedOption] =
-        useState("");
-    const [about, setAbout] = useState("");
+    const [selectedOption, setSelectedOption] = useState("");
+    const [deps, setDeps] = useState([]);
+    const [type, setType] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
+    const [title, setTitle] = useState("");
+    const [name_loc, setNameLocation] = useState("");
+    const [location, setLocation] = useState("");
+    const [formateur, setFormateur] = useState("");
+    const [error, setError] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
+
+    const handleDepChange = (e) => {
+        const { value, checked } = e.target;
+        if (value === "all") {
+            // If "All" is clicked, update all department checkboxes accordingly
+            const updatedDeps = checked ? ["1", "2", "3", "4", "5", "6", "7"] : [];
+            setDeps(updatedDeps);
+        } else {
+            // If a specific department is clicked, update the state accordingly
+            let updatedDeps;
+            if (checked) {
+                updatedDeps = [...deps, value];
+            } else {
+                updatedDeps = deps.filter((dep) => dep !== value);
+            }
+            setDeps(updatedDeps);
+        }
+    };
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(
-            firstName,
+            title,
             lastName,
             email,
             contact,
-            gender,
             selectedOption,
-            subjects,
             resume,
-            url,
-            about
+            date,
+            time,
+            type,
+            deps,
+            name_loc,
+            location,
+            formateur
         );
         // Add your form submission logic here
     };
 
-    const handleSubjectChange = (sub) => {
-        setSubjects((prev) => ({
-            ...prev,
-            [sub]: !prev[sub],
-        }));
-    };
     const handleReset = () => {
         // Reset all state variables here
-        setFirstName("");
+        setTitle("");
         setLastName("");
         setEmail("");
         setContact("");
-        setGender("male");
-        setSubjects({
-            english: true,
-            maths: false,
-            physics: false,
-        });
+        setTime("");
+        setDate("");
         setResume("");
-        setUrl("");
         setSelectedOption("");
-        setAbout("");
+        setDeps([]);
+        setType("");
+        setFormateur("");
+        setNameLocation("");
+        setLocation("");
     };
 
     return (
         <div className="Documents">
-            <h1>FormD</h1>
-            <fieldset>
-                <form action="#" method="get">
-                    <label for="firstname">
-                        First Name*
-                    </label>
-                    <input
-                        type="text"
-                        name="firstname"
-                        id="firstname"
-                        value={firstName}
-                        onChange={(e) =>
-                            setFirstName(e.target.value)
-                        }
-                        placeholder="Enter First Name"
-                        required
-                    />
-                    <label for="lastname">Last Name*</label>
-                    <input
-                        type="text"
-                        name="lastname"
-                        id="lastname"
-                        value={lastName}
-                        onChange={(e) =>
-                            setLastName(e.target.value)
-                        }
-                        placeholder="Enter Last Name"
-                        required
-                    />
-                    <label for="email">Enter Email* </label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) =>
-                            setEmail(e.target.value)
-                        }
-                        placeholder="Enter email"
-                        required
-                    />
-                    <label for="tel">Contact*</label>
-                    <input
-                        type="tel"
-                        name="contact"
-                        id="contact"
-                        value={contact}
-                        onChange={(e) =>
-                            setContact(e.target.value)
-                        }
-                        placeholder="Enter Mobile number"
-                        required
-                    />
-                    <label for="gender">Gender*</label>
-                    <input
-                        type="radio"
-                        name="gender"
-                        value="male"
-                        id="male"
-                        checked={gender === "male"}
-                        onChange={(e) =>
-                            setGender(e.target.value)
-                        }
-                    />
-                    Male
-                    <input
-                        type="radio"
-                        name="gender"
-                        value="female"
-                        id="female"
-                        checked={gender === "female"}
-                        onChange={(e) =>
-                            setGender(e.target.value)
-                        }
-                    />
-                    Female
-                    <input
-                        type="radio"
-                        name="gender"
-                        value="other"
-                        id="other"
-                        checked={gender === "other"}
-                        onChange={(e) =>
-                            setGender(e.target.value)
-                        }
-                    />
-                    Other
-                    <label for="lang">
-                        Your best Subject
-                    </label>
-                    <input
-                        type="checkbox"
-                        name="lang"
-                        id="english"
-                        checked={subjects.english === true}
-                        onChange={(e) =>
-                            handleSubjectChange("english")
-                        }
-                    />
-                    English
-                    <input
-                        type="checkbox"
-                        name="lang"
-                        id="maths"
-                        checked={subjects.maths === true}
-                        onChange={(e) =>
-                            handleSubjectChange("maths")
-                        }
-                    />
-                    Maths
-                    <input
-                        type="checkbox"
-                        name="lang"
-                        id="physics"
-                        checked={subjects.physics === true}
-                        onChange={(e) =>
-                            handleSubjectChange("physics")
-                        }
-                    />
-                    Physics
-                    <label for="file">Upload Resume*</label>
-                    <input
-                        type="file"
-                        name="file"
-                        id="file"
-                        onChange={(e) =>
-                            setResume(e.target.files[0])
-                        }
-                        placeholder="Enter Upload File"
-                        required
-                    />
-                    <label for="url">Enter URL*</label>
-                    <input
-                        type="url"
-                        name="url"
-                        id="url"
-                        onChange={(e) =>
-                            setUrl(e.target.value)
-                        }
-                        placeholder="Enter url"
-                        required
-                    />
-                    <label>Select your choice</label>
-                    <select
-                        name="select"
-                        id="select"
-                        value={selectedOption}
-                        onChange={(e) =>
-                            setSelectedOption(
-                                e.target.value
-                            )
-                        }
-                    >
-                        <option
-                            value=""
-                            disabled
-                            selected={selectedOption === ""}
-                        >
-                            Select your Ans
-                        </option>
-                        <optgroup label="Beginers">
-                            <option value="1">HTML</option>
-                            <option value="2">CSS</option>
-                            <option value="3">
-                                JavaScript
-                            </option>
-                        </optgroup>
-                        <optgroup label="Advance">
-                            <option value="4">React</option>
-                            <option value="5">Node</option>
-                            <option value="6">
-                                Express
-                            </option>
-                            <option value="t">
-                                MongoDB
-                            </option>
-                        </optgroup>
-                    </select>
-                    <label for="about">About</label>
-                    <textarea
-                        name="about"
-                        id="about"
-                        cols="30"
-                        rows="10"
-                        onChange={(e) =>
-                            setAbout(e.target.value)
-                        }
-                        placeholder="About your self"
-                        required
-                    ></textarea>
-                    <button
-                        type="reset"
-                        value="reset"
-                        onClick={() => handleReset()}
-                    >
-                        Reset
+            <h1>Form Documents</h1>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="title">Title*</label>
+                <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Enter Title"
+                    required
+                />
+                <label htmlFor="dep">Targeted Departments*</label>
+                <div className="department-selection">
+                    <button className="department-toggle" onClick={toggleModal}>
+                        Select Departments
                     </button>
-                    <button
-                        type="submit"
-                        value="Submit"
-                        onClick={(e) => handleSubmit(e)}
-                    >
-                        Submit
-                    </button>
-                </form>
-            </fieldset>
+                    {showModal && (
+                        <div className="modal-overlay" onClick={toggleModal}>
+                            <div className="modal" onClick={(e) => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Select Departments</h2>
+                                    <span className="close" onClick={toggleModal}>&times;</span>
+                                </div>
+                                <div className="modal-content">
+                                    <ul>
+                                    <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="all"
+                                                    checked={deps.length === 7}
+                                                    onChange={handleDepChange}
+                                                />
+                                               All
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="1"
+                                                    checked={deps.includes("1")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Development
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="2"
+                                                    checked={deps.includes("2")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Design
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="3"
+                                                    checked={deps.includes("3")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Project management
+                                            </label>
+                                        </li>  <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="4"
+                                                    checked={deps.includes("4")}
+                                                    onChange={handleDepChange}
+                                                />
+                                               Content
+                                            </label>
+                                        </li>  <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="5"
+                                                    checked={deps.includes("5")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Sales & Marketing
+                                            </label>
+                                        </li>  <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="6"
+                                                    checked={deps.includes("6")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Customer Support
+                                            </label>
+                                        </li>
+                                            
+                                       
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+                <label htmlFor="file">Upload Document*</label>
+                <input
+                    type="file"
+                    name="file"
+                    id="file"
+                    onChange={(e) => setResume(e.target.files[0])}
+                    placeholder="Enter Upload File"
+                    required
+                />
+                <button type="reset" id="butt2" value="reset" onClick={handleReset}>Reset</button>
+                <button type="submit" id="bu" value="Submit">Submit</button>
+            </form>
         </div>
     );
 }

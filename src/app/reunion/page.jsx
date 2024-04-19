@@ -125,21 +125,22 @@ function Reunion() {
                         required
                     />
 
-                    <label htmlFor="file">Upload Document*</label>
+                    <label htmlFor="file">Upload Document</label>
                     <input
                         type="file"
                         name="file"
                         id="file"
                         onChange={(e) => setResume(e.target.files[0])}
                         placeholder="Enter Upload File"
-                        required
+                        
                     />
-                    <label htmlFor="select">Place</label>
+                    <label htmlFor="select">Place*</label>
                     <select
                         name="select"
                         id="select"
                         value={selectedOption}
                         onChange={(e) => setSelectedOption(e.target.value)}
+                        required
                     >
                         <option value="" disabled>Select your place</option>
 
