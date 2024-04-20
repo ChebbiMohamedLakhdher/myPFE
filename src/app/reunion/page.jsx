@@ -1,76 +1,23 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./reunion.scss"
+import "./reunion.scss";
 
 function Reunion() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [contact, setContact] = useState("");
-    const [gender, setGender] = useState("male");
     const [users, setUsers] = useState([]);
-    const [resume, setResume] = useState("");
-    const [url, setUrl] = useState();
-    const [selectedOption, setSelectedOption] = useState("");
-    const [about, setAbout] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectedEmployees, setSelectedEmployees] = useState([]);
-    const employees = ["Chebbi Mohamed Lakhdher", "Employee 2", "Employee 3"]; // Replace with your actual employee data
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
+    const [FormR, setFormR] = useState({
+        title: "",
+        persons: [], // Initialize as an empty array
+        date: "",
+        time: "",
+        uploadDocument: null,
+        place: "",
+        orderdujour: ""
+    });
     const [error, setError] = useState(null);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(
-            firstName,
-            lastName,
-            email,
-            contact,
-            gender,
-            selectedOption,
-            subjects,
-            resume,
-            url,
-            about,
-            date,
-            time,
-        );
-        // Add your form submission logic here
-    };
 
-    const toggleModal = () => {
-        setShowModal(!showModal);
-    };
-
-    const handleEmployeeSelection = (employee) => {
-        if (selectedEmployees.includes(employee)) {
-            setSelectedEmployees(selectedEmployees.filter((emp) => emp !== employee));
-        } else {
-            setSelectedEmployees([...selectedEmployees, employee]);
-        }
-    };
-
-    const handleSubjectChange = (sub) => {
-        setSubjects((prev) => ({
-            ...prev,
-            [sub]: !prev[sub],
-        }));
-    };
-
-    const handleReset = () => {
-        // Reset all state variables here
-        setFirstName("");
-        setLastName("");
-        setEmail("");
-        setContact("");
-        setTime("");
-        setDate("");
-        setResume("");
-        setUrl("");
-        setSelectedOption("");
-        setAbout("");
-    };
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -87,79 +34,122 @@ function Reunion() {
         fetchUsers();
     }, []);
 
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
+
+    const handleEmployeeSelection = (employeeId) => {
+        if (selectedEmployees.includes(employeeId)) {
+            setSelectedEmployees(selectedEmployees.filter((empId) => empId !== employeeId));
+        } else {
+            setSelectedEmployees([...selectedEmployees, employeeId]);
+        }
+    };
+
+    const handleForm = async (e) => {
+        e.preventDefault();
+        // Set the selected employees' IDs to the FormR state
+        setFormR({ ...FormR, persons: selectedEmployees });
+        // Handle form submission here (e.g., send data to server)
+        console.log(FormR);
+        try {
+            const response = await axios.post("/api/users/forms", FormR);
+            console.log("Formulaire success", response.data);
+        } catch (error) {
+            console.log("Formulaire failed", error.message);
+            setError(true);
+        }
+    };
+
+    const handleReset = () => {
+        // Reset all state variables here
+        setFormR({
+            title: "",
+            persons: [], // Reset persons to an empty array
+            date: "",
+            time: "",
+            uploadDocument: null,
+            place: "",
+            orderdujour: ""
+        });
+        setSelectedEmployees([]);
+    };
+
     return (
         <div className="reunion">
             <h1>Form Reunion</h1>
             <fieldset>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="firstname">Title*</label>
+                <form onSubmit={handleForm}>
+                    <label htmlFor="title">Title*</label>
                     <input
                         type="text"
-                        name="firstname"
-                        id="firstname"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        name="title"
+                        id="title"
+                        value={FormR.title}
+                        onChange={(e) => setFormR({ ...FormR, title: e.target.value })}
                         placeholder="Enter Title"
                         required
                     />
                     <label htmlFor="lastname">Persons*</label>
-
-                    <button type="button" id="butt1" onClick={toggleModal}>Select Employees</button>
+                    <button type="button" id="butt1" onClick={toggleModal}>
+                        Select Employees
+                    </button>
                     <label htmlFor="date">Date*</label>
                     <input
                         type="date"
                         name="date"
                         id="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
+                        value={FormR.date}
+                        onChange={(e) => setFormR({ ...FormR, date: e.target.value })}
                         required
                     />
-
                     <label htmlFor="time">Time*</label>
                     <input
                         type="time"
                         name="time"
                         id="time"
-                        value={time}
-                        onChange={(e) => setTime(e.target.value)}
+                        value={FormR.time}
+                        onChange={(e) => setFormR({ ...FormR, time: e.target.value })}
                         required
                     />
-
                     <label htmlFor="file">Upload Document</label>
                     <input
                         type="file"
-                        name="file"
-                        id="file"
-                        onChange={(e) => setResume(e.target.files[0])}
+                        name="uploadDocument"
+                        id="uploadDocument"
+                        onChange={(e) => setFormR({ ...FormR, uploadDocument: e.target.files[0] })}
                         placeholder="Enter Upload File"
-                        
                     />
                     <label htmlFor="select">Place*</label>
                     <select
                         name="select"
                         id="select"
-                        value={selectedOption}
-                        onChange={(e) => setSelectedOption(e.target.value)}
+                        value={FormR.place}
+                        onChange={(e) => setFormR({ ...FormR, place: e.target.value })}
                         required
                     >
-                        <option value="" disabled>Select your place</option>
-
-                        <option value="1">Office</option>
-                        <option value="2">Online</option>
-
+                        <option value="" disabled>
+                            Select your place
+                        </option>
+                        <option value="Office">Office</option>
+                        <option value="Online">Online</option>
                     </select>
                     <label htmlFor="about">Ordre du jour</label>
                     <textarea
-                        name="about"
-                        id="about"
+                        name="ordedujour"
+                        id="ordedujour"
                         cols="30"
                         rows="10"
-                        onChange={(e) => setAbout(e.target.value)}
+                        onChange={(e) => setFormR({ ...FormR, orderdujour: e.target.value })}
                         placeholder="Description"
                         required
                     ></textarea>
-                    <button type="reset" id="butt2" value="reset" onClick={handleReset}>Reset</button>
-                    <button type="submit" id="bu" value="Submit">Submit</button>
+                    <button type="reset" id="butt2" onClick={handleReset}>
+                        Reset
+                    </button>
+                    <button type="submit" id="bu" value="Submit">
+                        Submit
+                    </button>
                 </form>
             </fieldset>
 
@@ -168,7 +158,10 @@ function Reunion() {
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h2>Select Employees</h2>
-                            <span className="close" onClick={toggleModal}>&times;</span> {/* X button to close modal */}
+                            <span className="close" onClick={toggleModal}>
+                                &times;
+                            </span>{" "}
+                            {/* X button to close modal */}
                         </div>
                         <div className="modal-content">
                             <ul>
@@ -177,8 +170,8 @@ function Reunion() {
                                         <label>
                                             <input
                                                 type="checkbox"
-                                                checked={selectedEmployees.includes(user)}
-                                                onChange={() => handleEmployeeSelection(user)}
+                                                checked={selectedEmployees.includes(user.id)}
+                                                onChange={() => handleEmployeeSelection(user.id)}
                                             />
                                             {user.name}
                                         </label>
@@ -189,10 +182,6 @@ function Reunion() {
                     </div>
                 </div>
             )}
-
-
-
-
         </div>
     );
 }
