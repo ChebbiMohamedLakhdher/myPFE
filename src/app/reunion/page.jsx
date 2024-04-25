@@ -32,31 +32,35 @@ function Reunion() {
         };
 
         fetchUsers();
-    }, []);
+    }, []);""
 
     const toggleModal = () => {
         setShowModal(!showModal);
     };
 
-    const handleEmployeeSelection = (employeeId) => {
-        if (selectedEmployees.includes(employeeId)) {
-            setSelectedEmployees(selectedEmployees.filter((empId) => empId !== employeeId));
+    const handleEmployeeSelection = (employeeName) => {
+        if (selectedEmployees.includes(employeeName)) {
+            setSelectedEmployees(selectedEmployees.filter((name) => name !== employeeName));
         } else {
-            setSelectedEmployees([...selectedEmployees, employeeId]);
+            setSelectedEmployees([...selectedEmployees, employeeName]);
         }
     };
 
+
     const handleForm = async (e) => {
         e.preventDefault();
-        // Set the selected employees' IDs to the FormR state
-        setFormR({ ...FormR, persons: selectedEmployees });
+        const formData = {
+            ...FormR,
+            persons: selectedEmployees
+        };
         // Handle form submission here (e.g., send data to server)
-        console.log(FormR);
+        console.log(formData);
         try {
-            const response = await axios.post("/api/users/forms", FormR);
-            console.log("Formulaire success", response.data);
+            const response = await axios.post("/api/users/forms", formData);
+            console.log("Form submission successful", response.data);
+            console.log(formData);
         } catch (error) {
-            console.log("Formulaire failed", error.message);
+            console.error("Form submission failed", error.message);
             setError(true);
         }
     };
@@ -170,8 +174,8 @@ function Reunion() {
                                         <label>
                                             <input
                                                 type="checkbox"
-                                                checked={selectedEmployees.includes(user.id)}
-                                                onChange={() => handleEmployeeSelection(user.id)}
+                                                checked={selectedEmployees.includes(user.name)} // Use _id field
+                                                onChange={() => handleEmployeeSelection(user.name)} // Pass _id
                                             />
                                             {user.name}
                                         </label>

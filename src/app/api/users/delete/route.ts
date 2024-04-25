@@ -10,15 +10,15 @@ connect();
 
 
 // Function to handle deleting an offer
-export async function DELETE    (request: NextApiRequest) {
+export async function DELETE  (request: NextApiRequest) {
     try {
         console.log(request)
         // Extract offerId from request parameters
         const { offerId } = request.query;
 
         // Delete the offer from the database
-        const deletedOffer = await Offer.findByIdAndDelete(offerId);
-        console.log("offerId")
+        const deletedOffer = await Offer.findByIdAndDelete(offerId as string);
+        console.log("offerId dqqsdqs")
 
         if (!deletedOffer) {
             // Offer not found

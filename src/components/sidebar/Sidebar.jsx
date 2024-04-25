@@ -9,13 +9,12 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import EqualizerIcon from "@mui/icons-material/Equalizer";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-
+import ChatIcon from '@mui/icons-material/Chat';
 const Sidebar = () => {
   const router = useRouter();
   const [data, setData] = useState("nothing");
@@ -78,10 +77,15 @@ const Sidebar = () => {
           </li>
          
           <p className="title">Useful</p>
-          <li>
-            <EqualizerIcon className="icon" />
-            <span> Stats </span>
+          <li>  
+          <button>
+            <Link href="/chatroom">
+            <ChatIcon className="icon" />
+              <span> ChatRoom</span>
+            </Link>
+            </button>
           </li>
+          
           <li>
             <NotificationsNoneIcon className="icon" />
             <span> Notifications </span>

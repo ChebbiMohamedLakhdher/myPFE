@@ -31,9 +31,10 @@ const Off_table = () => {
   const handleDeleteOffer = async (offer) => {
     try {
         const id = offer._id;
-        console.log("Offer ID:", id); 
+        console.log("Offer ID:", offer._id); 
         const response = await axios.delete(`/api/users/delete/${id}`);
-        if (response.status === 200) {
+        console.log(`response= ${response}`);
+        if (response.status == 200) {
             toast.success("Offer deleted successfully");
         } else {
             toast.error("Failed to delete offer");

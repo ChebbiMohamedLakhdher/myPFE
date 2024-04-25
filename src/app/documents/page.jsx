@@ -4,22 +4,15 @@ import axios from "axios";
 import "./Documents.scss";
 
 function Documents() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [contact, setContact] = useState("");
-    const [resume, setResume] = useState("");
-    const [selectedOption, setSelectedOption] = useState("");
+
     const [deps, setDeps] = useState([]);
-    const [type, setType] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
-    const [title, setTitle] = useState("");
-    const [name_loc, setNameLocation] = useState("");
-    const [location, setLocation] = useState("");
-    const [formateur, setFormateur] = useState("");
     const [error, setError] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [FormD, setFormD] = useState({
+        title: "",
+        targeteddepartments: "",
+        uploadDocument: "",
+    });
 
     const toggleModal = () => {
         setShowModal(!showModal);
@@ -28,11 +21,9 @@ function Documents() {
     const handleDepChange = (e) => {
         const { value, checked } = e.target;
         if (value === "all") {
-            // If "All" is clicked, update all department checkboxes accordingly
-            const updatedDeps = checked ? ["1", "2", "3", "4", "5", "6", "7"] : [];
+            const updatedDeps = checked ? ["Development", "Design", "Project management", "Content", "Sales & Marketing", "Customer Support"] : [];
             setDeps(updatedDeps);
         } else {
-            // If a specific department is clicked, update the state accordingly
             let updatedDeps;
             if (checked) {
                 updatedDeps = [...deps, value];
@@ -42,55 +33,43 @@ function Documents() {
             setDeps(updatedDeps);
         }
     };
-    
-    const handleSubmit = (e) => {
+
+    const handleForm = async (e) => {
         e.preventDefault();
-        console.log(
-            title,
-            lastName,
-            email,
-            contact,
-            selectedOption,
-            resume,
-            date,
-            time,
-            type,
-            deps,
-            name_loc,
-            location,
-            formateur
-        );
-        // Add your form submission logic here
+        const formData = {
+            ...FormD,
+            targeteddepartments: deps.join(","),
+        };
+        console.log(formData);
+        try {
+            const response = await axios.post("/api/users/document", formData);
+            console.log("Form submission successful", response.data);
+            console.log(formData);
+        } catch (error) {
+            console.error("Form submission failed", error.message);
+            setError(true);
+        }
     };
 
     const handleReset = () => {
-        // Reset all state variables here
-        setTitle("");
-        setLastName("");
-        setEmail("");
-        setContact("");
-        setTime("");
-        setDate("");
-        setResume("");
-        setSelectedOption("");
-        setDeps([]);
-        setType("");
-        setFormateur("");
-        setNameLocation("");
-        setLocation("");
+        setFormD({
+            title: "",
+            targeteddepartments: "",
+            uploadDocument: "",
+        });
     };
 
     return (
         <div className="Documents">
             <h1>Form Documents</h1>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleForm}>
                 <label htmlFor="title">Title*</label>
                 <input
                     type="text"
                     name="title"
                     id="title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={FormD.title}
+                    onChange={(e) => setFormD({ ...FormD, title: e.target.value })}
                     placeholder="Enter Title"
                     required
                 />
@@ -108,16 +87,16 @@ function Documents() {
                                 </div>
                                 <div className="modal-content">
                                     <ul>
-                                    <li>
+                                        <li>
                                             <label>
                                                 <input
                                                     type="checkbox"
                                                     name="dep"
                                                     value="all"
-                                                    checked={deps.length === 7}
+                                                    checked={deps.length === 6}
                                                     onChange={handleDepChange}
                                                 />
-                                               All
+                                                All
                                             </label>
                                         </li>
                                         <li>
@@ -125,8 +104,8 @@ function Documents() {
                                                 <input
                                                     type="checkbox"
                                                     name="dep"
-                                                    value="1"
-                                                    checked={deps.includes("1")}
+                                                    value="Development"
+                                                    checked={deps.includes("Development")}
                                                     onChange={handleDepChange}
                                                 />
                                                 Development
@@ -137,8 +116,8 @@ function Documents() {
                                                 <input
                                                     type="checkbox"
                                                     name="dep"
-                                                    value="2"
-                                                    checked={deps.includes("2")}
+                                                    value="Design"
+                                                    checked={deps.includes("Design")}
                                                     onChange={handleDepChange}
                                                 />
                                                 Design
@@ -149,62 +128,62 @@ function Documents() {
                                                 <input
                                                     type="checkbox"
                                                     name="dep"
-                                                    value="3"
-                                                    checked={deps.includes("3")}
+                                                    value="Project management"
+                                                    checked={deps.includes("Project management")}
                                                     onChange={handleDepChange}
                                                 />
                                                 Project management
                                             </label>
-                                        </li>  <li>
+                                        </li>
+                                        <li>
                                             <label>
                                                 <input
                                                     type="checkbox"
                                                     name="dep"
-                                                    value="4"
-                                                    checked={deps.includes("4")}
+                                                    value="Content"
+                                                    checked={deps.includes("Content")}
                                                     onChange={handleDepChange}
                                                 />
-                                               Content
+                                                Content
                                             </label>
-                                        </li>  <li>
+                                        </li>
+                                        <li>
                                             <label>
                                                 <input
                                                     type="checkbox"
                                                     name="dep"
-                                                    value="5"
-                                                    checked={deps.includes("5")}
+                                                    value="Sales & Marketing"
+                                                    checked={deps.includes("Sales & Marketing")}
                                                     onChange={handleDepChange}
                                                 />
                                                 Sales & Marketing
                                             </label>
-                                        </li>  <li>
+                                        </li>
+                                        <li>
                                             <label>
                                                 <input
                                                     type="checkbox"
                                                     name="dep"
-                                                    value="6"
-                                                    checked={deps.includes("6")}
+                                                    value="Customer Support"
+                                                    checked={deps.includes("Customer Support")}
                                                     onChange={handleDepChange}
                                                 />
                                                 Customer Support
                                             </label>
                                         </li>
-                                            
-                                       
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     )}
                 </div>
-                <label htmlFor="file">Upload Document*</label>
+                <label htmlFor="uploadDocument">Upload Document*</label>
                 <input
                     type="file"
-                    name="file"
-                    id="file"
-                    onChange={(e) => setResume(e.target.files[0])}
-                    placeholder="Enter Upload File"
-                    required
+                    name="uploadDocument"
+                    id="uploadDocument"
+                    onChange={(e) => setFormD({ ...FormD, uploadDocument: e.target.files[0] })}
+                    
                 />
                 <button type="reset" id="butt2" value="reset" onClick={handleReset}>Reset</button>
                 <button type="submit" id="bu" value="Submit">Submit</button>

@@ -7,8 +7,7 @@ const reunionSchema = new mongoose.Schema({
         required: true
     },
     persons:{
-        type: String,
-        required: true
+        type: [String],
     },
     date: {
         type: Date,
@@ -19,8 +18,9 @@ const reunionSchema = new mongoose.Schema({
         required: true
     },
     uploadDocument: {
+        data: Buffer, // Or Schema.Types.Mixed
+        contentType: String, // To store MIME type
         fileName: String,
-        data: Buffer
     },
     place: {
         type: String,
@@ -74,9 +74,13 @@ const formationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    namelocation: {
+        type: String,
+        
+    },
     location: {
         type: String,
-        required: true
+        
     },
     formateur: {
         type: String,
