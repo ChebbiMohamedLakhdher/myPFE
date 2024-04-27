@@ -1,190 +1,104 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { toast } from 'react-hot-toast';
 import "./Formation.scss";
+import Button from "@mui/material/Button"; 
+import FormFormation from "../formformation/Formformation"
 
-function Formation() {
-    const [error, setError] = useState(null);
-    const [FormF, setFormF] = useState({
-        title: "",
-        targeteddepartments: "",
-        startdate: "",
-        time: "",
-        enddate: "",
-        type: "",
-        namelocation: "",
-        location: "",
-        formateur: "",
-        uploadDocument: "",
-        description: "",
-    });
+const Formation = () => {
+  const [Formations, setFormations] = useState([]);
+  const [error, setError] = useState(null);
+  const [buttonPressed, setButtonPressed] = useState(false);
 
-    const handleReset = () => {
-        // Reset all state variables here
-        setFormF({
-            title: "",
-            targeteddepartments: "",
-            startdate: "",
-            time: "",
-            enddate: "",
-            type: "",
-            namelocation: "",
-            location: "",
-            formateur: "",
-            uploadDocument: "",
-            description: "",
-        });
+  const handleButtonClick = () => {
+    setButtonPressed(true);
+  };
+
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const response = await axios.post("/api/users/rtformation");
+        console.log("Success", response.data);
+        setFormations(response.data); // Set offers data in state
+        toast.success("Formation imported successfully");
+      } catch (error) {
+        console.log("Failed", error.response?.data?.error || "Unknown error");
+        setError(error.response?.data?.error || "Unknown error");
+      }
     };
+    
+    fetchOffers();
+  }, []);
 
-    const handleForm = async (e) => {
-        e.preventDefault();
-        const formData = {
-            ...FormF,
-        };
-        // Handle form submission here (e.g., send data to server)
-        console.log(formData);
-        try {
-            const response = await axios.post("/api/users/formation", formData);
-            console.log("Form submission successful", response.data);
-            console.log(formData);
-        } catch (error) {
-            console.error("Form submission failed", error.message);
-            setError(true);
-        }
-    };
-
-    return (
-        <div className="formation">
-            <h1>Form Formation</h1>
-            <form onSubmit={handleForm}>
-                <label htmlFor="title">Title*</label>
-                <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    value={FormF.title}
-                    onChange={(e) => setFormF({ ...FormF, title: e.target.value })}
-                    placeholder="Enter Title"
-                    required
-                />
-                <label htmlFor="dep">Targeted Department*</label>
-                <select
-                    name="targeteddepartments"
-                    id="dep"
-                    value={FormF.targeteddepartments}
-                    onChange={(e) => setFormF({ ...FormF, targeteddepartments: e.target.value })}
-                    required
-                >
-                    <option value="" disabled>Select Department</option>
-                    <option value="Development">Development</option>
-                    <option value="Design">Design </option>
-                    <option value="Project management">Project management</option>
-                    <option value="Content">Content</option>
-                    <option value="Sales & Marketing">Sales & Marketing</option>
-                    <option value="Customer Support">Customer Support</option>
-                </select>
-
-                <label htmlFor="startdate">Start Date*</label>
-                <input
-                    type="date"
-                    name="startdate"
-                    id="startdate"
-                    value={FormF.startdate}
-                    onChange={(e) => setFormF({ ...FormF, startdate: e.target.value })}
-                    required
-                />
-
-                <label htmlFor="time">Time*</label>
-                <input
-                    type="time"
-                    name="time"
-                    id="time"
-                    value={FormF.time}
-                    onChange={(e) => setFormF({ ...FormF, time: e.target.value })}
-                    required
-                />
-                <label htmlFor="enddate">End Date</label>
-                <input
-                    type="date"
-                    name="enddate"
-                    id="enddate"
-                    value={FormF.enddate}
-                    onChange={(e) => setFormF({ ...FormF, enddate: e.target.value })}
-                />
-
-                <label htmlFor="type">Type*</label>
-                <select
-                    name="type"
-                    id="type"
-                    value={FormF.type}
-                    onChange={(e) => setFormF({ ...FormF, type: e.target.value })}
-                    required
-                >
-                    <option value="" disabled>Select your type</option>
-                    <option value="Onsite">Onsite</option>
-                    <option value="Online">Online</option>
-                </select>
-
-                {FormF.type === "Onsite" && (
-                    <>
-                        <label htmlFor="namelocation">Location*</label>
-                        <input
-                            type="text"
-                            name="namelocation"
-                            id="namelocation"
-                            value={FormF.namelocation}
-                            onChange={(e) => setFormF({ ...FormF, namelocation: e.target.value })}
-                            placeholder="Enter Name Of The Location"
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="location"
-                            id="location"
-                            value={FormF.location}
-                            onChange={(e) => setFormF({ ...FormF, location: e.target.value })}
-                            placeholder="Enter Location Link "
-                            required
-                        />
-                    </>
-                )}
-
-                <label htmlFor="formateur">Formateur*</label>
-                <input
-                    type="text"
-                    name="formateur"
-                    id="formateur"
-                    value={FormF.formateur}
-                    onChange={(e) => setFormF({ ...FormF, formateur: e.target.value })}
-                    placeholder="Enter Formateur"
-                    required
-                />
-
-                <label htmlFor="file">Upload Document</label>
-                <input
-                    type="file"
-                    name="uploadDocument"
-                    id="file"
-                    onChange={(e) => setFormF({ ...FormF, uploadDocument: e.target.files[0] })}
-                    placeholder="Enter Upload File"
-                />
-                <label htmlFor="description">Description*</label>
-                <textarea
-                    name="description"
-                    id="description"
-                    cols="30"
-                    rows="10"
-                    value={FormF.description}
-                    onChange={(e) => setFormF({ ...FormF, description: e.target.value })}
-                    placeholder="Provide more details"
-                    required
-                ></textarea>
-
-                <button type="reset" id="butt2" value="reset" onClick={handleReset}>Reset</button>
-                <button type="submit" id="bu" value="Submit">Submit</button>
-            </form>
-        </div>
-    );
+  return (
+    <div className="offers-container">
+      {!buttonPressed ? (
+        // If button is not pressed, display the content of Reunion
+        Formations.map((Formation, index) => (
+          <div className="reunion-card" key={index}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" component="h2">
+                  Title: {Formation.title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  StartDate: {Formation.date }
+                </Typography>
+                <Typography variant="body1">
+                  Time: {Formation.time}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  EndDate: {Formation.date }
+                </Typography>
+                <Grid container justifyContent="center"> {/* Center align content */}
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
+                    
+                    <Typography variant="body1">
+                      Targeted department: {Formation.targeteddepartments}
+                    </Typography>
+                    <Typography variant="body1">
+                      type: {Formation.type}
+                    </Typography>
+                    <Typography variant="body1">
+                      Name Location: {Formation.namelocation}
+                    </Typography>
+                    <Typography variant="body1">
+                      Location: {Formation.location}
+                    </Typography>
+                    <Typography variant="body1">
+                      formateur: {Formation.formateur}
+                    </Typography>  
+                    <Typography variant="body1">
+                      description: {Formation.description}
+                    </Typography>
+                    {/* You can add more details here */}
+                  </Grid>
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
+                  </Grid>
+                  <Grid container justifyContent="flex-end"> {/* Align buttons to the right */}
+                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDeleteOffer(Formation)}>Delete</Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </div>
+        ))
+      ) : (
+        // If button is pressed, display FormReunion
+        <FormFormation />
+      )}
+      {!buttonPressed && (
+        <button className="acc" onClick={handleButtonClick} variant="contained" color="primary">
+          Add Offers
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default Formation;

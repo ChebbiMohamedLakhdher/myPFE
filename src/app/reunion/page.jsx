@@ -1,193 +1,91 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { toast } from 'react-hot-toast';
 import "./reunion.scss";
+import Button from "@mui/material/Button"; 
+import FormReunion from "../formreunion/Formreunion"
 
-function Reunion() {
-    const [users, setUsers] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [selectedEmployees, setSelectedEmployees] = useState([]);
-    const [FormR, setFormR] = useState({
-        title: "",
-        persons: [], // Initialize as an empty array
-        date: "",
-        time: "",
-        uploadDocument: null,
-        place: "",
-        orderdujour: ""
-    });
-    const [error, setError] = useState(null);
+const Reunion = () => {
+  const [Reunions, setReunions] = useState([]);
+  const [error, setError] = useState(null);
+  const [buttonPressed, setButtonPressed] = useState(false);
 
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await axios.post("/api/users/employees");
-                console.log("Success", response.data);
-                setUsers(response.data); // Set users data in state
-                toast.success("Users imported successfully");
-            } catch (error) {
-                console.log("Failed", error.response?.data?.error || "Unknown error");
-                setError(error.response?.data?.error || "Unknown error");
-            }
-        };
+  const handleButtonClick = () => {
+    setButtonPressed(true);
+  };
 
-        fetchUsers();
-    }, []);""
-
-    const toggleModal = () => {
-        setShowModal(!showModal);
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const response = await axios.post("/api/users/rtreunion");
+        console.log("Success", response.data);
+        setReunions(response.data); // Set offers data in state
+        toast.success("Reunion imported successfully");
+      } catch (error) {
+        console.log("Failed", error.response?.data?.error || "Unknown error");
+        setError(error.response?.data?.error || "Unknown error");
+      }
     };
+    
+    fetchOffers();
+  }, []);
 
-    const handleEmployeeSelection = (employeeName) => {
-        if (selectedEmployees.includes(employeeName)) {
-            setSelectedEmployees(selectedEmployees.filter((name) => name !== employeeName));
-        } else {
-            setSelectedEmployees([...selectedEmployees, employeeName]);
-        }
-    };
-
-
-    const handleForm = async (e) => {
-        e.preventDefault();
-        const formData = {
-            ...FormR,
-            persons: selectedEmployees
-        };
-        // Handle form submission here (e.g., send data to server)
-        console.log(formData);
-        try {
-            const response = await axios.post("/api/users/forms", formData);
-            console.log("Form submission successful", response.data);
-            console.log(formData);
-        } catch (error) {
-            console.error("Form submission failed", error.message);
-            setError(true);
-        }
-    };
-
-    const handleReset = () => {
-        // Reset all state variables here
-        setFormR({
-            title: "",
-            persons: [], // Reset persons to an empty array
-            date: "",
-            time: "",
-            uploadDocument: null,
-            place: "",
-            orderdujour: ""
-        });
-        setSelectedEmployees([]);
-    };
-
-    return (
-        <div className="reunion">
-            <h1>Form Reunion</h1>
-            <fieldset>
-                <form onSubmit={handleForm}>
-                    <label htmlFor="title">Title*</label>
-                    <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        value={FormR.title}
-                        onChange={(e) => setFormR({ ...FormR, title: e.target.value })}
-                        placeholder="Enter Title"
-                        required
-                    />
-                    <label htmlFor="lastname">Persons*</label>
-                    <button type="button" id="butt1" onClick={toggleModal}>
-                        Select Employees
-                    </button>
-                    <label htmlFor="date">Date*</label>
-                    <input
-                        type="date"
-                        name="date"
-                        id="date"
-                        value={FormR.date}
-                        onChange={(e) => setFormR({ ...FormR, date: e.target.value })}
-                        required
-                    />
-                    <label htmlFor="time">Time*</label>
-                    <input
-                        type="time"
-                        name="time"
-                        id="time"
-                        value={FormR.time}
-                        onChange={(e) => setFormR({ ...FormR, time: e.target.value })}
-                        required
-                    />
-                    <label htmlFor="file">Upload Document</label>
-                    <input
-                        type="file"
-                        name="uploadDocument"
-                        id="uploadDocument"
-                        onChange={(e) => setFormR({ ...FormR, uploadDocument: e.target.files[0] })}
-                        placeholder="Enter Upload File"
-                    />
-                    <label htmlFor="select">Place*</label>
-                    <select
-                        name="select"
-                        id="select"
-                        value={FormR.place}
-                        onChange={(e) => setFormR({ ...FormR, place: e.target.value })}
-                        required
-                    >
-                        <option value="" disabled>
-                            Select your place
-                        </option>
-                        <option value="Office">Office</option>
-                        <option value="Online">Online</option>
-                    </select>
-                    <label htmlFor="about">Ordre du jour</label>
-                    <textarea
-                        name="ordedujour"
-                        id="ordedujour"
-                        cols="30"
-                        rows="10"
-                        onChange={(e) => setFormR({ ...FormR, orderdujour: e.target.value })}
-                        placeholder="Description"
-                        required
-                    ></textarea>
-                    <button type="reset" id="butt2" onClick={handleReset}>
-                        Reset
-                    </button>
-                    <button type="submit" id="bu" value="Submit">
-                        Submit
-                    </button>
-                </form>
-            </fieldset>
-
-            {showModal && (
-                <div className="modal-overlay" onClick={toggleModal}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h2>Select Employees</h2>
-                            <span className="close" onClick={toggleModal}>
-                                &times;
-                            </span>{" "}
-                            {/* X button to close modal */}
-                        </div>
-                        <div className="modal-content">
-                            <ul>
-                                {users.map((user, index) => (
-                                    <li key={index}>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                checked={selectedEmployees.includes(user.name)} // Use _id field
-                                                onChange={() => handleEmployeeSelection(user.name)} // Pass _id
-                                            />
-                                            {user.name}
-                                        </label>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <div className="offers-container">
+      {!buttonPressed ? (
+        // If button is not pressed, display the content of Reunion
+        Reunions.map((Reunion, index) => (
+          <div className="reunion-card" key={index}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" component="h2">
+                  Title: {Reunion.title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  Date: {Reunion.date }
+                </Typography>
+                <Typography variant="body1">
+                  Time: {Reunion.time}
+                </Typography>
+                <Grid container justifyContent="center"> {/* Center align content */}
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
+                    <Typography variant="body1">
+                      Ordre du jour: {Reunion.ordredujour}
+                    </Typography>
+                    <Typography variant="body1">
+                      Persons: {Reunion.persons}
+                    </Typography>
+                    <Typography variant="body1">
+                      Place: {Reunion.place}
+                    </Typography>
+                    {/* You can add more details here */}
+                  </Grid>
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
+                  </Grid>
+                  <Grid container justifyContent="flex-end"> {/* Align buttons to the right */}
+                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDeleteOffer(Reunion)}>Delete</Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </div>
+        ))
+      ) : (
+        // If button is pressed, display FormReunion
+        <FormReunion />
+      )}
+      {!buttonPressed && (
+        <button className="acc" onClick={handleButtonClick} variant="contained" color="primary">
+          Add Offers
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default Reunion;

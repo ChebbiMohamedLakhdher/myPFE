@@ -2,8 +2,7 @@ import "./admin.scss";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Widget from "../../components/widget/Widget";
-import Featured from "../../components/featured/featured";
-
+import Chart from "../../components/chart/Chart";
 
 
 const Admin = () => {
@@ -20,7 +19,7 @@ const Admin = () => {
           
         </div>
         <div className="charts">
-          
+          <Chart />
           
         </div>
       </div>
@@ -33,6 +32,3 @@ const Admin = () => {
 }
 
 export default Admin
-
-
-

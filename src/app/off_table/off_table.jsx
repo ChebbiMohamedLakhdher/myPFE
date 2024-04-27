@@ -58,7 +58,7 @@ const Off_table = () => {
                 {offer.title}
               </Typography>
               <Typography variant="body2" color="textSecondary" gutterBottom>
-                {offer.type === "employment" ? "Employm ent Offer" : "Internship Offer"}
+                {offer.type === "employment" ? "Employment Offer" : "Internship Offer"}
               </Typography>
               <Grid container justifyContent="center"> {/* Center align content */}
                 <Grid item xs={6}> {/* Adjust width as per your requirement */}

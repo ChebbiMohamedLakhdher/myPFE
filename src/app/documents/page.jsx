@@ -1,195 +1,82 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { toast } from 'react-hot-toast';
 import "./Documents.scss";
+import Button from "@mui/material/Button"; 
+import FormDocument from "../formdocument/Formdocument"
 
-function Documents() {
+const Document = () => {
+  const [Documents, setDocuments] = useState([]);
+  const [error, setError] = useState(null);
+  const [buttonPressed, setButtonPressed] = useState(false);
 
-    const [deps, setDeps] = useState([]);
-    const [error, setError] = useState(null);
-    const [showModal, setShowModal] = useState(false);
-    const [FormD, setFormD] = useState({
-        title: "",
-        targeteddepartments: "",
-        uploadDocument: "",
-    });
+  const handleButtonClick = () => {
+    setButtonPressed(true);
+  };
 
-    const toggleModal = () => {
-        setShowModal(!showModal);
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const response = await axios.post("/api/users/rtdocuments");
+        console.log("Success", response.data);
+        setDocuments(response.data); // Set offers data in state
+        toast.success("Document imported successfully");
+      } catch (error) {
+        console.log("Failed", error.response?.data?.error || "Unknown error");
+        setError(error.response?.data?.error || "Unknown error");
+      }
     };
+    
+    fetchOffers();
+  }, []);
 
-    const handleDepChange = (e) => {
-        const { value, checked } = e.target;
-        if (value === "all") {
-            const updatedDeps = checked ? ["Development", "Design", "Project management", "Content", "Sales & Marketing", "Customer Support"] : [];
-            setDeps(updatedDeps);
-        } else {
-            let updatedDeps;
-            if (checked) {
-                updatedDeps = [...deps, value];
-            } else {
-                updatedDeps = deps.filter((dep) => dep !== value);
-            }
-            setDeps(updatedDeps);
-        }
-    };
+  return (
+    <div className="offers-container">
+      {!buttonPressed ? (
+        // If button is not pressed, display the content of Reunion
+        Documents.map((Document, index) => (
+          <div className="reunion-card" key={index}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" component="h2">
+                  Title: {Document.title}
+                </Typography>
 
-    const handleForm = async (e) => {
-        e.preventDefault();
-        const formData = {
-            ...FormD,
-            targeteddepartments: deps.join(","),
-        };
-        console.log(formData);
-        try {
-            const response = await axios.post("/api/users/document", formData);
-            console.log("Form submission successful", response.data);
-            console.log(formData);
-        } catch (error) {
-            console.error("Form submission failed", error.message);
-            setError(true);
-        }
-    };
-
-    const handleReset = () => {
-        setFormD({
-            title: "",
-            targeteddepartments: "",
-            uploadDocument: "",
-        });
-    };
-
-    return (
-        <div className="Documents">
-            <h1>Form Documents</h1>
-            <form onSubmit={handleForm}>
-                <label htmlFor="title">Title*</label>
-                <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    value={FormD.title}
-                    onChange={(e) => setFormD({ ...FormD, title: e.target.value })}
-                    placeholder="Enter Title"
-                    required
-                />
-                <label htmlFor="dep">Targeted Departments*</label>
-                <div className="department-selection">
-                    <button className="department-toggle" onClick={toggleModal}>
-                        Select Departments
-                    </button>
-                    {showModal && (
-                        <div className="modal-overlay" onClick={toggleModal}>
-                            <div className="modal" onClick={(e) => e.stopPropagation()}>
-                                <div className="modal-header">
-                                    <h2>Select Departments</h2>
-                                    <span className="close" onClick={toggleModal}>&times;</span>
-                                </div>
-                                <div className="modal-content">
-                                    <ul>
-                                        <li>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="dep"
-                                                    value="all"
-                                                    checked={deps.length === 6}
-                                                    onChange={handleDepChange}
-                                                />
-                                                All
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="dep"
-                                                    value="Development"
-                                                    checked={deps.includes("Development")}
-                                                    onChange={handleDepChange}
-                                                />
-                                                Development
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="dep"
-                                                    value="Design"
-                                                    checked={deps.includes("Design")}
-                                                    onChange={handleDepChange}
-                                                />
-                                                Design
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="dep"
-                                                    value="Project management"
-                                                    checked={deps.includes("Project management")}
-                                                    onChange={handleDepChange}
-                                                />
-                                                Project management
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="dep"
-                                                    value="Content"
-                                                    checked={deps.includes("Content")}
-                                                    onChange={handleDepChange}
-                                                />
-                                                Content
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="dep"
-                                                    value="Sales & Marketing"
-                                                    checked={deps.includes("Sales & Marketing")}
-                                                    onChange={handleDepChange}
-                                                />
-                                                Sales & Marketing
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    name="dep"
-                                                    value="Customer Support"
-                                                    checked={deps.includes("Customer Support")}
-                                                    onChange={handleDepChange}
-                                                />
-                                                Customer Support
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-                <label htmlFor="uploadDocument">Upload Document*</label>
-                <input
-                    type="file"
-                    name="uploadDocument"
-                    id="uploadDocument"
-                    onChange={(e) => setFormD({ ...FormD, uploadDocument: e.target.files[0] })}
+                <Grid container justifyContent="center"> {/* Center align content */}
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
                     
-                />
-                <button type="reset" id="butt2" value="reset" onClick={handleReset}>Reset</button>
-                <button type="submit" id="bu" value="Submit">Submit</button>
-            </form>
-        </div>
-    );
+                    <Typography variant="body1">
+                      Documents: {Document.targeteddepartments}
+                    </Typography>
+                   
+                    {/* You can add more details here */}
+                  </Grid>
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
+                  </Grid>
+                  <Grid container justifyContent="flex-end"> {/* Align buttons to the right */}
+                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDeleteOffer(Document)}>Delete</Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </div>
+        ))
+      ) : (
+        // If button is pressed, display FormReunion
+        <FormDocument />
+      )}
+      {!buttonPressed && (
+        <button className="acc" onClick={handleButtonClick} variant="contained" color="primary">
+          Add Offers
+        </button>
+      )}
+    </div>
+  );
 }
 
-export default Documents;
+export default Document;
