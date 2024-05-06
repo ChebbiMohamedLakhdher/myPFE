@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
-import Inventory2Icon from "@mui/icons-material/Inventory2";
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
@@ -61,10 +61,6 @@ const Sidebar = () => {
             </button>
           </li>
           <li>
-            <Inventory2Icon className="icon" />
-            <span> Products </span>
-          </li>
-          <li>
           <button>
           <Link href="/offers">
             <CreditCardIcon className="icon" />
@@ -72,6 +68,15 @@ const Sidebar = () => {
             </Link >
             </button>
           </li>
+          <li>  
+          <button>
+            <Link href="/news">
+            <NewspaperIcon className="icon" />
+              <span> News And Updates </span>
+            </Link>
+            </button>
+          </li>
+         
           <p className="title">Useful</p>
           <li>
             <EqualizerIcon className="icon" />

@@ -1,0 +1,22 @@
+.buttons-container {
+  display: flex;
+  margin-left: 1%;
+  margin-top: 3%;
+}
+
+.button {
+  /* Adjust button styles as needed */
+  background-color: #7451f8;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px; /* Decreased padding */
+  margin-right: 2px; /* Add margin between buttons */
+  cursor: pointer;
+  font-size: 12px; /* Decreased font size */
+}
+
+/* Style for the last button to remove the right margin */
+.button:last-child {
+  margin-right: 0;
+}
