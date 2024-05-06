@@ -1,5 +1,5 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { ReunionForm} from "@/models/formModel";
+import { DocumentsForm } from "@/models/formModel";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -12,32 +12,29 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
 
-        const {title , persons, date, time,  uploadDocument, place, ordredujour,  } = reqBody;
-        console.log(reqBody);
+        const {title , targeteddepartments , uploadDocument, } = reqBody;
+        console.log(reqBody); 
 
 
 
 
-        const newFormR = new ReunionForm({
+        const newFormD = new DocumentsForm({
             title,
-            persons,
-            date,
-            time,
+            targeteddepartments,     
             uploadDocument,
-            place,
-            ordredujour,
+            
         });
 
 
-        const savedFormR = await newFormR.save();
+        const savedFormD = await newFormD.save();
 
-        console.log(savedFormR);
+        console.log(savedFormD);
 
 
         return NextResponse.json({
             message: "Offer created successfully",
             success: true, 
-            savedFormR
+            savedFormD
         });
 
     } catch (error: any) {

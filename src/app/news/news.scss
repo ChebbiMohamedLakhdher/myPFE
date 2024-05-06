@@ -4,6 +4,18 @@
     background-color: whitesmoke;
     .adminContainer {
       flex: 6;
+      .sec{
+        background-color: whitesmoke;
+        color: #000;
+  
+        .acc{
+          background-color: black;
+          color: white;
+        }
+        .butt{
+          background-color: purple;
+        }
+      }
   
       .widgets,
       .charts {

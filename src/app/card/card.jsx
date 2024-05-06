@@ -6,7 +6,7 @@ import Documents from "../documents/page"; // Renamed to avoid conflict
 
 
 const NewsCard = ({}) => {
-    const [buttonPressed, setButtonPressed] = useState(<Reunion />);
+    const [buttonPressed, setButtonPressed] = useState();
 
     const handleButtonClick = (component) => {
         setButtonPressed(component);

@@ -1,194 +1,104 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import { toast } from 'react-hot-toast';
 import "./Formation.scss";
+import Button from "@mui/material/Button"; 
+import FormFormation from "../formformation/Formformation"
 
-function Formation() {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [contact, setContact] = useState("");
-    const [resume, setResume] = useState("");
-    const [selectedOption, setSelectedOption] = useState("");
-    const [dep, setDep] = useState("");
-    const [type, setType] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
-    const [name_loc, setNameLocation] = useState("");
-    const [location, setLocation] = useState("");
-    const [formateur, setFormateur] = useState("");
-    const [error, setError] = useState(null);
+const Formation = () => {
+  const [Formations, setFormations] = useState([]);
+  const [error, setError] = useState(null);
+  const [buttonPressed, setButtonPressed] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(
-            firstName,
-            lastName,
-            email,
-            contact,
-            selectedOption,   
-            resume,
-            date,
-            time,
-            type,
-            dep,
-            name_loc,
-            location,
-            formateur,
-        );
-        // Add your form submission logic here
+  const handleButtonClick = () => {
+    setButtonPressed(true);
+  };
+
+  useEffect(() => {
+    const fetchOffers = async () => {
+      try {
+        const response = await axios.post("/api/users/rtformation");
+        console.log("Success", response.data);
+        setFormations(response.data); // Set offers data in state
+        toast.success("Formation imported successfully");
+      } catch (error) {
+        console.log("Failed", error.response?.data?.error || "Unknown error");
+        setError(error.response?.data?.error || "Unknown error");
+      }
     };
-
-    const handleReset = () => {
-        // Reset all state variables here
-        setTitle("");
-        setLastName("");
-        setEmail("");
-        setContact("");
-        setTime("");
-        setDate("");
-        setResume("");
-        setSelectedOption("");
-        setType("");
-        setDep("");
-        setFormateur("");
-        setNameLocation("");
-        setLocation("");
     
-    };
+    fetchOffers();
+  }, []);
 
-    return (
-        <div className="formation">
-            <h1>Form Formation</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="firstname">Title*</label>
-                <input
-                    type="text"
-                    name="firstname"
-                    id="firstname"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="Enter Title"
-                    required
-                />
-                <label htmlFor="dep">Targeted Department*</label>
-                <select
-                    name="dep"
-                    id="dep"
-                    value={dep}
-                    onChange={(e) => setDep(e.target.value)}
-                    required
-                >
-                    <option value="" disabled>Select Department</option>
-                    <option value="1">Development</option>
-                    <option value="2">Design </option>
-                    <option value="3">Project management</option>
-                    <option value="4">Content</option>
-                    <option value="5">Sales & Marketing</option>
-                    <option value="6">Customer Support</option>
-                </select>
-
-                <label htmlFor="date">Start Date*</label>
-                <input
-                    type="date"
-                    name="date"
-                    id="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    required
-                />
-
-                <label htmlFor="time">Time*</label>
-                <input
-                    type="time"
-                    name="time"
-                    id="time"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    required
-                />
-                <label htmlFor="date">End Date</label>
-                <input
-                    type="date"
-                    name="date"
-                    id="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+  return (
+    <div className="offers-container">
+      {!buttonPressed ? (
+        // If button is not pressed, display the content of Reunion
+        Formations.map((Formation, index) => (
+          <div className="reunion-card" key={index}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" component="h2">
+                  Title: {Formation.title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  StartDate: {Formation.date }
+                </Typography>
+                <Typography variant="body1">
+                  Time: {Formation.time}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  EndDate: {Formation.date }
+                </Typography>
+                <Grid container justifyContent="center"> {/* Center align content */}
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
                     
-                />
-
-                <label htmlFor="type">Type*</label>
-                <select
-                    name="type"
-                    id="type"
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                    required
-                >
-                    <option value="" disabled>Select your type</option>
-                    <option value="Onsite">Onsite</option>
-                    <option value="Online">Online</option>
-                </select>
-
-                {type === "Onsite" && (
-                    <>
-                        <label htmlFor="forma">Location*</label>
-                        <input
-                            type="text"
-                            name="name_loc"
-                            id="name_loc"
-                            value={name_loc}
-                            onChange={(e) => setNameLocation(e.target.value)}
-                            placeholder="Enter Name Of The Location"
-                            required
-                        />
-                        <input
-                            type="text"
-                            name="location"
-                            id="location"
-                            value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            placeholder="Enter Location Link "
-                            required
-                        />
-                    </>
-                )}
-
-                <label htmlFor="forma">Formateur*</label>
-                <input
-                    type="text"
-                    name="forma"
-                    id="forma"
-                    value={formateur}
-                    onChange={(e) => setFormateur(e.target.value)}
-                    placeholder="Enter Title"
-                    required
-                />
-
-                <label htmlFor="file">Upload Document</label>
-                <input
-                    type="file"
-                    name="file"
-                    id="file"
-                    onChange={(e) => setResume(e.target.files[0])}
-                    placeholder="Enter Upload File"
-                />
-                <label htmlFor="about">Description*</label>
-                    <textarea
-                        name="about"
-                        id="about"
-                        cols="30"
-                        rows="10"
-                        onChange={(e) => setAbout(e.target.value)}
-                        placeholder="Provide more details"
-                        required
-                    ></textarea>
-                
-                <button type="reset" id="butt2" value="reset" onClick={handleReset}>Reset</button>
-                <button type="submit" id="bu" value="Submit">Submit</button>
-            </form>
-        </div>
-    );
+                    <Typography variant="body1">
+                      Targeted department: {Formation.targeteddepartments}
+                    </Typography>
+                    <Typography variant="body1">
+                      type: {Formation.type}
+                    </Typography>
+                    <Typography variant="body1">
+                      Name Location: {Formation.namelocation}
+                    </Typography>
+                    <Typography variant="body1">
+                      Location: {Formation.location}
+                    </Typography>
+                    <Typography variant="body1">
+                      formateur: {Formation.formateur}
+                    </Typography>  
+                    <Typography variant="body1">
+                      description: {Formation.description}
+                    </Typography>
+                    {/* You can add more details here */}
+                  </Grid>
+                  <Grid item xs={6}> {/* Adjust width as per your requirement */}
+                  </Grid>
+                  <Grid container justifyContent="flex-end"> {/* Align buttons to the right */}
+                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDeleteOffer(Formation)}>Delete</Button>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </div>
+        ))
+      ) : (
+        // If button is pressed, display FormReunion
+        <FormFormation />
+      )}
+      {!buttonPressed && (
+        <button className="acc" onClick={handleButtonClick} variant="contained" color="primary">
+          Add Offers
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default Formation;
