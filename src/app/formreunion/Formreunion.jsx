@@ -12,7 +12,7 @@ function FormReunion() {
         persons: [], // Initialize as an empty array
         date: "",
         time: "",
-        uploadDocument: null,
+        uploadDocument: "",
         place: "",
         orderdujour: ""
     });
@@ -45,24 +45,40 @@ function FormReunion() {
             setSelectedEmployees([...selectedEmployees, employeeName]);
         }
     };
-
+    
+    const resetCheckboxes = () => {
+        // Reset the deps state to an empty array or any initial state you want
+        setSelectedEmployees([]);
+    };
 
     const handleForm = async (e) => {
         e.preventDefault();
-        const formData = {
-            ...FormR,
-            persons: selectedEmployees
+        const formData = new FormData();
+        formData.append('title', FormR.title);
+        formData.append('persons', JSON.stringify(selectedEmployees));
+        formData.append('date', FormR.date);
+        formData.append('time', FormR.time);
+        formData.append('place', FormR.place);
+        formData.append('ordredujour', FormR.ordredujour);
+    
+        // Convertir le fichier en blob
+        const file = FormR.uploadDocument;
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = async function () {
+            const arrayBuffer = reader.result;
+            const blob = new Blob([arrayBuffer]);
+            formData.append('uploadDocument', blob, file.name);
+    
+            // Envoyer les données au serveur
+            try {
+                const response = await axios.post("/api/users/forms", formData);
+                console.log("Form submission successful", response.data);
+            } catch (error) {
+                console.error("Form submission failed", error.message);
+                setError(true);
+            }
         };
-        // Handle form submission here (e.g., send data to server)
-        console.log(formData);
-        try {
-            const response = await axios.post("/api/users/forms", formData);
-            console.log("Form submission successful", response.data);
-            console.log(formData);
-        } catch (error) {
-            console.error("Form submission failed", error.message);
-            setError(true);
-        }
     };
 
     const handleReset = () => {
@@ -72,7 +88,7 @@ function FormReunion() {
             persons: [], // Reset persons to an empty array
             date: "",
             time: "",
-            uploadDocument: null,
+            uploadDocument: "",
             place: "",
             orderdujour: ""
         });
@@ -162,9 +178,7 @@ function FormReunion() {
                     <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h2>Select Employees</h2>
-                            <span className="close" onClick={toggleModal}>
-                                &times;
-                            </span>{" "}
+                            <span className="close" onClick={() => {toggleModal(); resetCheckboxes();}}>&times;</span>
                             {/* X button to close modal */}
                         </div>
                         <div className="modal-content">
@@ -180,9 +194,13 @@ function FormReunion() {
                                             {user.name}
                                         </label>
                                     </li>
+
                                 ))}
                             </ul>
                         </div>
+                        <div className="modal-footer">
+                <button onClick={() => {toggleModal()}}>OK</button>
+            </div>
                     </div>
                 </div>
             )}

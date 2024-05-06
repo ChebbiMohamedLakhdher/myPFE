@@ -1,5 +1,5 @@
 import { connect } from "@/dbConfig/dbConfig";
-import Offer from "@/models/offerModel";
+import { FormationForm } from '@/models/formModel';
 import { NextRequest, NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from 'next';
 
@@ -14,12 +14,12 @@ export async function DELETE(request: NextRequest) {
     try {
         const reqBody = await request.json();
         // Extract offerId from request body
-        const { offerId } = reqBody;
+        const { FormationId } = reqBody;
 
         // Delete the offer from the database
-        const deletedOffer = await Offer.findByIdAndDelete(offerId);
+        const deletedFormation = await FormationForm.findByIdAndDelete(FormationId);
 
-        if (!deletedOffer) {
+        if (!deletedFormation) {
             // Offer not found
             return NextResponse.json({ error: "Offer not found" }, { status: 404 });
         }

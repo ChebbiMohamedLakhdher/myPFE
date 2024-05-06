@@ -1,8 +1,9 @@
 "use client"
 import React, { useState } from 'react';
 import axios from "axios";
-
-const Formulaire = () => {
+import Link from "next/link";
+import Off_table from "../off_table/off_table"
+const Formulaire = ({ onBackButtonClick }) => {
     const [error, setError] = useState(false);
     const [Offer, setOffer] = useState({
         type: "",
@@ -118,6 +119,7 @@ const Formulaire = () => {
                     </div>
                 ))}
                 <button className='butt' type="submit">Submit</button>
+                <button onClick={onBackButtonClick}>Back</button>
             </form>
         </div>
     );

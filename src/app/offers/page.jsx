@@ -13,19 +13,32 @@ const Offers = () => {
     setButtonPressed(true);
   };
 
+  const handleBackButtonClick = () => {
+    setButtonPressed(false);
+  };
+
   return (
     <div className="Offers">
       <Sidebar />
       <div className="adminContainer">
         <Navbar />
         <div className="sec">
-          {buttonPressed === false ? <Off_table /> : <Formulaire />}
-          <button className="acc" onClick={handleButtonClick} variant="contained" color="primary">
-            Add Offers
-          </button>
-          
+          {buttonPressed === false ? (
+            <Off_table />
+          ) : (
+            <Formulaire onBackButtonClick={handleBackButtonClick} />
+          )}
+          {!buttonPressed && (
+            <button
+              className="acc"
+              onClick={handleButtonClick}
+              variant="contained"
+              color="primary"
+            >
+              Add Offers
+            </button>
+          )}
         </div>
-
       </div>
     </div>
   );

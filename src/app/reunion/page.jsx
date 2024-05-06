@@ -19,6 +19,40 @@ const Reunion = () => {
     setButtonPressed(true);
   };
 
+  const handleDelete = async (Reunion) => {
+    try {
+      const response = await axios.delete(`/api/users/delreunion`, { data: { ReunionId: Reunion._id } });
+      
+  
+      console.log("response:", response);
+  
+      if (response.status === 200) {
+        toast.success("Offer deleted successfully");
+        
+        // Update the offers state to exclude the deleted offer
+        setReunions(prevReunions => prevReunions .filter(prevReunion => prevReunion._id !== Reunion._id));
+      } else {
+        toast.error("Failed to delete offer");
+      }
+    } catch (error) {
+      console.error("Error deleting offer:", error);
+      toast.error("Failed to delete offer");
+    }
+  };
+  
+  const getUrl = (uploadDocument) => {
+    if (uploadDocument) {
+      const contentType = uploadDocument.contentType;
+      const data = uploadDocument.data;
+
+      // Création d'un blob à partir des données
+      const blob = new Blob([new Uint8Array(data.data)], { type: contentType });
+
+      // Création de l'URL de données (Data URL) à partir du blob
+      return URL.createObjectURL(blob); // Retourner directement l'URL de données
+    }
+  };
+
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -63,12 +97,23 @@ const Reunion = () => {
                     <Typography variant="body1">
                       Place: {Reunion.place}
                     </Typography>
+                    <Typography variant="h6" component="h2">
+                      Fichier:
+                      {Reunion.uploadDocument && ( // Vérifier si le document est présent
+                        <a
+                          href={getUrl(Reunion.uploadDocument)} // Utiliser directement la valeur retournée par getUrl
+                          download={Reunion.uploadDocument.fileName}
+                        >
+                          {Reunion.uploadDocument.fileName}
+                        </a>
+                      )}
+                    </Typography>
                     {/* You can add more details here */}
                   </Grid>
                   <Grid item xs={6}> {/* Adjust width as per your requirement */}
                   </Grid>
                   <Grid container justifyContent="flex-end"> {/* Align buttons to the right */}
-                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDeleteOffer(Reunion)}>Delete</Button>
+                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDelete(Reunion)}>Delete</Button>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -80,7 +125,7 @@ const Reunion = () => {
         <FormReunion />
       )}
       {!buttonPressed && (
-        <button className="acc" onClick={handleButtonClick} variant="contained" color="primary">
+        <button className="bcc" onClick={handleButtonClick} variant="contained" color="primary">
           Add Offers
         </button>
       )}
