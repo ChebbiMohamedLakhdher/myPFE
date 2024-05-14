@@ -13,6 +13,7 @@ export default function LoginPage() {
     email: "",
     password: "",
     isEmployee: "",
+    isAdmin:"",
   });
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -23,7 +24,13 @@ export default function LoginPage() {
       const response = await axios.post("/api/users/login", user);
       console.log("Login success", response.data);
       toast.success("Login success");
-      router.push("/admin");
+      console.log(response.data)
+      if (response.data.isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/news");
+      }
+      
     } catch (error: any) {
       console.log("Login failed", error.response.data.error);
       setError(error.response.data.error);
@@ -33,6 +40,7 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     setButtonDisabled(!(user.email && user.password));

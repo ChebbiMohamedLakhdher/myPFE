@@ -1,15 +1,28 @@
 
     .table {
-      .acc{
+      .acc1{
         color: #6439fe ;
         font-weight: bold;
         
       }
-      .acc:hover{
+      .acc1:hover{
         background-color: #6439fe ;
         color: white;
         font-weight: bold;
       }
+      .acc2{
+        color: #6439fe ;
+        font-weight: bold;
+        margin-left: 10px;
+        width:auto ;
+        
+      }
+      .acc2:hover{
+        background-color: #6439fe ;
+        color: white;
+        font-weight: bold;
+      }
+
 
         .cellWrapper {
           display: flex;

@@ -24,7 +24,7 @@ export async function POST(request:NextRequest) {
             return NextResponse.json({error:"Invalid Password"}, {status:400})
         }
 
-        
+        const isAdmin = user.isAdmin;
         const isEmployee = user.isEmployee;
         if (!isEmployee) {
             console.log("Token not found");
@@ -36,7 +36,8 @@ export async function POST(request:NextRequest) {
             id: user._id,
             name: user.name,
             email: user.email,
-            isEmployee: user.isEmployee
+            isEmployee: user.isEmployee,
+            isAdmin: user.isAdmin
         }
         
         const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "1d"})
@@ -44,6 +45,7 @@ export async function POST(request:NextRequest) {
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
+            isAdmin: user.isAdmin,
         })
         response.cookies.set("token", token, {
             httpOnly: true, 
@@ -63,10 +65,7 @@ export async function POST(request:NextRequest) {
 
         
 
-function validCredentials(email: any, password: any) {
-    throw new Error("Function not implemented.");
-}
-     
+
 
 
 

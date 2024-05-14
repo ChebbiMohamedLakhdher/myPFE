@@ -103,8 +103,12 @@ const Sidebar = () => {
           </li>
           <p className="title">User</p>
           <li>
-            <AccountCircleIcon className="icon" />
-            <span> Profile </span>
+          <button>
+              <Link href="/profileadmin">
+                <AccountCircleIcon className="icon" />
+                <span> Profile </span>
+              </Link>
+            </button>
           </li>
           <li>
             <button onClick={logout}>

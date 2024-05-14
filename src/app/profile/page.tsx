@@ -19,7 +19,7 @@ export default function ProfilePage() {
             toast.error(error.message)
         }
     }
-
+    
     const getUserDetails = async () => {
         const res = await axios.get('/api/users/me')
         console.log(res.data);
