@@ -28,7 +28,7 @@ export default function LoginPage() {
       if (response.data.isAdmin) {
         router.push("/admin");
       } else {
-        router.push("/news");
+        router.push("/employee/main");
       }
       
     } catch (error: any) {

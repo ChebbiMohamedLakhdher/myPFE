@@ -4,11 +4,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import "./sidebar.scss";
+import "./Sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import NewspaperIcon from '@mui/icons-material/Newspaper';
-import CreditCardIcon from "@mui/icons-material/CreditCard";
+import EventIcon from '@mui/icons-material/Event';
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -48,7 +48,7 @@ const Sidebar = () => {
             <button>
               <Link href="/admin">
                 <DashboardIcon className="icon" />
-                <span> Admin Dashboard </span>
+                <span> Employee Dashboard </span>
               </Link>
             </button>
           </li>
@@ -63,9 +63,9 @@ const Sidebar = () => {
           </li>
           <li>
             <button>
-              <Link href="/offers">
-                <CreditCardIcon className="icon" />
-                <span> Offers </span>
+              <Link href="/employee/conge">
+                <EventIcon className="icon" />
+                <span> Day offs </span>
               </Link >
             </button>
           </li>

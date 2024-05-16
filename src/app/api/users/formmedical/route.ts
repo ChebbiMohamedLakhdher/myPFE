@@ -1,5 +1,5 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { RemForm} from "@/models/remModel";
+import { MedicalForm} from "@/models/congeModel";
 import { NextRequest, NextResponse } from "next/server";
 
 import fs from 'fs';
@@ -11,8 +11,11 @@ export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
 
-        const title = formData.get('title');
-        const persons = formData.get('persons');
+        
+        const startdate = formData.get('startdate');
+        const enddate = formData.get('enddate');
+        const description = formData.get('description');
+        const employeeid = formData.get('employeeid');
         
 
         // Obtenir le fichier
@@ -22,9 +25,11 @@ export async function POST(request: NextRequest) {
         const uploadDocumentBuffer = Buffer.from(await uploadDocumentFile.arrayBuffer());
 
         // Enregistrer le formulaire de réunion dans la base de données
-        const newFormRe = new RemForm({
-            title,
-            persons,
+        const newFormM = new MedicalForm({
+            employeeid,
+            startdate,
+            description,
+            enddate,
             uploadDocument: {
                 contentType: uploadDocumentFile.type,
                 fileName: uploadDocumentFile.name,
@@ -32,12 +37,12 @@ export async function POST(request: NextRequest) {
             },
             
         });
-        const savedFormRe = await newFormRe.save();
+        const savedFormM = await newFormM.save();
 
         return NextResponse.json({
             message: "Form submitted successfully",
             success: true,
-            savedFormRe
+            savedFormM
         });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
