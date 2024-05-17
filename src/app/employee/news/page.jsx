@@ -13,11 +13,13 @@ const News = () => {
       <Sidebar />
       <div className="adminContainer">
         <Navbar />
-        
-      </div>
-      <div className="empreunion">
+        <div className="empreunion">
         <Reunion />
       </div>
+        
+      </div>
+      
+      
 
 
 

@@ -4,7 +4,9 @@
    
     .adminContainer {
       flex: 6;
-  
+      .empreunion{
+        width: 40%;
+      }  
       .widgets,
       .charts {
         display: flex;

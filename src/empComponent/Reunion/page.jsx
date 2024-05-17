@@ -6,8 +6,12 @@ import "./EmpReunion.scss";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+import CardActions from "@mui/material/CardActions";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
 
 const EmpReunion = () => {
     const [reunions, setReunions] = useState([]);
@@ -30,27 +34,31 @@ const EmpReunion = () => {
         fetchReunions();
     }, []);
 
+    const handleViewMore = (reunionId) => {
+        console.log("View More clicked for reunion:", reunionId);
+    };
+
     return (
         <div className="reunion-container">
             <Card className="reunion-card">
                 <CardContent>
-                    <Typography variant="h5" component="div" gutterBottom>
+                    <Typography variant="h5" component="div">
                         Reunions
                     </Typography>
-                    <Grid container spacing={3}>
+                    <List>
                         {reunions.map((reunion, index) => (
-                            <Grid item xs={12} sm={6} md={4} key={index}>
-                                <Paper className={`reunion-section ${index % 3 === 0 ? 'personal-strength' : index % 3 === 1 ? 'communication' : 'leadership'}`}>
-                                    <Typography variant="h6" className="reunion-title">
-                                        {reunion.title}
-                                    </Typography>
-                                    <Typography variant="body2" className="reunion-description">
-                                        {reunion.description}
-                                    </Typography>
-                                </Paper>
-                            </Grid>
+                            <div key={index}>
+                                <ListItem>
+                                    <ListItemText 
+                                        primary={reunion.title} 
+                                        secondary={reunion.description} 
+                                    />
+                                    <Button size="small" onClick={() => handleViewMore(reunion.id)}>View More</Button>
+                                </ListItem>
+                                {index < reunions.length - 1 && <Divider />}
+                            </div>
                         ))}
-                    </Grid>
+                    </List>
                 </CardContent>
             </Card>
         </div>

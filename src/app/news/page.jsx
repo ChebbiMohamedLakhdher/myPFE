@@ -16,12 +16,15 @@ export default function News() {
         <Sidebar />
         <div className="adminContainer">
           <Navbar />
-          <div>
-          <NewsCard />
-            
+          <div className="card">
+          
+            <NewsCard />
           </div>
+          
         </div>
+        
       </div>
+      
     </div>
   );
 }
