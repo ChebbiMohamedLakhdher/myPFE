@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import axios from "axios";
 import React, { useState } from "react";
@@ -7,14 +7,14 @@ import { useRouter } from "next/navigation";
 import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
-import NewspaperIcon from '@mui/icons-material/Newspaper';
+import NewspaperIcon from "@mui/icons-material/Newspaper";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ChatIcon from '@mui/icons-material/Chat';
+import ChatIcon from "@mui/icons-material/Chat";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -24,6 +24,8 @@ const Sidebar = () => {
     try {
       await axios.get("/api/users/logout");
       toast.success("Logout successful");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       router.push("/login");
     } catch (error) {
       console.log(error.message);
@@ -66,10 +68,10 @@ const Sidebar = () => {
               <Link href="/offers">
                 <CreditCardIcon className="icon" />
                 <span> Offers </span>
-              </Link >
+              </Link>
             </button>
           </li>
-          <li>  
+          <li>
             <button>
               <Link href="/news">
                 <NewspaperIcon className="icon" />
@@ -77,9 +79,9 @@ const Sidebar = () => {
               </Link>
             </button>
           </li>
-         
+
           <p className="title">Useful</p>
-          <li>  
+          <li>
             <button>
               <Link href="/chatroom">
                 <ChatIcon className="icon" />
@@ -87,13 +89,13 @@ const Sidebar = () => {
               </Link>
             </button>
           </li>
-          
+
           <li>
             <NotificationsNoneIcon className="icon" />
             <span> Notifications </span>
           </li>
           <p className="title">Service</p>
-          <li>  
+          <li>
             <button>
               <Link href="/remunaration">
                 <LocalAtmIcon className="icon" />
@@ -107,7 +109,7 @@ const Sidebar = () => {
           </li>
           <p className="title">User</p>
           <li>
-          <button>
+            <button>
               <Link href="/profileadmin">
                 <AccountCircleIcon className="icon" />
                 <span> Profile </span>
@@ -123,8 +125,14 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="bottom">
-        <div className="colorOption" onClick={() => handleColorOptionClick("whitesmoke")}></div>
-        <div className="colorOption" onClick={() => handleColorOptionClick("#333")}></div>
+        <div
+          className="colorOption"
+          onClick={() => handleColorOptionClick("whitesmoke")}
+        ></div>
+        <div
+          className="colorOption"
+          onClick={() => handleColorOptionClick("#333")}
+        ></div>
       </div>
     </div>
   );

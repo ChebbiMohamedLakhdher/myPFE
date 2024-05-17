@@ -10,12 +10,14 @@ connect();
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        const token = reqBody; // Accessing userId property
+        const { userId } = reqBody;
+
         // Alternatively, you can use bracket notation: const userId = reqBody['userId'];
-        console.log(token)
+        const user = await User.findOne({_id: userId})
+        console.log('im here', user)
         
         // User updated successfully
-        return NextResponse.json({ message: "User updated successfully" });
+        return NextResponse.json({ message: "User updated successfully", user });
 
     } catch (error: any) {
         // Handle any errors

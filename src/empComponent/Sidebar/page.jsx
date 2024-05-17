@@ -23,6 +23,8 @@ const Sidebar = () => {
   const logout = async () => {
     try {
       await axios.get("/api/users/logout");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
       toast.success("Logout successful");
       router.push("/login");
     } catch (error) {

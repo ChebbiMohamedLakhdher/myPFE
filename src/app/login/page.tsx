@@ -13,7 +13,7 @@ export default function LoginPage() {
     email: "",
     password: "",
     isEmployee: "",
-    isAdmin:"",
+    isAdmin: "",
   });
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -24,13 +24,14 @@ export default function LoginPage() {
       const response = await axios.post("/api/users/login", user);
       console.log("Login success", response.data);
       toast.success("Login success");
-      console.log(response.data)
+      console.log("tessst", response.data);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userId", response.data.userId);
       if (response.data.isAdmin) {
         router.push("/admin");
       } else {
         router.push("/employee/main");
       }
-      
     } catch (error: any) {
       console.log("Login failed", error.response.data.error);
       setError(error.response.data.error);
@@ -40,7 +41,6 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     setButtonDisabled(!(user.email && user.password));
@@ -135,9 +135,14 @@ export default function LoginPage() {
         )}
       </div>
       <div className="relative right-28 bottom-3 text-xs ml-4">
-      <Link className="cursor-pointer hover:underline text-zinc-500 font-bold " href="/forgotpassword">Forgot password?</Link>
+        <Link
+          className="cursor-pointer hover:underline text-zinc-500 font-bold "
+          href="/forgotpassword"
+        >
+          Forgot password?
+        </Link>
       </div>
-      
+
       <button
         disabled={buttonDisabled || loading}
         onClick={onLogin}
@@ -147,7 +152,6 @@ export default function LoginPage() {
       </button>
       <h1>Don't have an account ?</h1>
       <Link href="/signup">Signup</Link>
-      
     </div>
   );
 }

@@ -1,54 +1,48 @@
-"use client"
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import './prof.scss';
-import Sidebar from '../../components/sidebar/Sidebar';
-import Navbar from '../../components/navbar/Navbar';
+"use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import "./prof.scss";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Navbar from "../../components/navbar/Navbar";
 
 const Prof = () => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         // Retrieve token from cookies
-        const token = getCookie('token');
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        console.log({ token, userId });
         if (!token) {
-          setError('Token not found');
+          setError("Token not found");
           return;
         }
-        
-        const response = await axios.post('/api/users/prof', null, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        
-        console.log('Success', response.data);
-        setUser(response.data);
-        toast.success('User information loaded successfully');
+
+        const response = await axios.post(
+          "/api/users/prof",
+          { userId },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("Success", response.data);
+        setUser(response.data.user);
+        toast.success("User information loaded successfully");
       } catch (error) {
-        console.log('Failed', error.response?.data?.error || 'Unknown error');
-        setError(error.response?.data?.error || 'Unknown error');
+        console.log("Failed", error.response?.data?.error || "Unknown error");
+        setError(error.response?.data?.error || "Unknown error");
       }
     };
 
     fetchUser();
   }, []);
-
-  // Function to get cookie by name
-  const getCookie = (name) => {
-    const cookies = document.cookie.split(';');
-    for (let cookie of cookies) {
-      const [cookieName, cookieValue] = cookie.trim().split('=');
-      if (cookieName === name) {
-        return cookieValue;
-      }
-    }
-    return null;
-  };
 
   return (
     <div className="single">

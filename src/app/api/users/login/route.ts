@@ -46,10 +46,11 @@ export async function POST(request:NextRequest) {
             message: "Login successful",
             success: true,
             isAdmin: user.isAdmin,
+            token,
+            userId: user._id
         })
         response.cookies.set("token", token, {
             httpOnly: true, 
-
         })
         return response;
 
