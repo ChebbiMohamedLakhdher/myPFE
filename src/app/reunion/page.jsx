@@ -19,6 +19,43 @@ const Reunion = () => {
     setButtonPressed(true);
   };
 
+  const handleDeleteOffer = async (Reunion) => {
+    try {
+      const response = await axios.delete(`/api/users/delreunion`, {
+        data: { ReunionId: Reunion._id },
+      });
+
+      console.log("response:", response);
+
+      if (response.status === 200) {
+        toast.success("Offer deleted successfully");
+
+        // Update the offers state to exclude the deleted offer
+        setReunions((prevReunions) =>
+          prevReunions.filter((prevReunion) => prevReunion._id !== Reunion._id)
+        );
+      } else {
+        toast.error("Failed to delete offer");
+      }
+    } catch (error) {
+      console.error("Error deleting offer:", error);
+      toast.error("Failed to delete offer");
+    }
+  };
+
+  const getUrl = (uploadDocument) => {
+    if (uploadDocument) {
+      const contentType = uploadDocument.contentType;
+      const data = uploadDocument.data;
+
+      // Création d'un blob à partir des données
+      const blob = new Blob([new Uint8Array(data.data)], { type: contentType });
+
+      // Création de l'URL de données (Data URL) à partir du blob
+      return URL.createObjectURL(blob); // Retourner directement l'URL de données
+    }
+  };
+
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -34,18 +71,6 @@ const Reunion = () => {
 
     fetchOffers();
   }, []);
-  const getUrl = (uploadDocument) => {
-    if (uploadDocument) {
-      const contentType = uploadDocument.contentType;
-      const data = uploadDocument.data;
-
-      // Création d'un blob à partir des données
-      const blob = new Blob([new Uint8Array(data.data)], { type: contentType });
-
-      // Création de l'URL de données (Data URL) à partir du blob
-      return URL.createObjectURL(blob); // Retourner directement l'URL de données
-    }
-  };
 
   return (
     <div className="offers-container">

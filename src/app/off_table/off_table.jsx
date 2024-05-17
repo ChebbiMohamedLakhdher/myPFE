@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 const Off_table = () => {
   const [offers, setOffers] = useState([]);
   const [error, setError] = useState(null);
-
+  
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -30,20 +30,26 @@ const Off_table = () => {
 
   const handleDeleteOffer = async (offer) => {
     try {
-        const id = offer._id;
-        console.log("Offer ID:", offer._id); 
-        const response = await axios.delete(`/api/users/delete/${id}`);
-        console.log(`response= ${response}`);
-        if (response.status == 200) {
-            toast.success("Offer deleted successfully");
-        } else {
-            toast.error("Failed to delete offer");
-        }
-    } catch (error) {
-        console.error("Error deleting offer:", error);
+      const response = await axios.delete(`/api/users/delete`, { data: { offerId: offer._id } });
+      console.log("Offer ID:", offer._id); 
+  
+      console.log("response:", response);
+  
+      if (response.status === 200) {
+        toast.success("Offer deleted successfully");
+        
+        // Update the offers state to exclude the deleted offer
+        setOffers(prevOffers => prevOffers.filter(prevOffer => prevOffer._id !== offer._id));
+      } else {
         toast.error("Failed to delete offer");
+      }
+    } catch (error) {
+      console.error("Error deleting offer:", error);
+      toast.error("Failed to delete offer");
     }
-};
+  };
+  
+
 
 
 
@@ -66,8 +72,9 @@ const Off_table = () => {
                     Start Date: {offer.startdate.slice(0, 10)}
                   </Typography>
 
-                  <Typography variant="body1">
-                    {offer.type === "internship" && `End Date: ${offer.enddate.slice(0, 10)}`}
+                  <Typography variant="body1">    
+                  {offer.type === "internship" && `End Date: ${offer.enddate.slice(0, 10)}`}
+
                   </Typography>
                   {offer.type === "internship" && (
                     <Typography variant="body1">

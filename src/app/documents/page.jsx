@@ -19,6 +19,27 @@ const Document = () => {
     setButtonPressed(true);
   };
 
+  const handleDelete = async (Document) => {
+    try {
+      const response = await axios.delete(`/api/users/deldocuments`, { data: { DocumentId: Document._id } });
+      
+  
+      console.log("response:", response);
+  
+      if (response.status === 200) {
+        toast.success("Doc deleted successfully");
+        
+        // Update the offers state to exclude the deleted offer
+        setDocuments(prevDocuments => prevDocuments .filter(prevDocument => prevDocument._id !== Document._id));
+      } else {
+        toast.error("Failed to delete doc");
+      }
+    } catch (error) {
+      console.error("Error deleting doc:", error);
+      toast.error("Failed to delete doc");
+    }
+  };
+
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -59,7 +80,7 @@ const Document = () => {
                   <Grid item xs={6}> {/* Adjust width as per your requirement */}
                   </Grid>
                   <Grid container justifyContent="flex-end"> {/* Align buttons to the right */}
-                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDeleteOffer(Document)}>Delete</Button>
+                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDelete(Document)}>Delete</Button>
                   </Grid>
                 </Grid>
               </CardContent>

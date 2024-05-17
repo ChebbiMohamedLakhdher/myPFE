@@ -19,6 +19,27 @@ const Formation = () => {
     setButtonPressed(true);
   };
 
+  const handleDelete = async (Formation) => {
+    try {
+      const response = await axios.delete(`/api/users/delformation`, { data: { FormationId: Formation._id } });
+      
+  
+      console.log("response:", response);
+  
+      if (response.status === 200) {
+        toast.success("Offer deleted successfully");
+        
+        // Update the offers state to exclude the deleted offer
+        setFormations(prevFormations => prevFormations .filter(prevFormation => prevFormation._id !== Formation._id));
+      } else {
+        toast.error("Failed to delete offer");
+      }
+    } catch (error) {
+      console.error("Error deleting offer:", error);
+      toast.error("Failed to delete offer");
+    }
+  };
+
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -81,7 +102,7 @@ const Formation = () => {
                   <Grid item xs={6}> {/* Adjust width as per your requirement */}
                   </Grid>
                   <Grid container justifyContent="flex-end"> {/* Align buttons to the right */}
-                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDeleteOffer(Formation)}>Delete</Button>
+                    <Button variant="outlined" color="secondary" className='margin right-2' onClick={() => handleDelete(Formation)}>Delete</Button>
                   </Grid>
                 </Grid>
               </CardContent>

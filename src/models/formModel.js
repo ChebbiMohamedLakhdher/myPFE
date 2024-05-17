@@ -18,7 +18,7 @@ const reunionSchema = new mongoose.Schema({
         required: true
     },
     uploadDocument: {
-        data: Buffer, // Or Schema.Types.Mixed
+        data: Buffer, // Or Schema.Types.Buffer
         contentType: String, // To store MIME type
         fileName: String,
     },
