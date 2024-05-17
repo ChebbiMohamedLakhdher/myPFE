@@ -1,0 +1,64 @@
+.Conge {
+    display: flex;
+    background-color: whitesmoke;
+  
+    .adminContainer {
+      flex: 6;
+  
+      .formWidget {
+        width: 60%;
+        margin-left: 260px;
+      }
+  
+      .widgets {
+        display: flex;
+        flex-direction: column; /* Display widgets vertically */
+        gap: 10px; /* Add gap between widgets */
+        margin-left: 10px;
+        margin-top: 10px;
+  
+        .rl {
+          display: flex; /* Change to flex */
+          gap: 1px; /* Reduce gap between buttons */
+        }
+      }
+  
+      .charts {
+        padding: 1px 20px;
+      }
+  
+      .listContainer {
+        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+        padding: 20px;
+        margin: 20px;
+  
+        .listTitle {
+          font-weight: 500;
+          color: gray;
+          margin-bottom: 15px;
+        }
+      }
+  
+      .mainContent {
+        display: flex;
+        flex-direction: column; /* Display main content vertically */
+        gap: 20px; /* Add gap between widgets and formWidget */
+      }
+  
+      .accordion {
+        .accordion-title {
+          cursor: pointer;
+          background-color: #7451f8;
+          padding: 8px 15px; /* Reduce padding to make the buttons smaller */
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          width: auto; /* Allow the width to adjust based on content */
+          font-size: 14px; /* Adjust font size to fit text within the button */
+          white-space: nowrap; /* Ensure text stays on one line */
+          text-align: center; /* Center the text within the button */
+        }
+      }
+    }
+  }
+  

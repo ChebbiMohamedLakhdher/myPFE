@@ -38,19 +38,36 @@ function FormFormation() {
 
     const handleForm = async (e) => {
         e.preventDefault();
-        const formData = {
-            ...FormF,
+        const formData = new FormData();
+        formData.append('title', FormF.title);
+        formData.append('targeteddepartments', FormF.targeteddepartments);
+        formData.append('startdate', FormF.startdate);
+        formData.append('enddate', FormF.enddate);
+        formData.append('time', FormF.time);
+        formData.append('type', FormF.type);
+        formData.append('location', FormF.location);
+        formData.append('formateur', FormF.formateur);
+        formData.append('description', FormF.description);
+        formData.append('namelocation', FormF.namelocation);
+    
+        // Convertir le fichier en blob
+        const file = FormF.uploadDocument;
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = async function () {
+            const arrayBuffer = reader.result;
+            const blob = new Blob([arrayBuffer]);
+            formData.append('uploadDocument', blob, file.name);
+    
+            // Envoyer les données au serveur
+            try {
+                const response = await axios.post("/api/users/formation", formData);
+                console.log("Form submission successful", response.data);
+            } catch (error) {
+                console.error("Form submission failed", error.message);
+                setError(true);
+            }
         };
-        // Handle form submission here (e.g., send data to server)
-        console.log(formData);
-        try {
-            const response = await axios.post("/api/users/formation", formData);
-            console.log("Form submission successful", response.data);
-            console.log(formData);
-        } catch (error) {
-            console.error("Form submission failed", error.message);
-            setError(true);
-        }
     };
 
     return (

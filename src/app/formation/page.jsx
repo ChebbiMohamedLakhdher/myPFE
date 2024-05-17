@@ -40,6 +40,19 @@ const Formation = () => {
     }
   };
 
+  const getUrl = (uploadDocument) => {
+    if (uploadDocument) {
+      const contentType = uploadDocument.contentType;
+      const data = uploadDocument.data;
+
+      // Création d'un blob à partir des données
+      const blob = new Blob([new Uint8Array(data.data)], { type: contentType });
+
+      // Création de l'URL de données (Data URL) à partir du blob
+      return URL.createObjectURL(blob); // Retourner directement l'URL de données
+    }
+  };
+
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -96,6 +109,17 @@ const Formation = () => {
                     </Typography>  
                     <Typography variant="body1">
                       description: {Formation.description}
+                    </Typography>
+                    <Typography variant="h6" component="h2">
+                      Fichier:
+                      {Formation.uploadDocument && ( // Vérifier si le document est présent
+                        <a
+                          href={getUrl(Formation.uploadDocument)} // Utiliser directement la valeur retournée par getUrl
+                          download={Formation.uploadDocument.fileName}
+                        >
+                          {Formation.uploadDocument.fileName}
+                        </a>
+                      )}
                     </Typography>
                     {/* You can add more details here */}
                   </Grid>

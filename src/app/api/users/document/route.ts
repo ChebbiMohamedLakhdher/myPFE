@@ -1,42 +1,44 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { DocumentsForm } from "@/models/formModel";
+import { DocumentsForm} from "@/models/formModel";
 import { NextRequest, NextResponse } from "next/server";
 
+import fs from 'fs';
 
 
 connect();
 
-
-
 export async function POST(request: NextRequest) {
     try {
-        const reqBody = await request.json();
+        const formData = await request.formData();
 
-        const {title , targeteddepartments , uploadDocument, } = reqBody;
-        console.log(reqBody); 
+        const title = formData.get('title');
+        const targeteddepartments = formData.get('targeteddepartments');
+        
 
+        // Obtenir le fichier
+        const uploadDocumentFile : any= formData.get('uploadDocument');
 
+        // Lire le contenu du fichier en tant que buffer
+        const uploadDocumentBuffer = Buffer.from(await uploadDocumentFile.arrayBuffer());
 
-
+        // Enregistrer le formulaire de réunion dans la base de données
         const newFormD = new DocumentsForm({
             title,
-            targeteddepartments,     
-            uploadDocument,
+            targeteddepartments,
+            uploadDocument: {
+                contentType: uploadDocumentFile.type,
+                fileName: uploadDocumentFile.name,
+                data: uploadDocumentBuffer
+            },
             
         });
-
-
         const savedFormD = await newFormD.save();
 
-        console.log(savedFormD);
-
-
         return NextResponse.json({
-            message: "Offer created successfully",
-            success: true, 
+            message: "Form submitted successfully",
+            success: true,
             savedFormD
         });
-
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

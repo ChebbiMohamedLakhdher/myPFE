@@ -1,6 +1,6 @@
 
   
-  .formfor {
+  .formrem {
     color: black;
     background-color: #fff;
     border-radius: 15px;
@@ -12,10 +12,6 @@
     margin: auto;
     width: 80%;
     margin-top: 20px;
-    color: black;
-    
-  
-    
     body {
         background: #f3f3f3;
         text-align: center;
@@ -28,7 +24,6 @@
   
     fieldset {
       border: none;
-      
     }
   
     input {
@@ -109,12 +104,12 @@
           
   
           .close {
-              position: absolute;
-              top: 265px;
-              right: 33.6% ; 
+              position: relative;
+              bottom: 70px;
+              left: 106% ; 
               cursor: pointer;
               font-size: 20px;
-              color: #555;
+              color: #262626;
           }
   
           ul {

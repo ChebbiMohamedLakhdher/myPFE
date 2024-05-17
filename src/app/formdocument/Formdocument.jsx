@@ -8,9 +8,10 @@ function FormDocuments() {
     const [showModal, setShowModal] = useState(false);
     const [FormD, setFormD] = useState({
         title: "",
-        targeteddepartments: "",
+        targeteddepartments: [], // Initialize with an empty array
         uploadDocument: "",
     });
+    
 
     const toggleModal = () => {
         setShowModal(!showModal);
@@ -19,8 +20,11 @@ function FormDocuments() {
     const handleDepChange = (e) => {
         const { value, checked } = e.target;
         if (value === "all") {
-            const updatedDeps = checked ? ["Development", "Design", "Project management", "Content", "Sales & Marketing", "Customer Support"] : [];
+            const updatedDeps = checked
+                ? ["Development", "Design", "Project management", "Content", "Sales & Marketing", "Customer Support"]
+                : [];
             setDeps(updatedDeps);
+            setFormD({ ...FormD, targeteddepartments: updatedDeps }); // Update targeteddepartments in FormD
         } else {
             let updatedDeps;
             if (checked) {
@@ -29,28 +33,45 @@ function FormDocuments() {
                 updatedDeps = deps.filter((dep) => dep !== value);
             }
             setDeps(updatedDeps);
+            setFormD({ ...FormD, targeteddepartments: updatedDeps }); // Update targeteddepartments in FormD
         }
     };
+    
     const resetCheckboxes = () => {
         // Reset the deps state to an empty array or any initial state you want
         setDeps([]);
     };
     const handleForm = async (e) => {
         e.preventDefault();
-        const formData = {
-            ...FormD,
-            targeteddepartments: deps.join(","),
+        const formData = new FormData();
+        formData.append('title', FormD.title);
+    
+        // Assuming deps is an array defined somewhere in your code
+        
+        // Include the code you provided to add targeteddepartments to formData
+        formData.append('targeteddepartments', JSON.stringify(FormD.deps));
+    
+        const file = FormD.uploadDocument;
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+    
+        reader.onload = async function () {
+            const arrayBuffer = reader.result;
+            const blob = new Blob([arrayBuffer]);
+            formData.append('uploadDocument', blob, file.name);
+    
+            // Sending data to the server
+            try {
+                console.log(deps)
+                const response = await axios.post("/api/users/document", formData);
+                console.log("Form submission successful", response.data);
+            } catch (error) {
+                console.error("Form submission failed", error.message);
+                setError(true);
+            }
         };
-        console.log(formData);
-        try {
-            const response = await axios.post("/api/users/document", formData);
-            console.log("Document submission successful", response.data);
-            console.log(formData);
-        } catch (error) {
-            console.error("Document submission failed", error.message);
-            setError(true);
-        }
     };
+    
 
     const handleTitleChange = (e) => {
         setFormD({ ...FormD, title: e.target.value });

@@ -43,8 +43,9 @@ const documentsSchema = new mongoose.Schema({
         required: true
     },
     uploadDocument: {
+        data: Buffer, // Or Schema.Types.Buffer
+        contentType: String, // To store MIME type
         fileName: String,
-        data: Buffer
     },
     
 });
@@ -87,8 +88,9 @@ const formationSchema = new mongoose.Schema({
         
     },
     uploadDocument: {
+        data: Buffer, // Or Schema.Types.Buffer
+        contentType: String, // To store MIME type
         fileName: String,
-        data: Buffer
     },
     description: {
         type: String,
