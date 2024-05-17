@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import "./formconge.scss";
+import "./formconge.scss";  
 
 function FormConge() {
     const [leaveType, setLeaveType] = useState("normal");

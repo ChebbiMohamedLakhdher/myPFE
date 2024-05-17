@@ -1,12 +1,12 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Link from "next/link";
-import Off_table from "../off_table/off_table"
-const Formulaire = ({ onBackButtonClick }) => {
-    const [error, setError] = useState(false);
-    const [Offer, setOffer] = useState({
-        type: "",
+import Cookies from "js-cookie";
+import "./formulaire.scss";
+
+function Formulaire() {
+    const [Type, SetType] = useState(""); // Default is now empty string
+    const [FormFor, setFormFor] = useState({
         requirements: "",
         posts_number: "",
         description: "",
@@ -17,112 +17,184 @@ const Formulaire = ({ onBackButtonClick }) => {
         department: "",
         position: "",
     });
-    const [formData, setFormData] = useState({
-        type: 'internship',
-        requirements: '',
-        posts_number: '',
-        description: '',
-        title: "",
-        startdate: "",
-        enddate: "",
-        ispaid: "",
-        department: "",
-        position: "",
-    });
-    const [additionalForms, setAdditionalForms] = useState([]);
+    const [token, setToken] = useState("");
+    const [error, setError] = useState(null);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+    useEffect(() => {
+        const token = Cookies.get('token');
+        setToken(token || "");
+        console.log(token);
+    }, []);
 
-        // Update Offer state with the changed value
-        setOffer(prevOffer => ({
-            ...prevOffer,
-            [name]: value
-        }));
-
-        if (name === 'type') {
-            if (value === 'internship') {
-                // Add forms specific to internship
-                setAdditionalForms(['enddate', 'ispaid']);
-            } else if (value === 'employment') {
-                // Add forms specific to employment
-                setAdditionalForms(['position', 'department']);
-            } else {
-                // Reset additional forms if another type is selected
-                setAdditionalForms([]);
-            }
-        }
-    };
-
-    const handleSubmit = async (e) => {
+    const handleForm = async (e) => {
         e.preventDefault();
-        // Handle form submission here (e.g., send data to server)
-        console.log(Offer);
+        const formData = new FormData();
+
+        formData.append('requirements', FormFor.requirements);
+        formData.append('posts_number', FormFor.posts_number);
+        formData.append('description', FormFor.description);
+        formData.append('title', FormFor.title);
+        formData.append('startdate', FormFor.startdate);
+        formData.append('token', token);
+
+        if (Type === "internship") {
+            formData.append('enddate', FormFor.enddate);
+            formData.append('ispaid', FormFor.ispaid);
+        } else if (Type === "employment") {
+            formData.append('department', FormFor.department);
+            formData.append('position', FormFor.position);
+        }
+
         try {
-            const response = await axios.post("/api/users/formulaire", Offer);
-            console.log("Formulaire success", response.data);
+            const response = await axios.post("/api/users/formulaire", formData);
+            console.log("Form submission successful", response.data);
         } catch (error) {
-            console.log("Formulaire failed", error.message);
+            console.error("Form submission failed", error.message);
             setError(true);
         }
     };
 
+    const handleReset = () => {
+        setFormFor({
+            requirements: "",
+            posts_number: "",
+            description: "",
+            title: "",
+            startdate: "",
+            enddate: "",
+            ispaid: "",
+            department: "",
+            position: "",
+        });
+    };
+
     return (
-        <div>
+        <div className="formfor">
             <h1>Offer Form</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="type">Type:</label>
-                    <select id="type" name="type" onChange={handleChange}>
-                        <option value="">Select Type</option>
+            <fieldset>
+                <form onSubmit={handleForm}>
+                    <label htmlFor="Type">Type:</label>
+                    <select
+                        id="Type"
+                        value={Type}
+                        onChange={(e) => SetType(e.target.value)}
+                        required
+                    >
+                        <option value="">Select Type</option> {/* Added default option */}
                         <option value="internship">Internship</option>
                         <option value="employment">Employment</option>
                     </select>
-                </div>
-                <div>
-                    <label htmlFor="title">Title:</label>
-                    <textarea id="title" name="title" value={formData.title} onChange={handleChange} required></textarea>
-                </div>
-                <div>
-                    <label htmlFor="requirements">Requirements:</label>
-                    <textarea id="requirements" name="requirements" value={formData.requirements} onChange={handleChange} required></textarea>
-                </div>
-                <div>
-                    <label htmlFor="posts_number">Number of Posts:</label>
-                    <input type="number" id="posts_number" name="posts_number" value={formData.posts_number} onChange={handleChange} required />
-                </div>
-                <div>
-                    <label htmlFor="description">Description:</label>
-                    <textarea id="description" name="description" value={formData.description} onChange={handleChange}></textarea>
-                </div>
-                <div>
-                    <label htmlFor="startdate">Start Date:</label>
-                    <input type="date" id="startdate" name="startdate" value={formData.startdate} onChange={handleChange} required />
-                </div>
-                {/* Render additional forms based on selected type */}
-                {additionalForms.map((formName, index) => (
-                    <div key={index}>
-                        <label htmlFor={formName}>{formName === 'enddate' ? 'End Date' : formName === 'ispaid' ? 'Is Paid' : formName.charAt(0).toUpperCase() + formName.slice(1)}:</label>
-                        {formName === 'ispaid' ?
-                            <select id={formName} name={formName} value={Offer[formName]} onChange={handleChange} required>
-                                <option value="">...</option>
+
+                    <label htmlFor="title">Title*</label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        value={FormFor.title}
+                        onChange={(e) => setFormFor({ ...FormFor, title: e.target.value })}
+                        placeholder="Enter Title"
+                        required
+                    />
+                    <label htmlFor="requirements">Requirements*</label>
+                    <input
+                        type="text"
+                        name="requirements"
+                        id="requirements"
+                        value={FormFor.requirements}
+                        onChange={(e) => setFormFor({ ...FormFor, requirements: e.target.value })}
+                        placeholder="Enter requirements"
+                        required
+                    />
+                    <label htmlFor="posts_number">Number of Posts:*</label>
+                    <input
+                        type="number"
+                        name="posts_number"
+                        id="posts_number"
+                        value={FormFor.posts_number}
+                        onChange={(e) => setFormFor({ ...FormFor, posts_number: e.target.value })}
+                        required
+                    />
+
+                    <label htmlFor="startdate">Start Date*</label>
+                    <input
+                        type="date"
+                        name="startdate"
+                        id="startdate"
+                        value={FormFor.startdate}
+                        onChange={(e) => setFormFor({ ...FormFor, startdate: e.target.value })}
+                        required
+                    />
+
+                    {Type === "internship" && (
+                        <>
+                            <label htmlFor="enddate">End Date*</label>
+                            <input
+                                type="date"
+                                name="enddate"
+                                id="enddate"
+                                value={FormFor.enddate}
+                                onChange={(e) => setFormFor({ ...FormFor, enddate: e.target.value })}
+                                required
+                            />
+                            <label htmlFor="ispaid">Is Paid*</label>
+                            <select
+                                id="ispaid"
+                                name="ispaid"
+                                value={FormFor.ispaid}
+                                onChange={(e) => setFormFor({ ...FormFor, ispaid: e.target.value })}
+                                required
+                            >
+                                <option value="">Select</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                             </select>
-                            :
-                            <input type={formName === 'enddate' ? 'date' : 'text'} id={formName} name={formName} value={Offer[formName]} onChange={handleChange} required={formName === 'position' || formName === 'department'} />
-                        }
-                    </div>
-                ))}
-                <button className='butt' type="submit">Submit</button>
-                <button onClick={onBackButtonClick}>Back</button>
-            </form>
+                        </>
+                    )}
+                    {Type === "employment" && (
+                        <>
+                            <label htmlFor="department">Department*</label>
+                            <input
+                                type="text"
+                                name="department"
+                                id="department"
+                                value={FormFor.department}
+                                onChange={(e) => setFormFor({ ...FormFor, department: e.target.value })}
+                                required
+                            />
+                            <label htmlFor="position">Position*</label>
+                            <input
+                                type="text"
+                                name="position"
+                                id="position"
+                                value={FormFor.position}
+                                onChange={(e) => setFormFor({ ...FormFor, position: e.target.value })}
+                                required
+                            />
+                        </>
+                    )}
+
+                    <label htmlFor="description">Description</label>
+                    <textarea
+                        name="description"
+                        id="description"
+                        cols="30"
+                        rows="10"
+                        value={FormFor.description}
+                        onChange={(e) => setFormFor({ ...FormFor, description: e.target.value })}
+                        placeholder="Description"
+                        required
+                    ></textarea>
+
+                    <button type="reset" id="butt2" onClick={handleReset}>
+                        Reset
+                    </button>
+                    <button type="submit" id="bu" value="Submit">
+                        Submit
+                    </button>
+                </form>
+            </fieldset>
         </div>
     );
-};
+}
 
 export default Formulaire;
