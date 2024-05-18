@@ -15,6 +15,7 @@ const News = () => {
         <Navbar />
         <div className="empreunion">
         <Reunion />
+        <Formation />
       </div>
         
       </div>

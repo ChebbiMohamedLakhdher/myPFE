@@ -45,7 +45,7 @@ const EmpReunion = () => {
                     <Typography variant="h5" component="div">
                         Reunions
                     </Typography>
-                    <List>
+                    <List className="reunion-list">
                         {reunions.map((reunion, index) => (
                             <div key={index}>
                                 <ListItem>

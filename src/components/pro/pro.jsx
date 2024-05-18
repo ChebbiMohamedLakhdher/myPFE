@@ -59,19 +59,12 @@ const Pro = () => {
                   <div className="details">
                     <h1 className="itemTitle">{user.name}</h1>
                     <div className="detailItem">
-                      <span className="itemKey">Email:</span>
+                      
                       <span className="itemValue">{user.email}</span>
                     </div>
+                   
                     <div className="detailItem">
-                      <span className="itemKey">Phone:</span>
-                      <span className="itemValue">{user.phone}</span>
-                    </div>
-                    <div className="detailItem">
-                      <span className="itemKey">Address:</span>
-                      <span className="itemValue">{user.address}</span>
-                    </div>
-                    <div className="detailItem">
-                      <span className="itemKey">Position:</span>
+                      
                       <span className="itemValue">{user.position}</span>
                     </div>
                   </div>

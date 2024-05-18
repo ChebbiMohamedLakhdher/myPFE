@@ -23,32 +23,7 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
-        phone: {
-            type: String,
-            required: false
-        },
-        address: {
-            type: String,
-            required: false
-        },
-        department: {
-            type: String,
-            required: false
-        },
-        position: {
-            type: String,
-            required: false
-        },
-        birthday: {
-            type: Date,
-            required: false
-        },
-        picture: {
-            data: Buffer, // To store the image data
-            contentType: String, // To store the MIME type of the image
-            fileName: String, // To store the original file name
-            required: false // This field is optional
-        },
+        
         resetToken: {
             type: String,
             required: false,
