@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import axios from "axios";
 import React, { useState } from "react";
@@ -7,14 +7,14 @@ import { useRouter } from "next/navigation";
 import "./Sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
-import NewspaperIcon from '@mui/icons-material/Newspaper';
-import EventIcon from '@mui/icons-material/Event';
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import EventIcon from "@mui/icons-material/Event";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ChatIcon from '@mui/icons-material/Chat';
+import ChatIcon from "@mui/icons-material/Chat";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -68,20 +68,20 @@ const Sidebar = () => {
               <Link href="/employee/conge">
                 <EventIcon className="icon" />
                 <span> Day offs </span>
-              </Link >
+              </Link>
             </button>
           </li>
-          <li>  
+          <li>
             <button>
-              <Link href="/news">
+              <Link href="/employee/news">
                 <NewspaperIcon className="icon" />
                 <span> News And Updates </span>
               </Link>
             </button>
           </li>
-         
+
           <p className="title">Useful</p>
-          <li>  
+          <li>
             <button>
               <Link href="/chatroom">
                 <ChatIcon className="icon" />
@@ -89,13 +89,13 @@ const Sidebar = () => {
               </Link>
             </button>
           </li>
-          
+
           <li>
             <NotificationsNoneIcon className="icon" />
             <span> Notifications </span>
           </li>
           <p className="title">Service</p>
-          <li>  
+          <li>
             <button>
               <Link href="/remunaration">
                 <LocalAtmIcon className="icon" />
@@ -103,16 +103,13 @@ const Sidebar = () => {
               </Link>
             </button>
           </li>
-          <li>
-            <SettingsIcon className="icon" />
-            <span> Settings </span>
-          </li>
+
           <p className="title">User</p>
           <li>
-          <button>
-              <Link href="/profileadmin">
-                <AccountCircleIcon className="icon" />
-                <span> Profile </span>
+            <button>
+              <Link href="/employee/profile">
+                <SettingsIcon className="icon" />
+                <span> Settings </span>
               </Link>
             </button>
           </li>
@@ -125,8 +122,14 @@ const Sidebar = () => {
         </ul>
       </div>
       <div className="bottom">
-        <div className="colorOption" onClick={() => handleColorOptionClick("whitesmoke")}></div>
-        <div className="colorOption" onClick={() => handleColorOptionClick("#333")}></div>
+        <div
+          className="colorOption"
+          onClick={() => handleColorOptionClick("whitesmoke")}
+        ></div>
+        <div
+          className="colorOption"
+          onClick={() => handleColorOptionClick("#333")}
+        ></div>
       </div>
     </div>
   );

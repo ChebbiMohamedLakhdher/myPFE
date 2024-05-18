@@ -18,19 +18,44 @@ const userSchema = new mongoose.Schema(
         isEmployee: {
             type: Boolean,
             default: false,
-           
         },
         isAdmin: {
             type: Boolean,
             default: false
         },
-        resetToken:{
+        phone: {
+            type: String,
+            required: false
+        },
+        address: {
+            type: String,
+            required: false
+        },
+        department: {
+            type: String,
+            required: false
+        },
+        position: {
+            type: String,
+            required: false
+        },
+        birthday: {
+            type: Date,
+            required: false
+        },
+        picture: {
+            data: Buffer, // To store the image data
+            contentType: String, // To store the MIME type of the image
+            fileName: String, // To store the original file name
+            required: false // This field is optional
+        },
+        resetToken: {
             type: String,
             required: false,
         },
-        resetTokenExpiry:{
+        resetTokenExpiry: {
             type: Date,
-            required : false,
+            required: false,
         },
         forgotPasswordToken: String,
         forgotPasswordTokenExpiry: Date,
@@ -38,6 +63,7 @@ const userSchema = new mongoose.Schema(
         verifyTokenExpiry: Date
     }
 );
+
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
