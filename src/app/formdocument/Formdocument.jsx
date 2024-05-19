@@ -11,7 +11,6 @@ function FormDocuments() {
         targeteddepartments: [], // Initialize with an empty array
         uploadDocument: "",
     });
-    
 
     const toggleModal = () => {
         setShowModal(!showModal);
@@ -36,30 +35,29 @@ function FormDocuments() {
             setFormD({ ...FormD, targeteddepartments: updatedDeps }); // Update targeteddepartments in FormD
         }
     };
-    
+
     const resetCheckboxes = () => {
         // Reset the deps state to an empty array or any initial state you want
         setDeps([]);
     };
+
     const handleForm = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('title', FormD.title);
-    
-        // Assuming deps is an array defined somewhere in your code
-        
+
         // Include the code you provided to add targeteddepartments to formData
-        formData.append('targeteddepartments', JSON.stringify(FormD.deps));
-    
-        const file = FormD.uploadDocument;
+        formData.append('targeteddepartments', FormD.targeteddepartments);
+
+        const file = FormD.uploadDocument;      
         const reader = new FileReader();
         reader.readAsArrayBuffer(file);
-    
+
         reader.onload = async function () {
             const arrayBuffer = reader.result;
             const blob = new Blob([arrayBuffer]);
             formData.append('uploadDocument', blob, file.name);
-    
+
             // Sending data to the server
             try {
                 console.log(deps)
@@ -71,7 +69,6 @@ function FormDocuments() {
             }
         };
     };
-    
 
     const handleTitleChange = (e) => {
         setFormD({ ...FormD, title: e.target.value });
@@ -82,9 +79,10 @@ function FormDocuments() {
     const handleReset = () => {
         setFormD({
             title: "",
-            targeteddepartments: "",
+            targeteddepartments: [],
             uploadDocument: "",
         });
+        setDeps([]); // Reset deps state as well
     };
 
     const handleModalClick = (e) => {
@@ -113,107 +111,106 @@ function FormDocuments() {
                         Select Departments
                     </button>
                     {showModal && (
-    <div className="modal-overlay" onClick={toggleModal}>
-        <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-                <h2>Select Departments</h2>
-                <span className="close" onClick={() => {toggleModal(); resetCheckboxes();}}>&times;</span>
-            </div>
-            <div className="modal-content">
-                <ul>
-                    <li>
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="dep"
-                                value="all"
-                                checked={deps.length === 6}
-                                onChange={handleDepChange}
-                            />
-                            All
-                        </label>
-                    </li>
-                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="dep"
-                                                value="Development"
-                                                checked={deps.includes("Development")}
-                                                onChange={handleDepChange}
-                                            />
-                                            Development
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="dep"
-                                                value="Design"
-                                                checked={deps.includes("Design")}
-                                                onChange={handleDepChange}
-                                            />
-                                            Design
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="dep"
-                                                value="Project management"
-                                                checked={deps.includes("Project management")}
-                                                onChange={handleDepChange}
-                                            />
-                                            Project management
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="dep"
-                                                value="Content"
-                                                checked={deps.includes("Content")}
-                                                onChange={handleDepChange}
-                                            />
-                                            Content
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="dep"
-                                                value="Sales & Marketing"
-                                                checked={deps.includes("Sales & Marketing")}
-                                                onChange={handleDepChange}
-                                            />
-                                            Sales & Marketing
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>
-                                            <input
-                                                type="checkbox"
-                                                name="dep"
-                                                value="Customer Support"
-                                                checked={deps.includes("Customer Support")}
-                                                onChange={handleDepChange}
-                                            />
-                                            Customer Support
-                                        </label>
-                                    </li>
+                        <div className="modal-overlay" onClick={toggleModal}>
+                            <div className="modal" onClick={(e) => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <h2>Select Departments</h2>
+                                    <span className="close" onClick={() => { toggleModal(); resetCheckboxes(); }}>&times;</span>
+                                </div>
+                                <div className="modal-content">
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="all"
+                                                    checked={deps.length === 6}
+                                                    onChange={handleDepChange}
+                                                />
+                                                All
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="Development"
+                                                    checked={deps.includes("Development")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Development
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="Design"
+                                                    checked={deps.includes("Design")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Design
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="Project management"
+                                                    checked={deps.includes("Project management")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Project management
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="Content"
+                                                    checked={deps.includes("Content")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Content
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="Sales & Marketing"
+                                                    checked={deps.includes("Sales & Marketing")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Sales & Marketing
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="dep"
+                                                    value="Customer Support"
+                                                    checked={deps.includes("Customer Support")}
+                                                    onChange={handleDepChange}
+                                                />
+                                                Customer Support
+                                            </label>
+                                        </li>
                                     </ul>
-            </div>
-            <div className="modal-footer">
-                <button onClick={() => {toggleModal()}}>OK</button>
-            </div>
-        </div>
-    </div>
-)}
-
+                                </div>
+                                <div className="modal-footer">
+                                    <button onClick={() => { toggleModal() }}>OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <label htmlFor="uploadDocument">Upload Document*</label>
                 <input
@@ -221,6 +218,7 @@ function FormDocuments() {
                     name="uploadDocument"
                     id="uploadDocument"
                     onChange={(e) => setFormD({ ...FormD, uploadDocument: e.target.files[0] })}
+                    required
                 />
                 <button type="reset" id="butt2" value="reset" onClick={handleReset}>Reset</button>
                 <button type="submit" id="bu" value="Submit">Submit</button>

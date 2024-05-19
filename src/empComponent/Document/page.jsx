@@ -60,10 +60,11 @@ const EmpDocument = () => {
                     <List className="scrollable-list">
                         {documents.map((document, index) => (
                             <div key={index}>
-                                <ListItem>
+                                <ListItem className="list-item">
                                     <ListItemText 
                                         primary={document.title} 
                                         secondary={document.targeteddepartments} 
+                                        className="list-item-text"
                                     />
                                     {document.uploadDocument && (
                                         <Button className="Button" variant="contained" color="primary">
