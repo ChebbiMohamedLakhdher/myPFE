@@ -17,7 +17,6 @@ export default function News() {
         <div className="adminContainer">
           <Navbar />
           <div className="card">
-          
             <NewsCard />
           </div>
           

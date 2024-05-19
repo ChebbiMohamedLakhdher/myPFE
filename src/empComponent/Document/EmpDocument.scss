@@ -1,4 +1,4 @@
-.formation-container {
+.document-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,7 +21,10 @@
     overflow-y: auto;
     padding-right: 16px; /* Ensure scrollbar doesn't overlap content */
 }
-
+.Button{
+    color: white;
+    background-color: purple;
+}
 .acc {
     padding: 15px;
     border-radius: 10px;

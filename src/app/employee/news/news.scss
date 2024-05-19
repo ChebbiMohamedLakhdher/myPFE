@@ -1,39 +1,54 @@
 .News {
-    display: flex;
-    background-color: whitesmoke;
-   
-    .adminContainer {
-      flex: 6;
-      .empreunion{
-        width: 40%;
-      }  
-      .widgets,
-      .charts {
+  display: flex;
+  background-color: whitesmoke;
+
+  .adminContainer {
+    flex: 6;
+
+    .empreunion {
+      display: flex;
+      flex-direction: row;  /* Arrange children side by side */
+      gap: 20px;  /* Adds space between the components */
+      width: 100%;  /* Ensures the container takes full width */
+      
+      & > div {
+        flex: 1;  /* Each child component will take up equal space */
         display: flex;
-        padding: 20px;
-        gap: 10px;
-        height: 40%;
-        
-        
-        
+        flex-direction: column;
+        justify-content: space-between;  /* Ensure equal height content */
+        height: 100%;  /* Ensures both components are the same height */
+        min-height: 400px;  /* Optional: Sets a minimum height */
+        box-sizing: border-box;  /* Include padding and border in the element's total width and height */
+        padding: 20px;  /* Optional: Adds padding inside the components */
+        background: white;  /* Ensure a consistent background color */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  /* Optional: Adds a shadow for better visual separation */
+        border-radius: 8px;  /* Optional: Adds rounded corners */
       }
-  
-      .charts {
-        padding: 1px 20px;
-        
-      }
-  
-      .listContainer {
-        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-        padding: 20px;
-        margin: 20px;
-  
-        .listTitle {
-          font-weight: 500;
-          color: gray;
-          margin-bottom: 15px;
-        }
+    }
+
+    .widgets,
+    .charts {
+      display: flex;
+      padding: 20px;
+      gap: 10px;
+      height: 40%;
+    }
+
+    .charts {
+      padding: 1px 20px;
+    }
+
+    .listContainer {
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      padding: 20px;
+      margin: 20px;
+
+      .listTitle {
+        font-weight: 500;
+        color: gray;
+        margin-bottom: 15px;
       }
     }
   }
+}

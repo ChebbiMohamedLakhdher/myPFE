@@ -14,24 +14,24 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 
 const EmpFormation = () => {
-    const [formations, setformations] = useState([]);
+    const [formations, setFormations] = useState([]);
     const [error, setError] = useState(null);
     const [token, setToken] = useState("");
 
     useEffect(() => {
-        const fetchformations = async () => {
+        const fetchFormations = async () => {
             try {
                 const response = await axios.post("/api/users/rtformation");
                 console.log("Success", response.data);
-                setformations(response.data); // Set formations data in state
-                toast.success("formations imported successfully");
+                setFormations(response.data); // Set formations data in state
+                toast.success("Formations imported successfully");
             } catch (error) {
                 console.log("Failed", error.response?.data?.error || "Unknown error");
                 setError(error.response?.data?.error || "Unknown error");
             }
         };
 
-        fetchformations();
+        fetchFormations();
     }, []);
 
     const handleViewMore = (reunionId) => {

@@ -16,6 +16,7 @@ const News = () => {
         <div className="empreunion">
         <Reunion />
         <Formation />
+        <Document />
       </div>
         
       </div>
