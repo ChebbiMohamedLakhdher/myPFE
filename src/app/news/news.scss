@@ -1,47 +1,46 @@
 .news {
   
-    display: flex;
-    background-color: whitesmoke;
-    .adminContainer {
-      flex: 6;
-      
-      .sec{
-        background-color: whitesmoke;
-        color: #000;
-  
-       
-        .butt{
-          background-color: purple;
-        }
+  display: flex;
+  background-color: whitesmoke;
+  .adminContainer {
+    flex: 6;
+    
+    .sec{
+      background-color: whitesmoke;
+      color: #000;
+
+     
+      .butt{
+        background-color: purple;
       }
-  
-      .widgets,
-      .charts {
-        display: flex;
-        padding: 20px;
-        gap: 20px;
+    }
+
+    .widgets,
+    .charts {
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+    }
+    .body{
+      .h1{
+          color: black   ;
       }
-      .body{
-        .h1{
-            color: black   ;
-        }
-      }
-      .charts {
-        padding: 5px 20px;
-      }
-  
-      .listContainer {
-        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-        padding: 20px;
-        margin: 20px;
-  
-        .listTitle {
-          font-weight: 500;
-          color: gray;
-          margin-bottom: 15px;
-        }
+    }
+    .charts {
+      padding: 5px 20px;
+    }
+
+    .listContainer {
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      padding: 20px;
+      margin: 20px;
+
+      .listTitle {
+        font-weight: 500;
+        color: gray;
+        margin-bottom: 15px;
       }
     }
   }
-  
+}
