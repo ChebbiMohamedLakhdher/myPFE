@@ -14,20 +14,19 @@ const News = () => {
       <div className="adminContainer">
         <Navbar />
         <div className="empreunion">
-        <Reunion />
-        <Formation />
-        <Document />
+          <div className="reunion-container">
+            <Reunion />
+          </div>
+          <div className="formation-container">
+            <Formation />
+          </div>
+          <div className="document-container">
+            <Document />
+          </div>
+        </div>
       </div>
-        
-      </div>
-      
-      
-
-
-
     </div>
+  );
+};
 
-  )
-}
-
-export default News
+export default News;
