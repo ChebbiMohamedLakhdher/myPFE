@@ -26,11 +26,7 @@ const congeSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    uploadDocument: {
-        data: Buffer, // Or Schema.Types.Buffer
-        contentType: String, // To store MIME type
-        fileName: String,
-    },
+   
     
 });
 
@@ -65,4 +61,4 @@ const CongeForm = mongoose.models.CongeForm || mongoose.model("CongeForm", conge
 const MedicalForm = mongoose.models.MedicalForm || mongoose.model("MedicalForm", medicalSchema);
 
 
-export { CongeForm, MedicalForm, };
+export { CongeForm, MedicalForm};

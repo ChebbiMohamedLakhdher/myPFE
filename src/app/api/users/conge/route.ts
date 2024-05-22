@@ -1,16 +1,14 @@
 import { connect } from "@/dbConfig/dbConfig";
-import { CongeForm} from "@/models/congeModel";
+import { CongeForm, MedicalForm } from "@/models/congeModel";
 import { NextRequest, NextResponse } from "next/server";
-
 import fs from 'fs';
-
 
 connect();
 
 export async function POST(request: NextRequest) {
     try {
         const formData = await request.formData();
-        console.log(formData)
+        console.log(formData);
 
         const title = formData.get('title');
         const type = formData.get('type');
@@ -18,30 +16,44 @@ export async function POST(request: NextRequest) {
         const enddate = formData.get('enddate');
         const description = formData.get('description');
         const employeeid = formData.get('employeeid');
-        
 
-        // Obtenir le fichier
-        const uploadDocumentFile : any= formData.get('uploadDocument');
+        let savedFormC;
 
-        // Lire le contenu du fichier en tant que buffer
-        const uploadDocumentBuffer = Buffer.from(await uploadDocumentFile.arrayBuffer());
+        if (type === 'medical') {
+            // Handle the "medical" type
+            const uploadDocumentFile: any = formData.get('uploadDocument');
+            const uploadDocumentBuffer = Buffer.from(await uploadDocumentFile.arrayBuffer());
 
-        // Enregistrer le formulaire de réunion dans la base de données
-        const newFormC = new CongeForm({
-            title,
-            type,
-            startdate,
-            enddate,
-            description,
-            uploadDocument: {
-                contentType: uploadDocumentFile.type,
-                fileName: uploadDocumentFile.name,
-                data: uploadDocumentBuffer
-            },
-            employeeid,
-            
-        });
-        const savedFormC = await newFormC.save();
+            const newMedicalForm = new MedicalForm({
+                title,
+                type,
+                startdate,
+                enddate,
+                description,
+                uploadDocument: {
+                    contentType: uploadDocumentFile.type,
+                    fileName: uploadDocumentFile.name,
+                    data: uploadDocumentBuffer
+                },
+                employeeid
+            });
+
+            savedFormC = await newMedicalForm.save();
+        } else if (type === 'normal') {
+            // Handle the "normal" type
+            const newCongeForm = new CongeForm({
+                title,
+                type,
+                startdate,
+                enddate,
+                description,
+                employeeid
+            });
+
+            savedFormC = await newCongeForm.save();
+        } else {
+            return NextResponse.json({ error: "Invalid form type" }, { status: 400 });
+        }
 
         return NextResponse.json({
             message: "Form submitted successfully",
@@ -49,6 +61,7 @@ export async function POST(request: NextRequest) {
             savedFormC
         });
     } catch (error: any) {
+        console.error('Error handling form submission:', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
