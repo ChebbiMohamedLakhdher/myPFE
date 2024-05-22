@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -8,6 +9,8 @@ function FormConge() {
     const [leaveType, setLeaveType] = useState("normal");
     const [FormC, setFormC] = useState({
         title: "",
+        type: "",
+        employeeid: "",
         startdate: "",
         enddate: "",
         uploadDocument: "",
@@ -17,28 +20,33 @@ function FormConge() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        setToken(token || "");
-        console.log(token)
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+            setToken(userId);
+        }
     }, []);
+
+    useEffect(() => {
+        setFormC(prevFormC => ({ ...prevFormC, type: leaveType }));
+    }, [leaveType]);
 
     const handleForm = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('title', FormC.title);
+        formData.append('type', FormC.type);
         formData.append('startdate', FormC.startdate);
         formData.append('enddate', FormC.enddate);
         formData.append('description', FormC.description);
-        formData.append('token', token);
+        formData.append('employeeid', token);
         
-
-        if (leaveType === "medical") {
-            const file = FormC.uploadDocument;
-            formData.append('uploadDocument', file);
+        if (leaveType === "medical" && FormC.uploadDocument) {
+            formData.append('uploadDocument', FormC.uploadDocument, FormC.uploadDocument.name);
         }
 
         try {
-            const response = await axios.post("/api/users/forms", formData);
+            
+            const response = await axios.post("/api/users/conge", formData);
             console.log("Form submission successful", response.data);
         } catch (error) {
             console.error("Form submission failed", error.message);
@@ -49,6 +57,8 @@ function FormConge() {
     const handleReset = () => {
         setFormC({
             title: "",
+            type: "",
+            employeeid: token,
             startdate: "",
             enddate: "",
             uploadDocument: "",
@@ -61,11 +71,11 @@ function FormConge() {
             <h1>Request Day Off</h1>
             <fieldset>
                 <form onSubmit={handleForm}>
-                    <label htmlFor="leaveType">Leave Type:</label>
+                    <label htmlFor="type">Leave Type:</label>
                     <select
-                        id="leaveType"
-                        value={leaveType}
-                        onChange={(e) => setLeaveType(e.target.value)}
+                        id="type"
+                        value={FormC.type}
+                        onChange={(e) => setFormC({ ...FormC, type: e.target.value })}
                     >
                         <option value="normal">Normal Leave</option>
                         <option value="medical">Medical Leave</option>
@@ -110,7 +120,6 @@ function FormConge() {
                                 name="uploadDocument"
                                 id="uploadDocument"
                                 onChange={(e) => setFormC({ ...FormC, uploadDocument: e.target.files[0] })}
-                                placeholder="Upload Document"
                                 required
                             />
                         </>
@@ -122,16 +131,11 @@ function FormConge() {
                         id="description"
                         cols="30"
                         rows="10"
+                        value={FormC.description}
                         onChange={(e) => setFormC({ ...FormC, description: e.target.value })}
                         placeholder="Description"
                         required
                     ></textarea>
-
-                    <input
-                        type="hidden"
-                        name="token"
-                        value={token}
-                    />
 
                     <button type="reset" id="butt2" onClick={handleReset}>
                         Reset
@@ -140,11 +144,8 @@ function FormConge() {
                         Submit
                     </button>
                 </form>
-                <div>
-                    <h2>Token:</h2>
-                    <p>{token}</p>
-                </div>
             </fieldset>
+            {error && <p className="error">Form submission failed. Please try again.</p>}
         </div>
     );
 }

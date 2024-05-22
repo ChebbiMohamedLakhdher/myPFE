@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -10,15 +10,15 @@ import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
 import Pro from "../pro/pro";
 import "./navbar.scss";
 
-export const Navbar = () => {
-  const [showPro, setShowPro] = useState(false);
+const Navbar = ({ backgroundColor }) => {
+  const [showPro, setShowPro] = React.useState(false);
 
   const handleAvatarClick = () => {
     setShowPro(!showPro);
   };
 
   return (
-    <div className="navbar">
+    <div className="navbar" style={{ backgroundColor }}>
       <div className="wrapper">
         <div className="search">
           <input type="text" placeholder="Search..." />

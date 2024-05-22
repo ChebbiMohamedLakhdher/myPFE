@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import "./sidebar.scss";
@@ -12,13 +12,11 @@ import CreditCardIcon from "@mui/icons-material/CreditCard";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import SettingsIcon from "@mui/icons-material/Settings";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ChatIcon from "@mui/icons-material/Chat";
 
-const Sidebar = () => {
+const Sidebar = ({ backgroundColor, setBackgroundColor }) => {
   const router = useRouter();
-  const [backgroundColor, setBackgroundColor] = useState("whitesmoke");
 
   const logout = async () => {
     try {
@@ -81,19 +79,9 @@ const Sidebar = () => {
           </li>
 
           <p className="title">Useful</p>
-          <li>
-            <button>
-              <Link href="/chatroom">
-                <ChatIcon className="icon" />
-                <span> ChatRoom</span>
-              </Link>
-            </button>
-          </li>
+          
 
-          <li>
-            <NotificationsNoneIcon className="icon" />
-            <span> Notifications </span>
-          </li>
+          
           <p className="title">Service</p>
           <li>
             <button>
@@ -103,16 +91,13 @@ const Sidebar = () => {
               </Link>
             </button>
           </li>
-          <li>
-            <SettingsIcon className="icon" />
-            <span> Settings </span>
-          </li>
+          
           <p className="title">User</p>
           <li>
             <button>
               <Link href="/profileadmin">
-                <AccountCircleIcon className="icon" />
-                <span> Profile </span>
+                <SettingsIcon className="icon" />
+                <span> Settings </span>
               </Link>
             </button>
           </li>

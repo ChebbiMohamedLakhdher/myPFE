@@ -11,10 +11,10 @@ const congeSchema = new mongoose.Schema({
         required: true
     },
     startdate: {
-        type: Date,
+        type: String,
         required: true
     },
-    enddatedate: {
+    enddate: {
         type: Date,
         required: true
     }, 
@@ -22,6 +22,7 @@ const congeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    
     description: {
         type: String,
     },
@@ -61,7 +62,7 @@ const medicalSchema = new mongoose.Schema({
 
 // Create models for each form type
 const CongeForm = mongoose.models.CongeForm || mongoose.model("CongeForm", congeSchema);
-const MedicalForm = mongoose.models.MedicalForm || mongoose.model("MedicalForm", medicalsSchema);
+const MedicalForm = mongoose.models.MedicalForm || mongoose.model("MedicalForm", medicalSchema);
 
 
 export { CongeForm, MedicalForm, };
