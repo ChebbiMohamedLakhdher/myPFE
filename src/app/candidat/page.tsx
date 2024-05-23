@@ -1,6 +1,6 @@
 "use client"
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState } from "react";
+import Image from "next/image";
 import "./candidat.scss";
 import pixelcutImage from "../../components/pixelcut-export.jpeg";
 
@@ -24,12 +24,12 @@ const Candidat = () => {
   };
 
   return (
-    <div className='main'>
-      <div className='static top-15 left-40'>
+    <div className="main">
+      <div className="static top-15 left-40">
         <h1>I'm looking for...</h1>
       </div>
-      <div className='container'>
-        {(!showJobOffers && !showInternshipOffers) && (
+      <div className="container">
+        {!showJobOffers && !showInternshipOffers && (
           <div className="card">
             <div className="card-section">
               <button onClick={toggleJobOffers}>Job Offers</button>
@@ -60,7 +60,9 @@ const Candidat = () => {
                 {/* Add more rows as needed */}
               </tbody>
             </table>
-            <button onClick={goBack}>Back</button>
+            <button className="back-button" onClick={goBack}>
+              Back
+            </button>
           </div>
         )}
         {showInternshipOffers && (
@@ -84,7 +86,9 @@ const Candidat = () => {
                 {/* Add more rows as needed */}
               </tbody>
             </table>
-            <button onClick={goBack}>Back</button>
+            <button className="back-button" onClick={goBack}>
+              Back
+            </button>
           </div>
         )}
         <div className="image-container">
