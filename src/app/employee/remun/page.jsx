@@ -4,7 +4,7 @@ import Sidebar from "../../../empComponent/Sidebar/page";
 import Remun from "../../remuntable/page"
 
 
-const Remuns= () => {
+const Remunsi= () => {
   return (
     <div className="Remun">
       <Sidebar />
@@ -18,4 +18,4 @@ const Remuns= () => {
   )
 }
 
-export default Remuns;
+export default Remunsi;
