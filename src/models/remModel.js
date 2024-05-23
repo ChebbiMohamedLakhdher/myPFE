@@ -7,7 +7,7 @@ const remSchema = new mongoose.Schema({
         required: true
     },
     persons:{
-        type: [String],
+        type: String,
         required: true
     },
     uploadDocument: {

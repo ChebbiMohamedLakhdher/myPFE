@@ -89,7 +89,7 @@ const Sidebar = ({ backgroundColor, setBackgroundColor }) => {
           </li>
           <li>
             <button>
-              <Link href="/employee/conge">
+              <Link href="/dayoff">
                 <EventIcon className="icon" />
                 <span> Day offs </span>
               </Link>

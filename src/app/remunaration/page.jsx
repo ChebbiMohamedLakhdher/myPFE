@@ -6,7 +6,7 @@ import FormRemunaration from "../../app/formremunaration/Formrem"
 
 const Remunaration = () => {
   return (
-    <div className="Admin">
+    <div className="Remunaration">
       <Sidebar />
       <div className="adminContainer">
         <Navbar />
