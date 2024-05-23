@@ -1,0 +1,86 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #006599;
+    font-family: Arial, sans-serif;
+  }
+  
+  .main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 2rem;
+  }
+  
+  .container {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    width: 100%; /* Ensure the container takes full width */
+    position: relative;
+  }
+  
+  .card {
+    margin-left: 300px;
+    margin-top: 200px;
+    background-color: #2f789d;
+    color: whitesmoke;
+    padding: 2rem; /* Adjusted padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px white;
+    max-width: 600px; /* Adjusted max-width */
+    width: 100%; /* Ensure the card takes full width */
+    margin-right: 50px;
+  }
+  
+  .image-container {
+    position: relative;
+    top: 7rem;
+    right: 5px; /* Adjust as necessary for your layout */
+  }
+  
+  .label {
+    
+    color: white;
+
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    width: 100%; /* Ensure the container takes full width */
+  }
+  
+  .card {
+    background-color: #3391c1;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .card-section {
+    padding: 2rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card-section:last-child {
+    border-bottom: none;
+  }
+  .static {
+    position: absolute;
+}
+
+.top-15 {
+    top: 110px; /* Adjust the top value as needed */
+}
+
+.left-40 {
+    left: 520px; /* Adjust the right value as needed */
+}
+

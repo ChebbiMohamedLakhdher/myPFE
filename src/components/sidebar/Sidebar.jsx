@@ -9,11 +9,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ChatIcon from "@mui/icons-material/Chat";
+import EventIcon from "@mui/icons-material/Event";
 
 const Sidebar = ({ backgroundColor, setBackgroundColor }) => {
   const router = useRouter();
@@ -77,10 +76,7 @@ const Sidebar = ({ backgroundColor, setBackgroundColor }) => {
               </Link>
             </button>
           </li>
-
-          <p className="title">Useful</p>
           
-
           
           <p className="title">Service</p>
           <li>
@@ -91,7 +87,14 @@ const Sidebar = ({ backgroundColor, setBackgroundColor }) => {
               </Link>
             </button>
           </li>
-          
+          <li>
+            <button>
+              <Link href="/employee/conge">
+                <EventIcon className="icon" />
+                <span> Day offs </span>
+              </Link>
+            </button>
+          </li>
           <p className="title">User</p>
           <li>
             <button>

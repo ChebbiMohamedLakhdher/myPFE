@@ -22,7 +22,7 @@ const remSchema = new mongoose.Schema({
 
 
 // Create models for each form type
-const RemForm = mongoose.models.RForm || mongoose.model("RemForm", remSchema);
+const RemForm = mongoose.models.RemForm || mongoose.model("RemForm", remSchema);
 
 
 export { RemForm };

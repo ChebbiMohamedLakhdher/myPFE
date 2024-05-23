@@ -37,102 +37,84 @@ const Sidebar = () => {
     setBackgroundColor(color);
   };
 
-  return (
-    <div className="sidebar" style={{ backgroundColor }}>
-      <div className="top">
-        <span className="logo">Lezarts Digital</span>
-      </div>
-      <hr />
-      <div className="center">
-        <ul>
-          <p className="title">Main</p>
-          <li>
-            <button>
-              <Link href="/admin">
-                <DashboardIcon className="icon" />
-                <span> Employee Dashboard </span>
-              </Link>
-            </button>
-          </li>
-          <p className="title">Lists</p>
-          <li>
-            <button>
-              <Link href="/employees">
-                <PersonIcon className="icon" />
-                <span> Employees </span>
-              </Link>
-            </button>
-          </li>
-          <li>
-            <button>
-              <Link href="/employee/conge">
-                <EventIcon className="icon" />
-                <span> Day offs </span>
-              </Link>
-            </button>
-          </li>
-          <li>
-            <button>
-              <Link href="/employee/news">
-                <NewspaperIcon className="icon" />
-                <span> News And Updates </span>
-              </Link>
-            </button>
-          </li>
+    return (
+      <div className="sidebar" style={{ backgroundColor }}>
+        <div className="top">
+          <span className="logo">Lezarts Digital</span>
+        </div>
+        <hr />
+        <div className="center">
+          <ul>
+            <p className="title">Main</p>
+            <li>
+              <button>
+                <Link href="/admin">
+                  <DashboardIcon className="icon" />
+                  <span> Employee Dashboard </span>
+                </Link>
+              </button>
+            </li>
+            <p className="title">Requests</p>
+            
+            <li>
+              <button>
+                <Link href="/employee/conge">
+                  <EventIcon className="icon" />
+                  <span> Day offs </span>
+                </Link>
+              </button>
+            </li>
+            <p className="title">Information</p>
+            <li>
+              <button>
+                <Link href="/employee/news">
+                  <NewspaperIcon className="icon" />
+                  <span> News And Updates </span>
+                </Link>
+              </button>
+            </li>
 
-          <p className="title">Useful</p>
-          <li>
-            <button>
-              <Link href="/chatroom">
-                <ChatIcon className="icon" />
-                <span> ChatRoom</span>
-              </Link>
-            </button>
-          </li>
+            <p className="title">Financial</p>
+            
+            <li>
+              <button>
+                <Link href="/employee/remun">
+                  <LocalAtmIcon className="icon" />
+                  <span> Remuneration </span>
+                </Link>
+              </button>
+            </li>
+            
 
-          <li>
-            <NotificationsNoneIcon className="icon" />
-            <span> Notifications </span>
-          </li>
-          <p className="title">Service</p>
-          <li>
-            <button>
-              <Link href="/remunaration">
-                <LocalAtmIcon className="icon" />
-                <span> Remuneration </span>
-              </Link>
-            </button>
-          </li>
-
-          <p className="title">User</p>
-          <li>
-            <button>
-              <Link href="/employee/profile">
-                <SettingsIcon className="icon" />
-                <span> Settings </span>
-              </Link>
-            </button>
-          </li>
-          <li>
-            <button onClick={logout}>
-              <LogoutIcon className="icon" />
-              <span> Logout </span>
-            </button>
-          </li>
-        </ul>
+            <p className="title">User</p>
+            <li>
+              <button>
+                <Link href="/employee/profile">
+                  <SettingsIcon className="icon" />
+                  <span> Settings </span>
+                </Link>
+              </button>
+            </li>
+            <li>
+              <button onClick={logout}>
+                <LogoutIcon className="icon" />
+                <span> Logout </span>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div className="bottom">
+          <div
+            className="colorOption"
+            onClick={() => handleColorOptionClick("whitesmoke")}
+          ></div>
+          <div
+            className="colorOption"
+            onClick={() => handleColorOptionClick("#333")}
+          ></div>
+        </div>
       </div>
-      <div className="bottom">
-        <div
-          className="colorOption"
-          onClick={() => handleColorOptionClick("whitesmoke")}
-        ></div>
-        <div
-          className="colorOption"
-          onClick={() => handleColorOptionClick("#333")}
-        ></div>
-      </div>
-    </div>
-  );
-};
+    );
+  };
 
 export default Sidebar;

@@ -4,14 +4,13 @@ import axios from "axios";
 import "./formrem.scss";
 
 function FormRemunaration() {
-    
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
     const [selectedEmployee, setSelectedEmployee] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [FormRe, setFormRe] = useState({
         title: "",
-        persons: "", // Initialize with an empty string
+        persons: "",
         uploadDocument: "",
     });
 
@@ -24,8 +23,7 @@ function FormRemunaration() {
             try {
                 const response = await axios.post("/api/users/employees");
                 console.log("Success", response.data);
-                setUsers(response.data); // Set users data in state
-                toast.success("Users imported successfully");
+                setUsers(response.data);
             } catch (error) {
                 console.log("Failed", error.response?.data?.error || "Unknown error");
                 setError(error.response?.data?.error || "Unknown error");
@@ -43,18 +41,29 @@ function FormRemunaration() {
         e.preventDefault();
         const formData = new FormData();
         formData.append('title', FormRe.title);
-        formData.append('persons', selectedEmployee);
+        formData.append('persons', selectedEmployee); // Append selectedEmployee directly
 
         const file = FormRe.uploadDocument;
-        const reader = new FileReader();
-        reader.readAsArrayBuffer(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(file);
 
-        reader.onload = async function () {
-            const arrayBuffer = reader.result;
-            const blob = new Blob([arrayBuffer]);
-            formData.append('uploadDocument', blob, file.name);
+            reader.onload = async function () {
+                const arrayBuffer = reader.result;
+                const blob = new Blob([arrayBuffer]);
+                formData.append('uploadDocument', blob, file.name);
 
-            // Sending data to the server
+                // Sending data to the server
+                try {
+                    const response = await axios.post("/api/users/remunaration", formData);
+                    console.log("Form submission successful", response.data);
+                } catch (error) {
+                    console.error("Form submission failed", error.message);
+                    setError(true);
+                }
+            };
+        } else {
+            // Sending data to the server without file
             try {
                 const response = await axios.post("/api/users/remunaration", formData);
                 console.log("Form submission successful", response.data);
@@ -62,12 +71,12 @@ function FormRemunaration() {
                 console.error("Form submission failed", error.message);
                 setError(true);
             }
-        };
+        }
     };
 
     const handleTitleChange = (e) => {
         setFormRe({ ...FormRe, title: e.target.value });
-        setError(null); // Clear the error state when the title field is being edited
+        setError(null);
     };
 
     const handleReset = () => {
