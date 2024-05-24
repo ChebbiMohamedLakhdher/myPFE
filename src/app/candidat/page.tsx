@@ -34,7 +34,7 @@ const Candidat = () => {
         {!showJobOffers && !showInternshipOffers && (
           <div className="card">
             <div className="card-section">
-              <button onClick={toggleJobOffers}>Job Offers</button>
+              <button onClick={toggleJobOffers}>Job Offer</button>
             </div>
             <div className="card-section">
               <button onClick={toggleInternshipOffers}>Internship</button>

@@ -14,6 +14,7 @@ html, body {
   }
   
   .container {
+    
     display: flex;
     align-items: center;
     padding: 2rem;
@@ -22,7 +23,7 @@ html, body {
   }
   
   .card {
-    margin-left: 300px;
+    margin-left: 270px;
     margin-top: 200px;
     background-color: #2f789d;
     color: whitesmoke;
@@ -35,9 +36,9 @@ html, body {
   }
   
   .image-container {
-    position: relative;
-    top: 7rem;
-    right: 5px; /* Adjust as necessary for your layout */
+    position: absolute;
+    top: 9rem;
+    right: 1px; /* Adjust as necessary for your layout */
   }
   
   .label {
@@ -77,17 +78,18 @@ html, body {
 }
 
 .top-15 {
-    top: 110px; /* Adjust the top value as needed */
+    top: 120px; /* Adjust the top value as needed */
 }
 
 .left-40 {
-    left: 520px; /* Adjust the right value as needed */
+    left: 490px; /* Adjust the right value as needed */
 }
 
 .back-button {
   display: block;
-  margin: 40px auto 0; /* Adjust margin to position the button lower */
+  margin: 50px auto 0; /* Adjust margin to position the button lower */
   padding: 10px 20px;
+  margin-left: 380px;
   background-color: #3391c1;
   color: whitesmoke;
   border: none;
