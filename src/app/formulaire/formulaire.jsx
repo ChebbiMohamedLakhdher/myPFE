@@ -1,56 +1,50 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import "./formulaire.scss";
 
 function Formulaire() {
-    const [Type, SetType] = useState(""); // Default is now empty string
     const [FormFor, setFormFor] = useState({
         requirements: "",
         posts_number: "",
         description: "",
         title: "",
+        type: "",
         startdate: "",
         enddate: "",
         ispaid: "",
         department: "",
         position: "",
     });
-    const [token, setToken] = useState("");
     const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const token = Cookies.get('token');
-        setToken(token || "");
-        console.log(token);
-    }, []);
 
     const handleForm = async (e) => {
         e.preventDefault();
         const formData = new FormData();
 
-        formData.append('requirements', FormFor.requirements);
-        formData.append('posts_number', FormFor.posts_number);
-        formData.append('description', FormFor.description);
-        formData.append('title', FormFor.title);
-        formData.append('startdate', FormFor.startdate);
-        formData.append('token', token);
+        formData.append("requirements", FormFor.requirements);
+        formData.append("posts_number", FormFor.posts_number);
+        formData.append("description", FormFor.description);
+        formData.append("title", FormFor.title);
+        formData.append("startdate", FormFor.startdate);
+        formData.append("type", FormFor.type);
 
-        if (Type === "internship") {
-            formData.append('enddate', FormFor.enddate);
-            formData.append('ispaid', FormFor.ispaid);
-        } else if (Type === "employment") {
-            formData.append('department', FormFor.department);
-            formData.append('position', FormFor.position);
+        if (FormFor.type === "internship") {
+            formData.append("enddate", FormFor.enddate);
+            formData.append("ispaid", FormFor.ispaid);
+        } else if (FormFor.type === "employment") {
+            formData.append("department", FormFor.department);
+            formData.append("position", FormFor.position);
         }
 
         try {
             const response = await axios.post("/api/users/formulaire", formData);
+            console.log(formData);
             console.log("Form submission successful", response.data);
+            setError(null); // Reset error state
         } catch (error) {
             console.error("Form submission failed", error.message);
-            setError(true);
+            setError(error.message);
         }
     };
 
@@ -60,6 +54,7 @@ function Formulaire() {
             posts_number: "",
             description: "",
             title: "",
+            type: "",
             startdate: "",
             enddate: "",
             ispaid: "",
@@ -73,14 +68,15 @@ function Formulaire() {
             <h1>Offer Form</h1>
             <fieldset>
                 <form onSubmit={handleForm}>
-                    <label htmlFor="Type">Type:</label>
+                    <label htmlFor="type">Type:</label>
                     <select
-                        id="Type"
-                        value={Type}
-                        onChange={(e) => SetType(e.target.value)}
+                        id="type"
+                        name="type"
+                        value={FormFor.type}
+                        onChange={(e) => setFormFor({ ...FormFor, type: e.target.value })}
                         required
                     >
-                        <option value="">Select Type</option> {/* Added default option */}
+                        <option value="">Select Type</option>
                         <option value="internship">Internship</option>
                         <option value="employment">Employment</option>
                     </select>
@@ -125,7 +121,7 @@ function Formulaire() {
                         required
                     />
 
-                    {Type === "internship" && (
+                    {FormFor.type === "internship" && (
                         <>
                             <label htmlFor="enddate">End Date*</label>
                             <input
@@ -150,7 +146,7 @@ function Formulaire() {
                             </select>
                         </>
                     )}
-                    {Type === "employment" && (
+                    {FormFor.type === "employment" && (
                         <>
                             <label htmlFor="department">Department*</label>
                             <input

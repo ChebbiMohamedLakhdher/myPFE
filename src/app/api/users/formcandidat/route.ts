@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
         const LastName = formData.get('LastName');
         const Adress = formData.get('Adress');
         const Email = formData.get('Email');
-        
+        const offerId = formData.get('offerId');
         const description = formData.get('description');
         
 
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
             Name,
             LastName,
             Adress,
-    
+            offerId,   
             Email,
          
            

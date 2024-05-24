@@ -36,6 +36,10 @@ const formCandSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    offerId:{
+        type: String,
+        
+    },
 });
 
 // Create models for each form type

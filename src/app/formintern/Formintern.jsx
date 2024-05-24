@@ -1,12 +1,12 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./formcandidat.scss";
+import "./formintern.scss";
 
-function Formcandidat() {
+function Forminternship() {
   const [error, setError] = useState(null);
   const [offerId, setOfferId] = useState("");
-  const [FormCand, setFormCand] = useState({
+  const [FormInter, setFormInter] = useState({
     Name: "",
     LastName: "",
     Adress: "",
@@ -23,7 +23,7 @@ function Formcandidat() {
   }, []);
 
   const handleReset = () => {
-    setFormCand({
+    setFormInter({
       Name: "",
       LastName: "",
       Adress: "",
@@ -38,41 +38,41 @@ function Formcandidat() {
   const handleForm = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("Name", FormCand.Name);
-    formData.append("LastName", FormCand.LastName);
-    formData.append("Adress", FormCand.Adress);
-    formData.append("Email", FormCand.Email);
-    formData.append("description", FormCand.description);
+    formData.append("Name", FormInter.Name);
+    formData.append("LastName", FormInter.LastName);
+    formData.append("Adress", FormInter.Adress);
+    formData.append("Email", FormInter.Email);
+    formData.append("description", FormInter.description);
     formData.append("offerId", offerId);
 
-    if (FormCand.uploadDocument) {
-      formData.append("uploadDocument", FormCand.uploadDocument);
+    if (FormInter.uploadDocument) {
+      formData.append("uploadDocument", FormInter.uploadDocument);
     }
 
-    if (FormCand.uploadDocument1) {
-      formData.append("uploadDocument1", FormCand.uploadDocument1);
+    if (FormInter.uploadDocument1) {
+      formData.append("uploadDocument1", FormInter.uploadDocument1);
     }
 
     try {
       const response = await axios.post("/api/users/formcandidat", formData);
-      console.log("Form submission successful", response.data);
+      console.log("FormInter submission successful", response.data);
     } catch (error) {
-      console.error("Form submission failed", error.message);
+      console.error("FormInter submission failed", error.message);
       setError(true);
     }
   };
 
   return (
-    <div className="formcand">
-      <h1>Apply for a job</h1>
+    <div className="formintern">
+      <h1>Apply for an internship</h1>
       <form onSubmit={handleForm}>
         <label htmlFor="name">Name*</label>
         <input
           type="text"
           name="name"
           id="name"
-          value={FormCand.Name}
-          onChange={(e) => setFormCand({ ...FormCand, Name: e.target.value })}
+          value={FormInter.Name}
+          onChange={(e) => setFormInter({ ...FormInter, Name: e.target.value })}
           placeholder="Enter Name"
           required
         />
@@ -81,9 +81,9 @@ function Formcandidat() {
           type="text"
           name="lastname"
           id="lastname"
-          value={FormCand.LastName}
+          value={FormInter.LastName}
           onChange={(e) =>
-            setFormCand({ ...FormCand, LastName: e.target.value })
+            setFormInter({ ...FormInter, LastName: e.target.value })
           }
           placeholder="Enter Last Name"
           required
@@ -94,9 +94,9 @@ function Formcandidat() {
           type="text"
           name="adress"
           id="adress"
-          value={FormCand.Adress}
+          value={FormInter.Adress}
           onChange={(e) =>
-            setFormCand({ ...FormCand, Adress: e.target.value })
+            setFormInter({ ...FormInter, Adress: e.target.value })
           }
           required
         />
@@ -106,9 +106,9 @@ function Formcandidat() {
           type="text"
           name="email"
           id="email"
-          value={FormCand.Email}
+          value={FormInter.Email}
           onChange={(e) =>
-            setFormCand({ ...FormCand, Email: e.target.value })
+            setFormInter({ ...FormInter, Email: e.target.value })
           }
           required
         />
@@ -119,7 +119,7 @@ function Formcandidat() {
           name="uploadDocument"
           id="file"
           onChange={(e) =>
-            setFormCand({ ...FormCand, uploadDocument: e.target.files[0] })
+            setFormInter({ ...FormInter, uploadDocument: e.target.files[0] })
           }
           placeholder="Upload CV"
         />
@@ -130,7 +130,7 @@ function Formcandidat() {
           name="uploadDocument1"
           id="file1"
           onChange={(e) =>
-            setFormCand({ ...FormCand, uploadDocument1: e.target.files[0] })
+            setFormInter({ ...FormInter, uploadDocument1: e.target.files[0] })
           }
           placeholder="Upload Cover Letter"
         />
@@ -140,9 +140,9 @@ function Formcandidat() {
           id="description"
           cols="30"
           rows="10"
-          value={FormCand.description}
+          value={FormInter.description}
           onChange={(e) =>
-            setFormCand({ ...FormCand, description: e.target.value })
+            setFormInter({ ...FormInter, description: e.target.value })
           }
           placeholder="Provide more details"
           required
@@ -159,4 +159,4 @@ function Formcandidat() {
   );
 }
 
-export default Formcandidat;
+export default  Forminternship;

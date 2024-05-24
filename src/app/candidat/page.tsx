@@ -1,8 +1,10 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import "./candidat.scss";
 import pixelcutImage from "../../components/pixelcut-export.jpeg";
+import JobOffers from "../joboffer/page";
+import InternshipOffers from "../internshipoffer/page";
+import "./candidat.scss";
 
 const Candidat = () => {
   const [showJobOffers, setShowJobOffers] = useState(false);
@@ -39,58 +41,8 @@ const Candidat = () => {
             </div>
           </div>
         )}
-        {showJobOffers && (
-          <div className="offers-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Job Offer Name</th>
-                  <th>Details</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Job Offer 1</td>
-                  <td>Offer details 1</td>
-                </tr>
-                <tr>
-                  <td>Job Offer 2</td>
-                  <td>Offer details 2</td>
-                </tr>
-                {/* Add more rows as needed */}
-              </tbody>
-            </table>
-            <button className="back-button" onClick={goBack}>
-              Back
-            </button>
-          </div>
-        )}
-        {showInternshipOffers && (
-          <div className="offers-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Internship Offer Name</th>
-                  <th>Details</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Internship Offer 1</td>
-                  <td>Offer details 1</td>
-                </tr>
-                <tr>
-                  <td>Internship Offer 2</td>
-                  <td>Offer details 2</td>
-                </tr>
-                {/* Add more rows as needed */}
-              </tbody>
-            </table>
-            <button className="back-button" onClick={goBack}>
-              Back
-            </button>
-          </div>
-        )}
+        {showJobOffers && <JobOffers goBack={goBack} />}
+        {showInternshipOffers && <InternshipOffers goBack={goBack} />}
         <div className="image-container">
           <Image src={pixelcutImage} alt="Candidate" />
         </div>

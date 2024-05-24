@@ -1,0 +1,57 @@
+.internship-table {
+    width: 100%;
+      /* Ensures all components have the same minimum height */
+    box-sizing: border-box;  /* Include padding and border in the element's total width and height */
+    padding: 20px;
+    flex: 1;
+    .reunion-card {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px;
+        margin-bottom: 20px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .scrollable-list {
+        max-height: 200px; /* Adjust the height as needed */
+        overflow-y: auto;
+        padding-right: 16px; /* Ensure scrollbar doesn't overlap content */
+    }
+    
+    .acc {
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        background-color: #4caf50;
+        width: 20%;
+        font-size: 16px;
+    }
+    
+    .label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+    
+    .right-info {
+        float: right;
+    }
+    
+    .reunion-container {
+        padding: 20px;
+    }
+    
+    .reunion-section {
+        padding: 20px;
+        border-radius: 8px;
+        color: white;
+    }
+    
+    
+}
+
