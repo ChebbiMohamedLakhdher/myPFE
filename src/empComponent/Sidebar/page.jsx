@@ -48,7 +48,7 @@ const Sidebar = () => {
             <p className="title">Main</p>
             <li>
               <button>
-                <Link href="/admin">
+                <Link href="/employee/main">
                   <DashboardIcon className="icon" />
                   <span> Employee Dashboard </span>
                 </Link>
